@@ -1,0 +1,164 @@
+// Заголовки, загальні БЕМ блоки та інше...
+
+.title {
+  &_1 {
+    font-family: "Cannonade";
+    font-weight: 700;
+    @include adaptiveValue("font-size", 41, 24);
+    line-height: 122%; /* 50/41 */
+    text-transform: uppercase;
+    color: #212121;
+  }
+
+  &_2 {
+    font-family: "Gravity";
+    font-style: normal;
+    font-weight: 700;
+    @include adaptiveValue("font-size", 26, 16);
+    line-height: 119.2%; /* 31/26 */
+    color: #212121;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: rem(10);
+
+  .swiper-pagination-bullet {
+    display: block;
+    width: 6px;
+    height: 6px;
+    background: #212121;
+    opacity: 0.7;
+    border-radius: 8px;
+    transition: all 0.3s ease 0s;
+  }
+  .swiper-pagination-bullet-active {
+    opacity: 1;
+    transform: scale(1.66);
+  }
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+
+  &__button {
+    cursor: pointer;
+    pointer-events: all;
+
+    &.swiper-button-disabled {
+      &::before,
+      &::after {
+        color: rgba(33, 33, 33, 0.8);
+      }
+    }
+
+    &::before,
+    &::after {
+      @extend %ic;
+      color: #fffafa;
+      font-size: rem(48);
+    }
+    &::before {
+    }
+  }
+
+  &_small {
+  }
+
+  &_black {
+    column-gap: rem(20);
+
+    button {
+      &.swiper-button-disabled {
+        &::before,
+        &::after {
+          opacity: 0.5;
+        }
+      }
+
+      &::before,
+      &::after {
+        color: #212121;
+        font-size: rem(19);
+      }
+    }
+  }
+}
+
+.button-prev {
+  &::before {
+    content: "\e90d";
+  }
+}
+.button-next {
+  &::before {
+    content: "\e90b";
+  }
+}
+
+.breadcrumbs {
+  white-space: nowrap;
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    font-weight: 450;
+    font-size: 10px;
+    line-height: 120%; /* 12/10 */
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  &__link {
+    position: relative;
+    transition: all 0.3s ease 0s;
+
+    @media (any-hover: hover) {
+      &:hover {
+        color: #000;
+
+        &::after {
+          color: rgba(0, 0, 0, 0.7);
+        }
+      }
+    }
+
+    &::after {
+      content: "/";
+      @extend %ic;
+      margin: 0 rem(3);
+      font-size: rem(10);
+    }
+  }
+
+  &__current {
+  }
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  column-gap: rem(16);
+  &__link {
+    &::before {
+      color: #212121;
+      font-size: rem(36);
+      transition: all 0.3s ease 0s;
+    }
+
+    @media (any-hover: hover) {
+      &:hover {
+        &::before {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+}

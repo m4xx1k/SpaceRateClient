@@ -1,0 +1,81 @@
+// <RATING>
+// Сніппет (HTML): rating
+.rating {
+  display: flex;
+  align-items: flex-end;
+  font-size: 30px;
+  line-height: 0.75;
+  transition: opacity 0.3s ease 0s;
+
+  text-stroke: 0.1px #000;
+  -webkit-text-stroke: 0.1px #000;
+}
+.rating.rating_sending {
+  opacity: 0.2;
+}
+.rating.rating_set .rating__active,
+.rating.rating_set .rating__item {
+  cursor: pointer;
+}
+
+.rating__body {
+  position: relative;
+}
+.rating__body::before {
+  content: "★★★★★";
+  display: block;
+  color: #fff;
+}
+.rating__active {
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.rating__active::before {
+  content: "★★★★★";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  color: #fcd400;
+}
+
+.rating__items {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.rating__item {
+  flex: 0 0 20%;
+  height: 100%;
+  opacity: 0;
+}
+.rating__value {
+  font-size: 50%;
+  line-height: 1;
+  padding: 0px 0px 0px 10px;
+}
+
+//========================================================================================================================================================
+
+.rating_lite {
+  -webkit-text-stroke: 0;
+
+  .rating__active::before {
+  }
+  .rating__body::before {
+    text-stroke: 1px #000;
+    -webkit-text-stroke: 1px #000;
+  }
+
+  .rating__value {
+    display: none;
+  }
+}
