@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 const baseQuery = fetchBaseQuery({
-    baseUrl:import.meta.env.VITE__API,
+    baseUrl:'https://cautious-pumps-toad.cyclic.app',
     credentials: 'include',
     prepareHeaders: (headers) =>{
         const token = localStorage.getItem('token')
