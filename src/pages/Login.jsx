@@ -6,7 +6,9 @@ const Login = () => {
     const {tg,user} = useTelegram()
     useEffect(() => {
         tg.ready()
-        if (!user) window.location.href = 'https://t.me/spaceratebot'
+        if(!user) {
+            window.location.replace('https://t.me/spaceratebot')
+        }
     }, [])
 
     return (

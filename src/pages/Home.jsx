@@ -32,8 +32,6 @@ const Home = () => {
 
                             effect="fade"
                             slidesPerView={1}
-                            onSlideChange={() => console.log('slide change')}
-                            onSwiper={(swiper) => console.log(swiper)}
                             className="hero__wrapper swiper-wrapper"
                             modules={[EffectFade, Autoplay]}
                             observer={true}
