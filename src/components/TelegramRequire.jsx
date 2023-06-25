@@ -8,7 +8,7 @@ const TelegramRequire = () => {
     const {user} = useTelegram()
     console.log(token)
     const goToTelegram = () => {
-        window.location.replace = 'https://t.me/spaceratebot'
+        window.location.href = 'https://t.me/spaceratebot'
     }
     return (
         <div>
