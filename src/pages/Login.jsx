@@ -13,7 +13,10 @@ const Login = () => {
     useEffect(() => {
         tg.ready()
         const handleFindUser = async ()=>{
-            const user = await findUser({telegramId:tgUser?.id})
+            const {data} = await findUser({telegramId:tgUser?.id})
+            if(data){
+                navigate('/profile')
+            }
         }
         if(!tgUser) {
             window.location.replace('https://t.me/spaceratebot')
