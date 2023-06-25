@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {useTelegram} from "../hooks/useTelegram.js";
+import {useTelegram} from "../../hooks/useTelegram.js";
 import {Link, useNavigate} from "react-router-dom";
-import {useFindUserMutation, useRegistrationMutation} from "../redux/auth/authApiSlice.js";
-
+import {useFindUserMutation, useRegistrationMutation} from "../../redux/auth/authApiSlice.js";
+import s from './Login.module.scss'
 const Login = () => {
     const {tg,user:tgUser} = useTelegram()
     const [username, setUsername] = useState(!!tgUser?.username ? tgUser.username :'')
     const [name, setName] = useState(!!tgUser?.username ? tgUser.username :'')
+    const [error, setError] = useState('')
     const navigate= useNavigate()
     const [findUser] = useFindUserMutation()
     const [registration] = useRegistrationMutation()
@@ -32,19 +33,22 @@ const Login = () => {
                     name: username
                 })
                 navigate('/profile')
+            }else{
+                setError('Поле не может быть пустым')
             }
         }catch (e) {
             alert(JSON.stringify(e))
         }
     }
     return (
-        <div style={{background: '#000', height: '100hv', width: '100vw', color: '#fff', fontSize: '42px'}}>
+        <div className={s.container}>
 
-            <h2>login</h2>
+            <h2 className={s.title}>Добро Пожаловать!</h2>
 
-            <input value={username} onChange={e=>setUsername(e.target.value)} type="text"/>
-            <input value={name} onChange={e=>setName(e.target.value)} type="text"/>
-            <button onClick={handleLogin}>login</button>
+            <input className={s.input} placeholder={'Логин...'} value={username} onChange={e=>setUsername(e.target.value)} type="text"/>
+            <input className={s.input} placeholder={'Имя...'} value={name} onChange={e=>setName(e.target.value)} type="text"/>
+            <span className={s.error}>{error}</span>
+            <button className={s.btn} onClick={handleLogin}>Ввойти</button>
         </div>
     );
 };

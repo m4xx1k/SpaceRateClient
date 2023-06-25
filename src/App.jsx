@@ -5,8 +5,8 @@ import './assets/scss/style.scss'
 import {Route, Routes} from "react-router";
 import Layout from "./components/Layout.jsx";
 import TelegramRequire from "./components/TelegramRequire.jsx";
-import Login from "./pages/Login.jsx";
-import Profile from "./pages/Profile.jsx";
+import Login from "./pages/Login/Login.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
 function App() {
     return (
         <Routes>
