@@ -1,10 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useTelegram} from "../hooks/useTelegram.js";
+import {Link} from "react-router-dom";
 
 const Login = () => {
-    return (
-        <div style={{background:'#000', height:'100hv',width:'100vw', color:'#fff',fontSize:'42px'}}>
+    const {user} = useTelegram()
+    useEffect(() => {
+        if (!!user) window.location.replace = 'https://t.me/spaceratebot'
+    }, [])
 
-                <h2>login</h2>
+    return (
+        <div style={{background: '#000', height: '100hv', width: '100vw', color: '#fff', fontSize: '42px'}}>
+
+            <h2>login</h2>
+            <Link to={'/profile'}>Profile</Link>
         </div>
     );
 };
