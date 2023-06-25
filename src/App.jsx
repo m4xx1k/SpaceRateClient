@@ -7,7 +7,6 @@ import Layout from "./components/Layout.jsx";
 import TelegramRequire from "./components/TelegramRequire.jsx";
 import Login from "./pages/Login.jsx";
 function App() {
-
     return (
         <Routes>
             <Route element={<Layout/>}>

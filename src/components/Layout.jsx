@@ -1,11 +1,14 @@
 import React from 'react';
 import Header from "./Header.jsx";
-import {Outlet} from "react-router";
+import {Outlet, useLocation} from "react-router";
+
 const Layout = () => {
+    const {pathname} = useLocation()
     return (
         <>
-         <Header/>
-         <Outlet/>
+            <Header/>
+            <Outlet/>
+            <span>{pathname}</span>
         </>
     );
 };
