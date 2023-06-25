@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import logo from '../assets/img/logo.svg'
+import {Link} from "react-router-dom";
 const Header = () => {
     const [isSideMenu,setIsSideMenu] = useState(false)
     const handleToggleSideMenu = ()=>{
@@ -46,8 +47,8 @@ const Header = () => {
                                        className="search-form__input input"/>
                             </form>
                         </div>
-                        <div className="actions-header__item"><a href="#"
-                                                                 className="actions-header__link _icon-user"></a></div>
+                        <div className="actions-header__item"><Link to="/login"
+                                                                 className="actions-header__link _icon-user"></Link></div>
                         <div className="actions-header__item"><a href="#"
                                                                  className="actions-header__link _icon-favorite active">(2)</a>
                         </div>
