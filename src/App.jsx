@@ -13,7 +13,6 @@ function App() {
             <Route element={<Layout/>}>
                 <Route element={<TelegramRequire/>}>
                     <Route path={'/profile'} element={<Profile/>}/>
-
                 </Route>
                 <Route path={'/login'} element={<Login/>}/>
                 <Route path={'/'} element={<Home/>}/>

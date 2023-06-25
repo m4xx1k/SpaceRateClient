@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTelegram} from "../hooks/useTelegram.js";
 
 const Profile = () => {
-    const {user} = useTelegram()
+    const {user,tg} = useTelegram()
+    useEffect(()=>{
+        tg.ready()
+    })
     return (
         <div>
             {Object.keys(user).map(elem=>(

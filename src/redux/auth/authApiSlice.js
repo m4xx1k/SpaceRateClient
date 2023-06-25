@@ -2,36 +2,23 @@ import {api} from "../api.js";
 
 export const authApiSlice = api.injectEndpoints({
     endpoints: builder=>({
-        logInWithEmailAndPass: builder.mutation({
+        findUser: builder.mutation({
             query: body =>({
-                url:'user/login',
+                url:'user/find',
                 method:'POST',
                 body
             })
         }),
-        logInByServices: builder.mutation({
-            query: body => ({
-                url: 'user/loginByService',
-                method: 'POST',
-                body
-            })
-        }),
-        question:builder.mutation({
+        registration:builder.mutation({
             query:body=>({
-                url:'mail/send',
-                method:'POST',
-                body
-            })
-        }),
-        liqpay:builder.mutation({
-            query:body=>({
-                url:'liqpay/create',
+                url:'user/register',
                 method:'POST',
                 body
             })
         })
 
+
     })
 })
 
-export const { useLogInWithEmailAndPassMutation,useLiqpayMutation,useQuestionMutation} = authApiSlice
+export const { useFindUserMutation,useRegistrationMutation} = authApiSlice
