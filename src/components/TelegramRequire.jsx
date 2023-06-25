@@ -3,10 +3,10 @@ import {Navigate, Outlet, useLocation} from "react-router";
 import {useTelegram} from "../hooks/useTelegram.js";
 
 const TelegramRequire = () => {
-    const token = localStorage.getItem('token')
+    // const token = localStorage.getItem('token')
     const location = useLocation()
     const {user} = useTelegram()
-    console.log(token)
+    // console.log(token)
     const goToTelegram = () => {
         window.location.replace('https://t.me/spaceratebot')
 
@@ -15,9 +15,9 @@ const TelegramRequire = () => {
         <div>
             <span>telegram require</span>
             {
-                token && !!user ?
-                    <Outlet/>
-                    : (!!user ? <Navigate to="/login"/> : goToTelegram())
+                !!user ?
+                    <Outlet/> :
+                    goToTelegram()
             }
         </div>
 
