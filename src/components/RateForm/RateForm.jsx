@@ -31,7 +31,7 @@ const RateForm = ({placeId}) => {
         setRating(newRating);
     };
     const handleRateSpace = async () => {
-        if (!text && !rating) {
+        if (text && rating) {
             const res = await ratePlace({telegramId: user.id, value: rating, placeId, text})
             setIsShow(false)
         }else{
