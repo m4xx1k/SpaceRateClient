@@ -12,8 +12,12 @@ const Home = () => {
     const [activeCategory, setActiveCategory] = useState(null)
     const {data} = useFetchAllQuery()
     const {data: places} = useFetchByCategoryQuery(activeCategory)
-    const {user} = useTelegram()
-    useEffect(()=>console.log({places, category:data}),[data, places])
+    const {user, tg} = useTelegram()
+
+    useEffect(() => {
+        tg.ready()
+    }, [])
+    useEffect(() => console.log({places, category: data}), [data, places])
     return (<main className="page menu-open">
 
         <section className="hero">
@@ -60,7 +64,7 @@ const Home = () => {
                             </SwiperSlide>
                             <SwiperSlide className="hero__slide slide-hero swiper-slide">
                                 <div className="slide-hero__title">
-                                    {JSON.stringify(user)}
+                                    {user ? JSON.stringify(user) : 'is not tg'}
                                     {/*Думать нужно думать куда пойти*/}
                                 </div>
                                 <div className="slide-hero__decors">
