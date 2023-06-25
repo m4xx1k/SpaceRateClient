@@ -7,7 +7,6 @@ const Login = () => {
     const {tg,user:tgUser} = useTelegram()
     const [username, setUsername] = useState(!!tgUser?.username ? tgUser.username :'')
     const [name, setName] = useState(!!tgUser?.username ? tgUser.username :'')
-    const [user,setUser] = useState({})
     const navigate= useNavigate()
     const [findUser] = useFindUserMutation()
     const [registration] = useRegistrationMutation()
@@ -15,7 +14,6 @@ const Login = () => {
         tg.ready()
         const handleFindUser = async ()=>{
             const user = await findUser({telegramId:tgUser?.id})
-            setUser(user)
         }
         if(!tgUser) {
             window.location.replace('https://t.me/spaceratebot')
@@ -44,7 +42,6 @@ const Login = () => {
             <input value={username} onChange={e=>setUsername(e.target.value)} type="text"/>
             <input value={name} onChange={e=>setName(e.target.value)} type="text"/>
             <button onClick={handleLogin}>login</button>
-            <p>{JSON.stringify(user)}</p>
         </div>
     );
 };
