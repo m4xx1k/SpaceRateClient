@@ -17,7 +17,7 @@ const Profile = () => {
         }
         handleFindUser()
         tg.ready()
-    })
+    },[])
     return (
         <div>
             {Object.keys(user).map(elem=>(
