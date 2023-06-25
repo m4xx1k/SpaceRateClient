@@ -49,7 +49,7 @@ const Header = () => {
                         </div>
                         <div className="actions-header__item"><Link to="/login"
                                                                  className="actions-header__link _icon-user"></Link></div>
-                        <div className="actions-header__item"><a href="#"
+                        <div className="actions-header__item"><a href="/profile"
                                                                  className="actions-header__link _icon-favorite active">(2)</a>
                         </div>
                         <button onClick={handleToggleSideMenu}
