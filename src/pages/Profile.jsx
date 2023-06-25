@@ -6,13 +6,14 @@ import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
 const Profile = () => {
     const {tg,user:tgUser} = useTelegram()
     const [user, setUser] = useState({})
-
+    const [etc,sett]= useState(null)
     const [findUser] = useFindUserMutation()
 
     useEffect(()=>{
         const handleFindUser = async ()=>{
-            const {data} = await findUser({telegramId:tgUser?.id})
-            if(data) setUser(data)
+            const data = await findUser({telegramId:tgUser?.id})
+            if(data.data) setUser(data.data)
+            sett(data)
         }
         handleFindUser()
         tg.ready()
@@ -24,6 +25,7 @@ const Profile = () => {
                     <span>{elem}</span>:<span>{user[elem]}</span>
                 </div>
             ))}
+            {JSON.stringify(etc)}
         </div>
     );
 };
