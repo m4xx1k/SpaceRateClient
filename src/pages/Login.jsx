@@ -14,7 +14,7 @@ const Login = () => {
         tg.ready()
         const handleFindUser = async ()=>{
             const user = await findUser({telegramId:tgUser?.id})
-            if(user) navigate('/')
+            if(!!user) navigate('/')
         }
         if(!tgUser) {
             window.location.replace('https://t.me/spaceratebot')
