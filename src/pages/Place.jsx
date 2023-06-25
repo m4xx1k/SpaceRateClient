@@ -1,29 +1,36 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useParams} from "react-router";
 import {Swiper, SwiperSlide} from "swiper/react";
-import {useFetchByIdPlaceQuery} from "../redux/place/place.api.js";
+import {useFetchAllRatingsMutation, useFetchByIdPlaceQuery} from "../redux/place/place.api.js";
 import SwiperCore, {Pagination, Navigation} from 'swiper/core';
 
 SwiperCore.use([Pagination, Navigation]);
 const Place = () => {
     const {id} = useParams()
-    const {data, isSuccess, isError, error} = useFetchByIdPlaceQuery(id)
+    const {data, isSuccess, isLoading, isError, error} = useFetchByIdPlaceQuery(id)
+    const [fetchRatings] = useFetchAllRatingsMutation()
+    const [ratings, setRatings] = useState(null)
     const [info, setInfo] = useState({})
     useEffect(() => {
-            console.log(data)
-            if (isSuccess) {
-                let info = {}
-                data.info.forEach(e => info[e.name] = e.value)
-                setInfo(info)
-                console.log(info)
-            }
-            console.log({data, isSuccess, isError, error})
-        },
-        [data, isSuccess, isError, error]
-    )
-    if (!data) return null
-    return (
-        <main className="page">
+        if (isSuccess) {
+            let info = {}
+            data.info.forEach(e => info[e.name] = e.value)
+            setInfo(info)
+            console.log(info)
+        }
+        const handleFetchAllRatings = async ()=>{
+            const {data} = await fetchRatings({placeId:id})
+            console.log({ratings:data})
+            setRatings(data.ratings)
+        }
+        if(ratings===null) handleFetchAllRatings()
+        console.log({data, isSuccess, isError, error})
+    }, [data, isSuccess, isError, error])
+    const swiperRef = useRef();
+    if (isLoading) return <p>loading</p>
+    if (isError) return <p>'error'</p>
+    if (!data || !ratings) return <p>no data</p>
+    return (<main className="page">
 
             <section className="restaurant">
                 <div className="restaurant__container">
@@ -58,31 +65,22 @@ const Place = () => {
                                 navigation={true}
                                 breakpoints={{
                                     320: {
-                                        slidesPerView: 1,
-                                        spaceBetween: 10,
-                                    },
-                                    768: {
-                                        slidesPerView: 1.5,
-                                        spaceBetween: 40,
-                                    },
-                                    992: {
-                                        slidesPerView: 2,
-                                        spaceBetween: 40,
-                                    },
-                                    1268: {
-                                        slidesPerView: 2,
-                                        spaceBetween: 60,
+                                        slidesPerView: 1, spaceBetween: 10,
+                                    }, 768: {
+                                        slidesPerView: 1.5, spaceBetween: 40,
+                                    }, 992: {
+                                        slidesPerView: 2, spaceBetween: 40,
+                                    }, 1268: {
+                                        slidesPerView: 2, spaceBetween: 60,
                                     },
                                 }}
                                 className="restaurant__slider slider-restaurant"
                             >
 
-                                {data.photos.map((e, index) => (
-                                    <SwiperSlide key={index}
-                                                 className="restaurant__slide slide-restaurant-ibg swiper-slide">
+                                {data.photos.map((e, index) => (<SwiperSlide key={index}
+                                                                             className="restaurant__slide slide-restaurant-ibg swiper-slide">
                                         <img src={`${import.meta.env.VITE__API}/places/${e.photo}`} alt={e.photo}/>
-                                    </SwiperSlide>
-                                ))}
+                                    </SwiperSlide>))}
                             </Swiper>
                             {/*<Swiper className="slider-restaurant__wrapper swiper-wrapper"*/}
                             {/*        observer={true}*/}
@@ -140,9 +138,7 @@ const Place = () => {
                             <div className="description-restaurant__title">ОПИСАНИЕ:</div>
                             <div className="description-restaurant__body">
                                 <div className="description-restaurant__text">
-                                    {
-                                        data.place.description
-                                    }
+                                    {data.place.description}
                                 </div>
                                 <div className="description-restaurant__list list-product">
                                     <div className="list-product__item _icon-ruble">{info.price}</div>
@@ -177,82 +173,105 @@ const Place = () => {
                             <div className="rewievs__control">
                                 <button className="rewievs__btn _icon-comment"><span>ОСТАВИТЬ ОТЗЫВ</span></button>
                                 <div className="rewievs__navigation navigation navigation_small navigation_black">
-                                    <button className="navigation__button button-prev"></button>
-                                    <button className="navigation__button button-next"></button>
+                                    <button onClick={() => swiperRef.current.slidePrev()}
+                                            className="navigation__button button-prev"></button>
+                                    <button onClick={() => swiperRef.current.slideNext()}
+                                            className="navigation__button button-next"></button>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="rewievs__slider slider-rewievs swiper">
-                            <div className="slider-rewievs__wrapper swiper-wrapper">
-                                <div className="slider-rewievs__slide slide-rewievs swiper-slide">
+                        <Swiper
+                            pagination={{clickable: true}}
+                            navigation={true}
+                            breakpoints={{
+                                320: {
+                                    slidesPerView: 1, spaceBetween: 10,
+                                }, 768: {
+                                    slidesPerView: 1.5, spaceBetween: 40,
+                                }, 992: {
+                                    slidesPerView: 2, spaceBetween: 40,
+                                }, 1268: {
+                                    slidesPerView: 2, spaceBetween: 60,
+                                },
+                            }}
+                            onSwiper={(swiper) => {
+                                swiperRef.current = swiper;
+                            }}
+                            loop
+                            className="rewievs__slider slider-rewievs swiper slider-rewievs__wrapper swiper-wrapper"
+                        >
+
+                            {!!ratings?.length ? ratings.map((e, index) => (
+                                <SwiperSlide className="slider-rewievs__slide slide-rewievs swiper-slide" key={index}>
                                     <div className="slide-rewievs__top">
                                         <div className="slide-rewievs__ico"><img src="@img/rewievs/01.png" alt=""/>
                                         </div>
                                         <div className="slide-rewievs__info">
-                                            <div className="slide-rewievs__name">Сергей Ремезов</div>
+                                            <div className="slide-rewievs__name">Сергей Ремезов {index}</div>
                                             <div className="slide-rewievs__place">БЛОГЕР</div>
                                         </div>
                                     </div>
-                                    <div className="slide-rewievs__text">Сет морепродуктов. Много маленьких квадратиков
-                                        с разными морскими гадами. Аттракцион. Симпатично. Ассорти тако все по 2.
-                                        Вкусно, но опять-таки больше развлечение, чем еда. Лапша с говядиной-супер.
-                                        Остро, ароматно, идеально. Чизкейк. Вау. Супчик-огонь. Ганаш-красота и сладость.
-                                        Лимонады в красивых бутылках. Цены доступные. Рекомендую.
+                                    <div className="slide-rewievs__text">{e.text}
                                     </div>
                                     <div className="slide-rewievs__date">3 мая 2023</div>
-                                </div>
-                                <div className="slider-rewievs__slide slide-rewievs swiper-slide">
-                                    <div className="slide-rewievs__top">
-                                        <div className="slide-rewievs__ico"><img src="@img/rewievs/02.png" alt=""/>
-                                        </div>
-                                        <div className="slide-rewievs__info">
-                                            <div className="slide-rewievs__name">Гостья Заведения</div>
-                                            <div className="slide-rewievs__place">ГУРМАН</div>
-                                        </div>
-                                    </div>
-                                    <div className="slide-rewievs__text">Это были самые божественные боул и тартар,
-                                        которые пробовала! Невероятно вкусно! И огромное спасибо девушкам-официанткам за
-                                        подачу. Очень красиво рассказывали и советовали чем и как есть. Надеюсь к вам
-                                        скоро вернуться!
-                                    </div>
-                                    <div className="slide-rewievs__date">13 июня 2023</div>
-                                </div>
-                                <div className="slider-rewievs__slide slide-rewievs swiper-slide">
-                                    <div className="slide-rewievs__top">
-                                        <div className="slide-rewievs__ico"><img src="@img/rewievs/01.png" alt=""/>
-                                        </div>
-                                        <div className="slide-rewievs__info">
-                                            <div className="slide-rewievs__name">Сергей Ремезов</div>
-                                            <div className="slide-rewievs__place">БЛОГЕР</div>
-                                        </div>
-                                    </div>
-                                    <div className="slide-rewievs__text">Сет морепродуктов. Много маленьких квадратиков
-                                        с разными морскими гадами. Аттракцион. Симпатично. Ассорти тако все по 2.
-                                        Вкусно, но опять-таки больше развлечение, чем еда. Лапша с говядиной-супер.
-                                        Остро, ароматно, идеально. Чизкейк. Вау. Супчик-огонь. Ганаш-красота и сладость.
-                                        Лимонады в красивых бутылках. Цены доступные. Рекомендую.
-                                    </div>
-                                    <div className="slide-rewievs__date">3 мая 2023</div>
-                                </div>
-                                <div className="slider-rewievs__slide slide-rewievs swiper-slide">
-                                    <div className="slide-rewievs__top">
-                                        <div className="slide-rewievs__ico"><img src="@img/rewievs/02.png" alt=""/>
-                                        </div>
-                                        <div className="slide-rewievs__info">
-                                            <div className="slide-rewievs__name">Гостья Заведения</div>
-                                            <div className="slide-rewievs__place">ГУРМАН</div>
-                                        </div>
-                                    </div>
-                                    <div className="slide-rewievs__text">Это были самые божественные боул и тартар,
-                                        которые пробовала! Невероятно вкусно! И огромное спасибо девушкам-официанткам за
-                                        подачу. Очень красиво рассказывали и советовали чем и как есть. Надеюсь к вам
-                                        скоро вернуться!
-                                    </div>
-                                    <div className="slide-rewievs__date">13 июня 2023</div>
-                                </div>
-                            </div>
-                        </div>
+                                </SwiperSlide>)):<></>}
+                        </Swiper>
+
+                        {/*<div className="rewievs__slider slider-rewievs swiper">*/}
+                        {/*    <div className="slider-rewievs__wrapper swiper-wrapper">*/}
+
+                        {/*        <div className="slider-rewievs__slide slide-rewievs swiper-slide">*/}
+                        {/*            <div className="slide-rewievs__top">*/}
+                        {/*                <div className="slide-rewievs__ico"><img src="@img/rewievs/02.png" alt=""/>*/}
+                        {/*                </div>*/}
+                        {/*                <div className="slide-rewievs__info">*/}
+                        {/*                    <div className="slide-rewievs__name">Гостья Заведения</div>*/}
+                        {/*                    <div className="slide-rewievs__place">ГУРМАН</div>*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*            <div className="slide-rewievs__text">Это были самые божественные боул и тартар,*/}
+                        {/*                которые пробовала! Невероятно вкусно! И огромное спасибо девушкам-официанткам за*/}
+                        {/*                подачу. Очень красиво рассказывали и советовали чем и как есть. Надеюсь к вам*/}
+                        {/*                скоро вернуться!*/}
+                        {/*            </div>*/}
+                        {/*            <div className="slide-rewievs__date">13 июня 2023</div>*/}
+                        {/*        </div>*/}
+                        {/*        <div className="slider-rewievs__slide slide-rewievs swiper-slide">*/}
+                        {/*            <div className="slide-rewievs__top">*/}
+                        {/*                <div className="slide-rewievs__ico"><img src="@img/rewievs/01.png" alt=""/>*/}
+                        {/*                </div>*/}
+                        {/*                <div className="slide-rewievs__info">*/}
+                        {/*                    <div className="slide-rewievs__name">Сергей Ремезов</div>*/}
+                        {/*                    <div className="slide-rewievs__place">БЛОГЕР</div>*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*            <div className="slide-rewievs__text">Сет морепродуктов. Много маленьких квадратиков*/}
+                        {/*                с разными морскими гадами. Аттракцион. Симпатично. Ассорти тако все по 2.*/}
+                        {/*                Вкусно, но опять-таки больше развлечение, чем еда. Лапша с говядиной-супер.*/}
+                        {/*                Остро, ароматно, идеально. Чизкейк. Вау. Супчик-огонь. Ганаш-красота и сладость.*/}
+                        {/*                Лимонады в красивых бутылках. Цены доступные. Рекомендую.*/}
+                        {/*            </div>*/}
+                        {/*            <div className="slide-rewievs__date">3 мая 2023</div>*/}
+                        {/*        </div>*/}
+                        {/*        <div className="slider-rewievs__slide slide-rewievs swiper-slide">*/}
+                        {/*            <div className="slide-rewievs__top">*/}
+                        {/*                <div className="slide-rewievs__ico"><img src="@img/rewievs/02.png" alt=""/>*/}
+                        {/*                </div>*/}
+                        {/*                <div className="slide-rewievs__info">*/}
+                        {/*                    <div className="slide-rewievs__name">Гостья Заведения</div>*/}
+                        {/*                    <div className="slide-rewievs__place">ГУРМАН</div>*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*            <div className="slide-rewievs__text">Это были самые божественные боул и тартар,*/}
+                        {/*                которые пробовала! Невероятно вкусно! И огромное спасибо девушкам-официанткам за*/}
+                        {/*                подачу. Очень красиво рассказывали и советовали чем и как есть. Надеюсь к вам*/}
+                        {/*                скоро вернуться!*/}
+                        {/*            </div>*/}
+                        {/*            <div className="slide-rewievs__date">13 июня 2023</div>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
 
                     </div>
                 </div>

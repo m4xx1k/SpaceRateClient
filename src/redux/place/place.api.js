@@ -6,6 +6,14 @@ export const placeApi = api.injectEndpoints({
             query: () => 'place',
             providesTags: ['Place']
         }),
+        fetchAllRatings: builder.mutation({
+            query: body => ({
+                url: 'place/ratings',
+                method: 'POST',
+                body
+            }),
+            invalidatesTags: ['Place']
+        }),
         fetchByIdPlace: builder.query({
             query: id => `place/${id}`,
             providesTags: ['Place']
@@ -42,6 +50,7 @@ export const placeApi = api.injectEndpoints({
 })
 
 export const {
+    useFetchAllRatingsMutation,
     useCreatePlaceMutation,
     useFetchByCategoryQuery,
     useFetchAllPlacesQuery,

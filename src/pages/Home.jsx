@@ -155,12 +155,14 @@ const Home = () => {
                                                         className="ratings__item item-ratings">
                                             <div className="item-ratings__content">
                                                 <div className="item-ratings__top">
-                                                    <a href="#" className="item-ratings__name">{e.place.name}</a>
+                                                    <Link to={`/place/${id}`}
+                                                          className="item-ratings__name">{e.place.name}</Link>
                                                     <div className="item-ratings__grade">
                                                         <div className="grade">
                                                             {/*ИДЕАЛЬНО */}
                                                             <span>{e.place.rating}</span></div>
-                                                        <a href="#" className="link">читать все отзывы</a>
+                                                        <Link to={`/place/${id}`}
+                                                              className="link">читать все отзывы</Link>
                                                     </div>
                                                 </div>
                                                 <div className="item-ratings__text">{
