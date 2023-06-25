@@ -1,0 +1,30 @@
+.form{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.btn{
+  width: 100%;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-radius: 8px;
+  background: #000aff;
+  color:#fff;
+}
+.textarea{
+  border: 1px solid #111;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 14px;
+  &::placeholder{
+    text-transform: lowercase;
+  }
+}
+.error{
+  font-size: 14px;
+  color:red;
+}

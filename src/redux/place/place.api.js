@@ -39,6 +39,21 @@ export const placeApi = api.injectEndpoints({
             })
 
         }),
+        ratePlace:builder.mutation({
+            query: body => ({
+                url: `place/rate`,
+                method: 'POST',
+                body
+            })
+        }),
+        findUserPlaceRating: builder.mutation({
+            query: body => ({
+                url: `place/user_rating`,
+                method: 'POST',
+                body
+            })
+
+        }),
         removePlace: builder.mutation({
             query: ({id}) => ({
                 url: `place/${id}`,
@@ -51,9 +66,9 @@ export const placeApi = api.injectEndpoints({
 
 export const {
     useFetchAllRatingsMutation,
-    useCreatePlaceMutation,
+    useFindUserPlaceRatingMutation,
     useFetchByCategoryQuery,
-    useFetchAllPlacesQuery,
+    useRatePlaceMutation,
     useFetchByIdPlaceQuery,
     useUpdateMutation,
     useRemoveMutation

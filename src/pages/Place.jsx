@@ -3,6 +3,7 @@ import {useParams} from "react-router";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {useFetchAllRatingsMutation, useFetchByIdPlaceQuery} from "../redux/place/place.api.js";
 import SwiperCore, {Pagination, Navigation} from 'swiper/core';
+import RateForm from "../components/RateForm/RateForm.jsx";
 
 SwiperCore.use([Pagination, Navigation]);
 const Place = () => {
@@ -115,25 +116,7 @@ const Place = () => {
                             </div>
                         </div>
 
-                        <div className="restaurant__hide">
-                            <button className="rewievs__btn _icon-comment"><span>ОСТАВИТЬ ОТЗЫВ</span></button>
-                            <div className="rating rating_lite rating_set">
-                                <div className="rating__body">
-                                    <div className="rating__active"></div>
-                                    <div className="rating__items">
-                                        <input type="radio" className="rating__item" value="1" name="rating"/>
-                                        <input type="radio" className="rating__item" value="2" name="rating"/>
-                                        <input type="radio" className="rating__item" value="3" name="rating"/>
-                                        <input type="radio" className="rating__item" value="4"
-                                               name="rating"/>
-                                        <input type="radio" className="rating__item" value="5"
-                                               name="rating"/>
-                                    </div>
-                                </div>
-                                <div className="rating__value"></div>
-                            </div>
-                        </div>
-
+                        <RateForm placeId={data.place._id}/>
                         <div className="restaurant__description description-restaurant">
                             <div className="description-restaurant__title">ОПИСАНИЕ:</div>
                             <div className="description-restaurant__body">
