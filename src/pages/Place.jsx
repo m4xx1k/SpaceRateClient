@@ -143,7 +143,7 @@ const Place = () => {
                                 </div>
                                 <div className="description-restaurant__list list-product">
                                     <div className="list-product__item _icon-ruble">{info.price}</div>
-                                    <div className="list-product__item _icon-time">{info.date}</div>
+                                    <div className="list-product__item _icon-time">{info.time}</div>
                                     <div className="list-product__item _icon-location">{info.location}</div>
                                     <div className="list-product__item _icon-kitchen">{info.type}
                                     </div>

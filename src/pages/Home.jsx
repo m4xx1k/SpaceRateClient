@@ -12,7 +12,6 @@ const Home = () => {
     const {data} = useFetchAllQuery()
     const {data: places} = useFetchByCategoryQuery(activeCategory)
 
-    useEffect(() => console.log(data), [data])
     return (<main className="page menu-open">
 
         <section className="hero">
@@ -142,7 +141,8 @@ const Home = () => {
                             <div className="ratings__items ratings__items_pc">
                                 {
                                     places?.map(e => {
-                                        const info = e.info.map(elem => ({[elem.name]: elem.value}))
+                                        let info = {}
+                                        e.info.forEach(e => info[e.name] = e.value)
                                         return <article key={e.place._id}
                                                         className="ratings__item item-ratings">
                                             <div className="item-ratings__content">
@@ -160,7 +160,7 @@ const Home = () => {
                                                 <div className="item-ratings__bottom">
                                                     <div className="item-ratings__list list-product">
                                                         <div
-                                                            className="list-product__item _icon-ruble">{info.price}</div>
+                                                            className="list-product__item _icon-ruble">{info.time}</div>
                                                         <div
                                                             className="list-product__item _icon-location">{info.location}</div>
                                                         <div className="list-product__item _icon-kitchen">{info.type}
