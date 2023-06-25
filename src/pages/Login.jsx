@@ -3,9 +3,10 @@ import {useTelegram} from "../hooks/useTelegram.js";
 import {Link} from "react-router-dom";
 
 const Login = () => {
-    const {user} = useTelegram()
+    const {tg,user} = useTelegram()
     useEffect(() => {
-        if (!!user) window.location.replace = 'https://t.me/spaceratebot'
+        tg.ready()
+        if (!user) window.location.replace = 'https://t.me/spaceratebot'
     }, [])
 
     return (
