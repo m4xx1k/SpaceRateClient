@@ -11,10 +11,16 @@ const TelegramRequire = () => {
         window.location.replace = 'https://t.me/spaceratebot'
     }
     return (
-        token && !!user ?
-            <Outlet/>
-            : (!!user ? <Navigate to="/login" state={{from: location}}
-                                  replace/> : goToTelegram())
+        <div>
+            <span>telegram require</span>
+            {
+                token && !!user ?
+                    <Outlet/>
+                    : (!!user ? <Navigate to="/login" state={{from: location}}
+                                          replace/> : goToTelegram())
+            }
+        </div>
+
 
     );
 };
