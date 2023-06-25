@@ -26,8 +26,8 @@ const Login = () => {
         try{
             if(!!username && !!name) {
                 await registration({
-                    telegramId: tgUser.id,
-                    password: tgUser.id,
+                    telegramId:`${tgUser.id}`,
+                    password: `${tgUser.id}`,
                     username,
                     name: username
                 })
