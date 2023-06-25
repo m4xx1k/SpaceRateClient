@@ -7,7 +7,7 @@ const TelegramRequire = () => {
     const location = useLocation()
     const {user} = useTelegram()
     console.log(token)
-    const goToTelegram=()=>{
+    const goToTelegram = () => {
         window.location.replace = 'https://t.me/spaceratebot'
     }
     return (
@@ -16,8 +16,7 @@ const TelegramRequire = () => {
             {
                 token && !!user ?
                     <Outlet/>
-                    : (!!user ? <Navigate to="/login" state={{from: location}}
-                                          replace/> : goToTelegram())
+                    : (!!user ? <Navigate to="/login"/> : goToTelegram())
             }
         </div>
 
