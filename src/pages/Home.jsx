@@ -64,7 +64,7 @@ const Home = () => {
                             </SwiperSlide>
                             <SwiperSlide className="hero__slide slide-hero swiper-slide">
                                 <div className="slide-hero__title">
-                                    {user ? JSON.stringify(user) : 'is not tg'}
+                                    {!!user?.username ? user.username : 'is not tg'}
                                     {/*Думать нужно думать куда пойти*/}
                                 </div>
                                 <div className="slide-hero__decors">
