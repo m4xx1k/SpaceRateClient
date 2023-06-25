@@ -6,12 +6,14 @@ import 'swiper/css/effect-fade';
 import {useFetchAllQuery} from "../redux/category/category.api.js";
 import {useFetchByCategoryQuery} from "../redux/place/place.api.js";
 import {Link} from "react-router-dom";
+import {useTelegram} from "../hooks/useTelegram.js";
 
 const Home = () => {
     const [activeCategory, setActiveCategory] = useState(null)
     const {data} = useFetchAllQuery()
     const {data: places} = useFetchByCategoryQuery(activeCategory)
-
+    const {user} = useTelegram()
+    useEffect(()=>console.log({places, category:data}),[data, places])
     return (<main className="page menu-open">
 
         <section className="hero">
@@ -57,7 +59,10 @@ const Home = () => {
                                 </div>
                             </SwiperSlide>
                             <SwiperSlide className="hero__slide slide-hero swiper-slide">
-                                <div className="slide-hero__title">Думать нужно думать куда пойти</div>
+                                <div className="slide-hero__title">
+                                    {JSON.stringify(user)}
+                                    {/*Думать нужно думать куда пойти*/}
+                                </div>
                                 <div className="slide-hero__decors">
                                     <div className="slide-hero__decor slide-hero__decor_10"></div>
                                     <div className="slide-hero__decor slide-hero__decor_11"></div>
