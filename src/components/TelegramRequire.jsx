@@ -12,14 +12,13 @@ const TelegramRequire = () => {
 
     }
     return (
-        <div>
-            <span>telegram require</span>
+        <>
             {
                 !!user ?
                     <Outlet/> :
                     goToTelegram()
             }
-        </div>
+        </>
 
 
     );

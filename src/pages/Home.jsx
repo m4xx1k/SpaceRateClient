@@ -150,13 +150,16 @@ const Home = () => {
                                     places?.map(e => {
                                         let info = {}
                                         e.info.forEach(e => info[e.name] = e.value)
-                                        return <article key={e.place._id}
+                                        const id = e.place._id
+                                        return <article key={id}
                                                         className="ratings__item item-ratings">
                                             <div className="item-ratings__content">
                                                 <div className="item-ratings__top">
                                                     <a href="#" className="item-ratings__name">{e.place.name}</a>
                                                     <div className="item-ratings__grade">
-                                                        <div className="grade">ИДЕАЛЬНО <span>9,3</span></div>
+                                                        <div className="grade">
+                                                            {/*ИДЕАЛЬНО */}
+                                                            <span>{e.place.rating}</span></div>
                                                         <a href="#" className="link">читать все отзывы</a>
                                                     </div>
                                                 </div>
@@ -173,14 +176,17 @@ const Home = () => {
                                                         <div className="list-product__item _icon-kitchen">{info.type}
                                                         </div>
                                                     </div>
-                                                    <Link to={`/place/${e.place._id}`}
+                                                    <Link to={`/place/${id}`}
                                                           className="item-ratings__goto _icon-link"></Link>
                                                 </div>
                                             </div>
                                             <div className="item-ratings__image-ibg">
-                                                <a href=""><img
-                                                    src={`${import.meta.env.VITE__API}/places/${e.photos[0].photo}`}
-                                                    alt=""/></a>
+                                                <Link to={`/place/${id}`}>
+
+
+                                                    <img
+                                                        src={`${import.meta.env.VITE__API}/places/${e.photos[0].photo}`}
+                                                        alt=""/></Link>
                                                 <button className="item-ratings__favorite _icon-favorite"></button>
                                             </div>
                                         </article>
@@ -192,42 +198,32 @@ const Home = () => {
                             </div>
 
                             <div className="ratings__items ratings__items_mob">
-                                <article className="ratings__item item-ratings">
-                                    <div className="item-ratings__content">
-                                        <div className="item-ratings__top">
-                                            <a href="#" className="item-ratings__name">1. Elm</a>
-                                            <a href="#" className="item-ratings__goto _icon-link"></a>
-                                        </div>
-                                        <div className="item-ratings__grade">
-                                            <div className="grade"><span>9,3</span></div>
-                                            <a href="#" className="link">(20) отзывы</a>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article className="ratings__item item-ratings">
-                                    <div className="item-ratings__content">
-                                        <div className="item-ratings__top">
-                                            <a href="#" className="item-ratings__name">2. Forest hill</a>
-                                            <a href="#" className="item-ratings__goto _icon-link"></a>
-                                        </div>
-                                        <div className="item-ratings__grade">
-                                            <div className="grade"><span>9</span></div>
-                                            <a href="#" className="link">(20) отзывы</a>
-                                        </div>
-                                    </div>
-                                </article>
-                                <article className="ratings__item item-ratings">
-                                    <div className="item-ratings__content">
-                                        <div className="item-ratings__top">
-                                            <a href="#" className="item-ratings__name">3. Nama </a>
-                                            <a href="#" className="item-ratings__goto _icon-link"></a>
-                                        </div>
-                                        <div className="item-ratings__grade">
-                                            <div className="grade"><span>8,9</span></div>
-                                            <a href="#" className="link">(20) отзывы</a>
-                                        </div>
-                                    </div>
-                                </article>
+
+                                {
+                                    places?.map((e, i) => {
+                                        let info = {}
+                                        e.info.forEach((e) => info[e.name] = e.value)
+                                        const id = e.place._id
+                                        return <article key={id} className="ratings__item item-ratings">
+                                            <div className="item-ratings__content">
+                                                <div className="item-ratings__top">
+                                                    <Link to={`/place/${id}`}
+                                                          className="item-ratings__name">{`${i + 1}. ${e.place.name}`}</Link>
+                                                    <Link to={`/place/${id}`}
+                                                          className="item-ratings__goto _icon-link"></Link>
+                                                </div>
+                                                <div className="item-ratings__grade">
+                                                    <div className="grade"><span>{e.place.rating}</span></div>
+                                                    <Link to={`/place/${id}`} className="link">(X)
+                                                        отзывы</Link>
+                                                </div>
+                                            </div>
+                                        </article>
+
+                                    })
+                                }
+
+
                             </div>
 
                         </div>

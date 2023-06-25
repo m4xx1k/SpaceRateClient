@@ -2,22 +2,24 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {useFetchByIdPlaceQuery} from "../redux/place/place.api.js";
-import SwiperCore, { Pagination, Navigation } from 'swiper/core';
+import SwiperCore, {Pagination, Navigation} from 'swiper/core';
 
 SwiperCore.use([Pagination, Navigation]);
 const Place = () => {
     const {id} = useParams()
-    const {data, isSuccess} = useFetchByIdPlaceQuery(id)
+    const {data, isSuccess, isError, error} = useFetchByIdPlaceQuery(id)
     const [info, setInfo] = useState({})
     useEffect(() => {
+            console.log(data)
             if (isSuccess) {
                 let info = {}
                 data.info.forEach(e => info[e.name] = e.value)
                 setInfo(info)
                 console.log(info)
             }
+            console.log({data, isSuccess, isError, error})
         },
-        [isSuccess]
+        [data, isSuccess, isError, error]
     )
     if (!data) return null
     return (
@@ -52,7 +54,7 @@ const Place = () => {
 
                         <div className="restaurant__slider slider-restaurant">
                             <Swiper
-                                pagination={{ clickable: true }}
+                                pagination={{clickable: true}}
                                 navigation={true}
                                 breakpoints={{
                                     320: {
@@ -75,9 +77,10 @@ const Place = () => {
                                 className="restaurant__slider slider-restaurant"
                             >
 
-                                { data.photos.map((e, index) => (
-                                    <SwiperSlide key={index} className="restaurant__slide slide-restaurant-ibg swiper-slide">
-                                        <img src={`${import.meta.env.VITE__API}/places/${e.photo}`} alt={e.photo} />
+                                {data.photos.map((e, index) => (
+                                    <SwiperSlide key={index}
+                                                 className="restaurant__slide slide-restaurant-ibg swiper-slide">
+                                        <img src={`${import.meta.env.VITE__API}/places/${e.photo}`} alt={e.photo}/>
                                     </SwiperSlide>
                                 ))}
                             </Swiper>
