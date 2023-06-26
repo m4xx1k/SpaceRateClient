@@ -4,6 +4,8 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import {useFetchAllRatingsMutation, useFetchByIdPlaceQuery} from "../redux/place/place.api.js";
 import SwiperCore, {Pagination, Navigation} from 'swiper/core';
 import RateForm from "../components/RateForm/RateForm.jsx";
+import dayjs from "dayjs";
+import ReviewSlide from "../components/ReviewSlide.jsx";
 
 SwiperCore.use([Pagination, Navigation]);
 const Place = () => {
@@ -19,12 +21,11 @@ const Place = () => {
             setInfo(info)
             console.log(info)
         }
-        const handleFetchAllRatings = async ()=>{
-            const {data} = await fetchRatings({placeId:id})
-            console.log({ratings:data})
+        const handleFetchAllRatings = async () => {
+            const {data} = await fetchRatings({placeId: id})
             setRatings(data.ratings)
         }
-        if(ratings===null) handleFetchAllRatings()
+        if (ratings === null) handleFetchAllRatings()
         console.log({data, isSuccess, isError, error})
     }, [data, isSuccess, isError, error])
     const swiperRef = useRef();
@@ -80,8 +81,8 @@ const Place = () => {
 
                                 {data.photos.map((e, index) => (<SwiperSlide key={index}
                                                                              className="restaurant__slide slide-restaurant-ibg swiper-slide">
-                                        <img src={`${import.meta.env.VITE__API}/places/${e.photo}`} alt={e.photo}/>
-                                    </SwiperSlide>))}
+                                    <img src={`${import.meta.env.VITE__API}/places/${e.photo}`} alt={e.photo}/>
+                                </SwiperSlide>))}
                             </Swiper>
                             {/*<Swiper className="slider-restaurant__wrapper swiper-wrapper"*/}
                             {/*        observer={true}*/}
@@ -116,7 +117,6 @@ const Place = () => {
                             </div>
                         </div>
 
-                        <RateForm placeId={data.place._id}/>
                         <div className="restaurant__description description-restaurant">
                             <div className="description-restaurant__title">ОПИСАНИЕ:</div>
                             <div className="description-restaurant__body">
@@ -143,122 +143,86 @@ const Place = () => {
                                 </div>
                             </div>
                         </div>
+                        <RateForm placeId={data.place._id}/>
 
                     </div>
                 </div>
             </section>
-
-            <section className="rewievs">
-                <div className="rewievs__container">
-                    <div className="rewievs__body">
-                        <div className="rewievs__top">
-                            <h2 className="rewievs__title">ОТЗЫВЫ:</h2>
-                            <div className="rewievs__control">
-                                <button className="rewievs__btn _icon-comment"><span>ОСТАВИТЬ ОТЗЫВ</span></button>
-                                <div className="rewievs__navigation navigation navigation_small navigation_black">
-                                    <button onClick={() => swiperRef.current.slidePrev()}
-                                            className="navigation__button button-prev"></button>
-                                    <button onClick={() => swiperRef.current.slideNext()}
-                                            className="navigation__button button-next"></button>
+            {
+                !!ratings?.length && ratings.length > 0 ?
+                    <section className="rewievs">
+                        <div className="rewievs__container">
+                            <div className="rewievs__body">
+                                <div className="rewievs__top">
+                                    <h2 className="rewievs__title">ОТЗЫВЫ:</h2>
+                                    <div className="rewievs__control">
+                                        <button className="none rewievs__btn _icon-comment"><span>ОСТАВИТЬ ОТЗЫВ</span>
+                                        </button>
+                                        <div
+                                            className="rewievs__navigation navigation navigation_small navigation_black">
+                                            <button onClick={() => swiperRef.current.slidePrev()}
+                                                    className="navigation__button button-prev"></button>
+                                            <button onClick={() => swiperRef.current.slideNext()}
+                                                    className="navigation__button button-next"></button>
+                                        </div>
+                                    </div>
                                 </div>
+
+
+                                <Swiper
+                                    pagination={{clickable: true}}
+                                    navigation={true}
+                                    breakpoints={{
+                                        320: {
+                                            slidesPerView: 1, spaceBetween: 10,
+                                        }, 768: {
+                                            slidesPerView: 1.5, spaceBetween: 40,
+                                        }, 992: {
+                                            slidesPerView: 2, spaceBetween: 40,
+                                        }, 1268: {
+                                            slidesPerView: 2, spaceBetween: 60,
+                                        },
+                                    }}
+                                    onSwiper={(swiper) => {
+                                        swiperRef.current = swiper;
+                                    }}
+
+                                    className="rewievs__slider slider-rewievs swiper slider-rewievs__wrapper swiper-wrapper"
+                                >
+
+                                    {ratings.map((e, index) => {
+                                        // const {data} = await fetchRatings({placeId: id})
+                                        // const e = data.ratings[index]
+                                        return (
+                                            // <div className="swiper-slide" key={index}>
+                                            //     <ReviewSlide key={e._id} e={e} index={index}/>
+                                            // </div>
+                                            <SwiperSlide className="slider-rewievs__slide slide-rewievs swiper-slide"
+                                                         key={index}>
+                                                <div className="slide-rewievs__top">
+                                                    <div className="slide-rewievs__ico"><img
+                                                        src="https://api.telegram.org/file/bot6143502881:AAEQmvcZkDavYqOjfvvjXl7tpWLskmI7OEc/photos/file_1.jpg"
+                                                        alt=""/>
+                                                    </div>
+                                                    <div className="slide-rewievs__info">
+                                                        <div className="slide-rewievs__name">{e?.user?.username ? e.user.username : 'Username'} {index}</div>
+                                                        <div className="slide-rewievs__place">БЛОГЕР</div>
+                                                    </div>
+                                                </div>
+                                                <div className="slide-rewievs__text">{e.text}
+                                                </div>
+                                                <div
+                                                    className="slide-rewievs__date">{dayjs(e.date).format('DD.MM.YYYY HH:mm')}</div>
+                                            </SwiperSlide>
+
+                                        )
+                                    })}
+                                </Swiper>
+
+
                             </div>
                         </div>
-
-                        <Swiper
-                            pagination={{clickable: true}}
-                            navigation={true}
-                            breakpoints={{
-                                320: {
-                                    slidesPerView: 1, spaceBetween: 10,
-                                }, 768: {
-                                    slidesPerView: 1.5, spaceBetween: 40,
-                                }, 992: {
-                                    slidesPerView: 2, spaceBetween: 40,
-                                }, 1268: {
-                                    slidesPerView: 2, spaceBetween: 60,
-                                },
-                            }}
-                            onSwiper={(swiper) => {
-                                swiperRef.current = swiper;
-                            }}
-                            loop
-                            className="rewievs__slider slider-rewievs swiper slider-rewievs__wrapper swiper-wrapper"
-                        >
-
-                            {!!ratings?.length ? ratings.map((e, index) => (
-                                <SwiperSlide className="slider-rewievs__slide slide-rewievs swiper-slide" key={index}>
-                                    <div className="slide-rewievs__top">
-                                        <div className="slide-rewievs__ico"><img src="@img/rewievs/01.png" alt=""/>
-                                        </div>
-                                        <div className="slide-rewievs__info">
-                                            <div className="slide-rewievs__name">Сергей Ремезов {index}</div>
-                                            <div className="slide-rewievs__place">БЛОГЕР</div>
-                                        </div>
-                                    </div>
-                                    <div className="slide-rewievs__text">{e.text}
-                                    </div>
-                                    <div className="slide-rewievs__date">3 мая 2023</div>
-                                </SwiperSlide>)):<></>}
-                        </Swiper>
-
-                        {/*<div className="rewievs__slider slider-rewievs swiper">*/}
-                        {/*    <div className="slider-rewievs__wrapper swiper-wrapper">*/}
-
-                        {/*        <div className="slider-rewievs__slide slide-rewievs swiper-slide">*/}
-                        {/*            <div className="slide-rewievs__top">*/}
-                        {/*                <div className="slide-rewievs__ico"><img src="@img/rewievs/02.png" alt=""/>*/}
-                        {/*                </div>*/}
-                        {/*                <div className="slide-rewievs__info">*/}
-                        {/*                    <div className="slide-rewievs__name">Гостья Заведения</div>*/}
-                        {/*                    <div className="slide-rewievs__place">ГУРМАН</div>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*            <div className="slide-rewievs__text">Это были самые божественные боул и тартар,*/}
-                        {/*                которые пробовала! Невероятно вкусно! И огромное спасибо девушкам-официанткам за*/}
-                        {/*                подачу. Очень красиво рассказывали и советовали чем и как есть. Надеюсь к вам*/}
-                        {/*                скоро вернуться!*/}
-                        {/*            </div>*/}
-                        {/*            <div className="slide-rewievs__date">13 июня 2023</div>*/}
-                        {/*        </div>*/}
-                        {/*        <div className="slider-rewievs__slide slide-rewievs swiper-slide">*/}
-                        {/*            <div className="slide-rewievs__top">*/}
-                        {/*                <div className="slide-rewievs__ico"><img src="@img/rewievs/01.png" alt=""/>*/}
-                        {/*                </div>*/}
-                        {/*                <div className="slide-rewievs__info">*/}
-                        {/*                    <div className="slide-rewievs__name">Сергей Ремезов</div>*/}
-                        {/*                    <div className="slide-rewievs__place">БЛОГЕР</div>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*            <div className="slide-rewievs__text">Сет морепродуктов. Много маленьких квадратиков*/}
-                        {/*                с разными морскими гадами. Аттракцион. Симпатично. Ассорти тако все по 2.*/}
-                        {/*                Вкусно, но опять-таки больше развлечение, чем еда. Лапша с говядиной-супер.*/}
-                        {/*                Остро, ароматно, идеально. Чизкейк. Вау. Супчик-огонь. Ганаш-красота и сладость.*/}
-                        {/*                Лимонады в красивых бутылках. Цены доступные. Рекомендую.*/}
-                        {/*            </div>*/}
-                        {/*            <div className="slide-rewievs__date">3 мая 2023</div>*/}
-                        {/*        </div>*/}
-                        {/*        <div className="slider-rewievs__slide slide-rewievs swiper-slide">*/}
-                        {/*            <div className="slide-rewievs__top">*/}
-                        {/*                <div className="slide-rewievs__ico"><img src="@img/rewievs/02.png" alt=""/>*/}
-                        {/*                </div>*/}
-                        {/*                <div className="slide-rewievs__info">*/}
-                        {/*                    <div className="slide-rewievs__name">Гостья Заведения</div>*/}
-                        {/*                    <div className="slide-rewievs__place">ГУРМАН</div>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*            <div className="slide-rewievs__text">Это были самые божественные боул и тартар,*/}
-                        {/*                которые пробовала! Невероятно вкусно! И огромное спасибо девушкам-официанткам за*/}
-                        {/*                подачу. Очень красиво рассказывали и советовали чем и как есть. Надеюсь к вам*/}
-                        {/*                скоро вернуться!*/}
-                        {/*            </div>*/}
-                        {/*            <div className="slide-rewievs__date">13 июня 2023</div>*/}
-                        {/*        </div>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-
-                    </div>
-                </div>
-            </section>
+                    </section> : null}
 
             <section className="links">
                 <div className="links__container">

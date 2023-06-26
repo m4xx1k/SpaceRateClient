@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useTelegram} from "../../hooks/useTelegram.js";
-import {Link, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import {useFindUserMutation, useRegistrationMutation} from "../../redux/auth/authApiSlice.js";
 import s from './Login.module.scss'
 const Login = () => {
     const {tg,user:tgUser} = useTelegram()
     const [username, setUsername] = useState(!!tgUser?.username ? tgUser.username :'')
-    const [name, setName] = useState(!!tgUser?.username ? tgUser.username :'')
+    const [name, setName] = useState(!!tgUser?.username ? tgUser.first_name :'')
     const [error, setError] = useState('')
     const navigate= useNavigate()
     const [findUser] = useFindUserMutation()
@@ -30,7 +30,7 @@ const Login = () => {
                     telegramId:`${tgUser.id}`,
                     password: `${tgUser.id}`,
                     username,
-                    name: username
+                    name
                 })
                 navigate('/profile')
             }else{

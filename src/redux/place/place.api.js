@@ -12,7 +12,7 @@ export const placeApi = api.injectEndpoints({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['Place']
+            invalidatesTags: ['Rating']
         }),
         fetchByIdPlace: builder.query({
             query: id => `place/${id}`,
@@ -31,27 +31,21 @@ export const placeApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Place']
         }),
-        updatePlace: builder.mutation({
-            query: ({id, body}) => ({
-                url: `place/${id}`,
-                method: 'PUT',
-                body
-            })
-
-        }),
         ratePlace:builder.mutation({
             query: body => ({
                 url: `place/rate`,
                 method: 'POST',
                 body
-            })
+            }),
+            invalidatesTags:['Rating']
         }),
         findUserPlaceRating: builder.mutation({
             query: body => ({
                 url: `place/user_rating`,
                 method: 'POST',
                 body
-            })
+            }),
+            invalidatesTags:['Rating']
 
         }),
         removePlace: builder.mutation({

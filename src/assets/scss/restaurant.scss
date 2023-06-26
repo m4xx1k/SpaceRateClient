@@ -77,10 +77,10 @@
     justify-content: space-between;
     column-gap: rem(20);
     margin: rem(40) 0 rem(20);
-
-    @media (min-width: $mobile) {
-      display: none;
-    }
+    //commented
+    //@media (min-width: $mobile) {
+    //  display: none;
+    //}
   }
 
   &__like {
@@ -240,9 +240,10 @@
 //========================================================================================================================================================
 
 .rewievs {
-  @media (max-width: $mobile) {
-    display: none;
-  }
+  //commented
+  //@media (max-width: $mobile) {
+  //  display: none;
+  //}
   &__container {
   }
 
@@ -268,10 +269,13 @@
 
   &__control {
     display: flex;
-    justify-content: space-between;
+    //commented
+    //justify-content: space-between;
+    justify-content: flex-end;
   }
 
   &__btn {
+
     display: flex;
     align-items: center;
     column-gap: rem(6);

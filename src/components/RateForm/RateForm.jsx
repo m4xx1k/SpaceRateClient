@@ -23,15 +23,17 @@ const RateForm = ({placeId}) => {
 
     }, [])
     const ratingChanged = (newRating) => {
-        if(!user){
-            window.location.replace('https://t.me/spaceratebot')
-            return
-        }
+        // if(!user){
+        //     window.location.replace('https://t.me/spaceratebot')
+        //     return
+        // }
         setIsShow(true);
         setRating(newRating);
     };
     const handleRateSpace = async () => {
         if (text && rating) {
+
+
             const res = await ratePlace({telegramId: `${user.id}`, value: rating, placeId, text})
             setIsShow(false)
         }else{
