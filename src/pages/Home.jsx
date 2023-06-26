@@ -4,20 +4,25 @@ import {Autoplay, EffectFade} from "swiper";
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import {useFetchAllQuery} from "../redux/category/category.api.js";
-import {useFetchByCategoryQuery} from "../redux/place/place.api.js";
+import {useLazyFetchByCategoryQuery} from "../redux/place/place.api.js";
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
 
 const Home = () => {
     const [activeCategory, setActiveCategory] = useState(null)
     const {data} = useFetchAllQuery()
-    const {data: places} = useFetchByCategoryQuery(activeCategory)
+    const [fetchPlaces] = useLazyFetchByCategoryQuery()
+    const [places,setPlaces] = useState([])
     const {user, tg} = useTelegram()
-
+    const selectCategory = async category => {
+        console.log(1)
+        const {data} = await fetchPlaces(category._id)
+        setPlaces(data)
+        setActiveCategory(category._id)
+    }
     useEffect(() => {
         tg.ready()
     }, [])
-    useEffect(() => console.log({places, category: data}), [data, places])
     return (<main className="page menu-open">
 
         <section className="hero">
@@ -121,7 +126,7 @@ const Home = () => {
                     <div className="categories__items">
                         {
                             data?.map(category => (
-                                <div onClick={() => setActiveCategory(category._id)} key={category._id}
+                                <div onClick={() => selectCategory(category)} key={category._id}
                                      className={`categories__item item-categories${category._id === activeCategory ? ' active' : ''} `}>
                                     {category.name}
                                     <div className="item-categories__img-ibg">
@@ -147,7 +152,7 @@ const Home = () => {
 
                             <div className="ratings__items ratings__items_pc">
                                 {
-                                    places?.map(e => {
+                                    places.map(e => {
                                         let info = {}
                                         e.info.forEach(e => info[e.name] = e.value)
                                         const id = e.place._id

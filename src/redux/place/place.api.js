@@ -61,7 +61,7 @@ export const placeApi = api.injectEndpoints({
 export const {
     useFetchAllRatingsMutation,
     useFindUserPlaceRatingMutation,
-    useFetchByCategoryQuery,
+    useLazyFetchByCategoryQuery,
     useRatePlaceMutation,
     useFetchByIdPlaceQuery,
     useUpdateMutation,

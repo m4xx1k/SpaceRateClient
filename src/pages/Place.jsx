@@ -201,12 +201,12 @@ const Place = () => {
                                                          key={index}>
                                                 <div className="slide-rewievs__top">
                                                     <div className="slide-rewievs__ico"><img
-                                                        src="https://api.telegram.org/file/bot6143502881:AAEQmvcZkDavYqOjfvvjXl7tpWLskmI7OEc/photos/file_1.jpg"
+                                                        src={e?.user?.picture ? e.user.picture : 'Username'}
                                                         alt=""/>
                                                     </div>
                                                     <div className="slide-rewievs__info">
-                                                        <div className="slide-rewievs__name">{e?.user?.username ? e.user.username : 'Username'} {index}</div>
-                                                        <div className="slide-rewievs__place">БЛОГЕР</div>
+                                                        <div className="slide-rewievs__name">{e?.user?.username ? e.user.username : 'Username'}</div>
+                                                        <div className="slide-rewievs__place">{e?.user?.name ? e.user.name : 'Name'}</div>
                                                     </div>
                                                 </div>
                                                 <div className="slide-rewievs__text">{e.text}
