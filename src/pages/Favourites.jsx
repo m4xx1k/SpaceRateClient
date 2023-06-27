@@ -5,7 +5,7 @@ import {useUserFavouritesQuery} from "../redux/place/place.api.js";
 import {Link} from "react-router-dom";
 const VITE__API= import.meta.env.VITE__API
 const Favourites = () => {
-    const {data, isLoading} = useUserFavouritesQuery('466439009')
+    const {data, isLoading} = useUserFavouritesQuery(user?.id)
     useEffect(()=>console.log(data),[data])
     if(!data || isLoading) return <p>loading</p>
     return (

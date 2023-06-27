@@ -12,8 +12,6 @@ import dayjs from "dayjs";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {clsx} from 'clsx';
 import ReactStars from "react-rating-stars-component";
-import {Link} from "react-router-dom";
-
 SwiperCore.use([Pagination, Navigation]);
 const Place = () => {
     const {id} = useParams()
@@ -22,7 +20,7 @@ const Place = () => {
     const [isLiked, setIsLiked] = useState(false)
     const {data, isSuccess, isLoading, isError, error: placeError} = useFetchByIdPlaceQuery({
         id,
-        telegramId: '466439009'
+        telegramId: user?.id
     })
     const [toggleFavourite] = useToggleFavouritePlaceMutation()
     const [fetchRatings] = useFetchAllRatingsMutation()
@@ -68,7 +66,7 @@ const Place = () => {
 
     const handleToggleFavourite = async () => {
         try {
-            const res = await toggleFavourite({placeId: id, telegramId: '466439009'})
+            const res = await toggleFavourite({placeId: id, telegramId: user?.id})
             console.log(res)
             setIsLiked(prev => !prev)
         } catch (e) {

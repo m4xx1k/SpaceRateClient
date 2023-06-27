@@ -7,7 +7,7 @@ import {useFavouriteCountQuery} from "../redux/place/place.api.js";
 const Header = () => {
     const [isSideMenu, setIsSideMenu] = useState(false)
     const {user} = useTelegram()
-    const {data} = useFavouriteCountQuery('466439009')
+    const {data} = useFavouriteCountQuery(user?.id)
     useEffect(() => console.log(data), [data])
     const handleToggleSideMenu = () => {
         if (isSideMenu) document.documentElement.classList.remove("menu-open");
