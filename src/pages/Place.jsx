@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useParams} from "react-router";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {
-    useFetchAllRatingsMutation,
+    useLazyFetchAllRatingsQuery,
     useFetchByIdPlaceQuery, useFindUserPlaceRatingMutation, useRatePlaceMutation,
     useToggleFavouritePlaceMutation
 } from "../redux/place/place.api.js";
@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {clsx} from 'clsx';
 import ReactStars from "react-rating-stars-component";
+import {Link} from "react-router-dom";
 SwiperCore.use([Pagination, Navigation]);
 const Place = () => {
     const {id} = useParams()
@@ -23,7 +24,7 @@ const Place = () => {
         telegramId: user?.id
     })
     const [toggleFavourite] = useToggleFavouritePlaceMutation()
-    const [fetchRatings] = useFetchAllRatingsMutation()
+    const [fetchRatings] = useLazyFetchAllRatingsQuery()
     const [rating, setRating] = useState(0)
     const [text, setText] = useState('')
     const [error, setError] = useState('')
@@ -309,8 +310,8 @@ const Place = () => {
             <section className="links">
                 <div className="links__container">
                     <div className="links__body">
-                        <a href="#" className="links__item links__item_btn">РЕЙТИНГИ </a>
-                        <a href="#" className="links__item">МНЕ НРАВИТСЯ</a>
+                        <Link to="/" className="links__item links__item_btn">РЕЙТИНГИ </Link>
+                        <Link to="/favourites" className="links__item">МНЕ НРАВИТСЯ</Link>
                         <a href="#" className="links__item">ОТДЕЛ ЗАБОТЫ</a>
                     </div>
                 </div>

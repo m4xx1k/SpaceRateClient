@@ -6,17 +6,16 @@ export const placeApi = api.injectEndpoints({
             query: () => 'place',
             providesTags: ['Place']
         }),
-        fetchAllRatings: builder.mutation({
+        fetchAllRatings: builder.query({
             query: body => ({
                 url: 'place/ratings',
-                method: 'POST',
-                body
+                params:{...body}
             }),
-            invalidatesTags: ['Rating']
+            providesTags: ['Rating']
         }),
         fetchByIdPlace: builder.query({
             query: ({id, telegramId}) => ({
-                url: `place/${id}`,
+                url: `place/findById/${id}`,
                 params: {telegramId}
             }),
             providesTags: ['Place']
@@ -83,7 +82,7 @@ export const placeApi = api.injectEndpoints({
 export const {
     useUserFavouritesQuery,
     useToggleFavouritePlaceMutation,
-    useFetchAllRatingsMutation,
+    useLazyFetchAllRatingsQuery,
     useFindUserPlaceRatingMutation,
     useLazyFetchByCategoryQuery,
     useRatePlaceMutation,

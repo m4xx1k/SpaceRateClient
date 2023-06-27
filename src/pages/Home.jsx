@@ -167,7 +167,7 @@ const Home = () => {
                                                     <div className="item-ratings__grade">
                                                         <div className="grade">
                                                             {/*ИДЕАЛЬНО */}
-                                                            <span>{e.place.rating}</span></div>
+                                                            <span>{e.place.rating?.toFixed(1)}</span></div>
                                                         <Link to={`/place/${id}`}
                                                               className="link">читать все отзывы</Link>
                                                     </div>
