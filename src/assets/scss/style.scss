@@ -192,6 +192,16 @@ body {
 // Підключення стилів окремих сторінок
 @import "home";
 @import "restaurant";
+#root{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.page{
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
 .favorite {
   padding: rem(20) 0 rem(30);
   &__container {

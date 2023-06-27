@@ -78,7 +78,7 @@ const Place = ({VITE__API}) => {
     if (isLoading) return <p>loading</p>
     if (isError) return <p>'error'</p>
     if (!data || !ratings) return <p>no data</p>
-    return (<main className="page">
+    return (<>
 
             {
                 isShow ?
@@ -307,17 +307,9 @@ const Place = ({VITE__API}) => {
                     </>
             }
 
-            <section className="links">
-                <div className="links__container">
-                    <div className="links__body">
-                        <Link to="/" className="links__item links__item_btn">РЕЙТИНГИ </Link>
-                        <Link to="/favourites" className="links__item">МНЕ НРАВИТСЯ</Link>
-                        <a href="#" className="links__item">ОТДЕЛ ЗАБОТЫ</a>
-                    </div>
-                </div>
-            </section>
 
-        </main>
+
+        </>
     );
 };
 

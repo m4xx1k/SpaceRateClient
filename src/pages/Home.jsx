@@ -25,7 +25,7 @@ const Home = ({VITE__API}) => {
 
         tg.ready()
     }, [])
-    return (<main className="page menu-open">
+    return (<>
 
         <section className="hero">
             <div className="hero__container">
@@ -239,17 +239,9 @@ const Home = ({VITE__API}) => {
                 </section>
                 : <></>
         }
-        <section className="links">
-            <div className="links__container">
-                <div className="links__body">
-                    <a href="#" className="links__item links__item_btn">РЕЙТИНГИ </a>
-                    <a href="#" className="links__item">МНЕ НРАВИТСЯ</a>
-                    <a href="#" className="links__item">ОТДЕЛ ЗАБОТЫ</a>
-                </div>
-            </div>
-        </section>
 
-    </main>)
+
+    </>)
 };
 
 export default Home;

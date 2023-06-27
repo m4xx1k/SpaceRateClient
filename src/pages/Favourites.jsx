@@ -145,15 +145,7 @@ const Favourites = ({VITE__API}) => {
                 </div>
             </section>
 
-            <section className="links">
-                <div className="links__container">
-                    <div className="links__body">
-                        <a href="#" className="links__item links__item_btn">РЕЙТИНГИ </a>
-                        <a href="#" className="links__item">МНЕ НРАВИТСЯ</a>
-                        <a href="#" className="links__item">ОТДЕЛ ЗАБОТЫ</a>
-                    </div>
-                </div>
-            </section>
+
         </>
 
     );
