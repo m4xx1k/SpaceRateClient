@@ -38,10 +38,9 @@ const Place = () => {
         setIsShow(true);
         setRating(newRating);
     };
-    const handleRateSpace = async () => {
+    const handleRateSpace = async e=> {
+        e?.preventDefault()
         if (text && rating) {
-
-
             const res = await ratePlace({telegramId: `${user.id}`, value: rating, placeId:id, text})
             setIsShow(false)
         } else {
