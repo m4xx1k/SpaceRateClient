@@ -179,10 +179,10 @@ const Home = () => {
                                                 <div className="item-ratings__bottom">
                                                     <div className="item-ratings__list list-product">
                                                         <div
-                                                            className="list-product__item _icon-ruble">{info.time}</div>
+                                                            className="list-product__item _icon-ruble">{info.time.value}</div>
                                                         <div
-                                                            className="list-product__item _icon-location">{info.location}</div>
-                                                        <div className="list-product__item _icon-kitchen">{info.type}
+                                                            className="list-product__item _icon-location">{info.location.value}</div>
+                                                        <div className="list-product__item _icon-kitchen">{info.type.value}
                                                         </div>
                                                     </div>
                                                     <Link to={`/place/${id}`}
