@@ -14,7 +14,7 @@ import {clsx} from 'clsx';
 import ReactStars from "react-rating-stars-component";
 import {Link} from "react-router-dom";
 SwiperCore.use([Pagination, Navigation]);
-const Place = () => {
+const Place = ({VITE__API}) => {
     const {id} = useParams()
     const {user, tg} = useTelegram()
     const [ratings, setRatings] = useState(null)
@@ -135,7 +135,7 @@ const Place = () => {
 
                                             {data.photos.map((e, index) => (<SwiperSlide key={index}
                                                                                          className="restaurant__slide slide-restaurant-ibg swiper-slide">
-                                                <img src={`${import.meta.env.VITE__API}/places/${e.photo}`} alt={e.photo}/>
+                                                <img src={`${VITE__API}/places/${e.photo}`} alt={e.photo}/>
                                             </SwiperSlide>))}
                                         </Swiper>
                                         {/*<Swiper className="slider-restaurant__wrapper swiper-wrapper"*/}

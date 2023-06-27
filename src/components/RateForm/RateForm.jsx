@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import ReactStars from "react-rating-stars-component/dist/react-stars.js";
 import close from '../../assets/img/close.svg'
 import icon from '../../assets/img/icon.svg'
+const VITE__API = 'https://spacerateserver-production.up.railway.app'
 const RateForm = ({data,setIsShow, ratingChanged,handleRateSpace,setText, text,rating, error}) => {
     const [symbols, setSymbols] = useState(100-text.length)
-    const photo = import.meta.env.VITE__API + '/places/' + data.photos[0].photo
+    const photo = VITE__API + '/places/' + data.photos[0].photo
     const location = data.info.location.value
     const name = data.place.name
     const handleTextChange = e=>{

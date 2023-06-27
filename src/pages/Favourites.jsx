@@ -4,8 +4,8 @@ import {Autoplay, EffectFade} from "swiper";
 import {useUserFavouritesQuery} from "../redux/place/place.api.js";
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
-const VITE__API= import.meta.env.VITE__API
-const Favourites = () => {
+
+const Favourites = ({VITE__API}) => {
     const {user} = useTelegram()
     const {data, isLoading} = useUserFavouritesQuery(user?.id)
     useEffect(()=>console.log(data),[data])

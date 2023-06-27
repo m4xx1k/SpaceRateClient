@@ -9,7 +9,7 @@ import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
 
-const Home = () => {
+const Home = ({VITE__API}) => {
     const [activeCategory, setActiveCategory] = useState(null)
     const {data} = useFetchAllQuery()
     const [fetchPlaces] = useLazyFetchByCategoryQuery()
@@ -132,7 +132,7 @@ const Home = () => {
                                      className={`categories__item item-categories${category._id === activeCategory ? ' active' : ''} `}>
                                     {category.name}
                                     <div className="item-categories__img-ibg">
-                                        <img src={`${import.meta.env.VITE__API}/categories/${category.photo}`}
+                                        <img src={`${VITE__API}/categories/${category.photo}`}
                                              alt=""/>
                                     </div>
                                 </div>
@@ -194,7 +194,7 @@ const Home = () => {
 
 
                                                     <img
-                                                        src={`${import.meta.env.VITE__API}/places/${e.photos[0].photo}`}
+                                                        src={`${VITE__API}/places/${e.photos[0].photo}`}
                                                         alt=""/></Link>
                                                 <button className="item-ratings__favorite _icon-favorite"></button>
                                             </div>

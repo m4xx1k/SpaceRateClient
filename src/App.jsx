@@ -9,18 +9,20 @@ import Login from "./pages/Login/Login.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import Favourites from "./pages/Favourites.jsx";
 
+const VITE__API = 'https://spacerateserver-production.up.railway.app'
+
 function App() {
     return (
         <Routes>
             <Route element={<Layout/>}>
-                <Route path={'/'} element={<Home/>}/>
+                <Route path={'/'} element={<Home VITE__API={VITE__API}/>}/>
 
-                <Route element={<TelegramRequire/>}>
-                    <Route path={'/profile'} element={<Profile/>}/>
+                <Route element={<TelegramRequire VITE__API={VITE__API}/>}>
+                    <Route path={'/profile'} element={<Profile VITE__API={VITE__API}/>}/>
                 </Route>
-                <Route path={'/login'} element={<Login/>}/>
-                <Route path={'/favourites'} element={<Favourites/>}/>
-                <Route path={'/place/:id'} element={<Place/>}/>
+                <Route path={'/login'} element={<Login VITE__API={VITE__API}/>}/>
+                <Route path={'/favourites'} element={<Favourites VITE__API={VITE__API}/>}/>
+                <Route path={'/place/:id'} element={<Place VITE__API={VITE__API}/>}/>
                 <Route path={'*'} element={<>404</>}/>
             </Route>
         </Routes>
