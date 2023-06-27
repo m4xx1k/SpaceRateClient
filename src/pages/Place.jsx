@@ -42,7 +42,7 @@ const Place = () => {
         if (text && rating) {
 
 
-            const res = await ratePlace({telegramId: `${user.id}`, value: rating, placeId, text})
+            const res = await ratePlace({telegramId: `${user.id}`, value: rating, placeId:id, text})
             setIsShow(false)
         } else {
             setError('Заполните рейтинг и текст')
