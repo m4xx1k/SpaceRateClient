@@ -1,12 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from '../assets/img/logo.svg'
 import {Link} from "react-router-dom";
+import {useTelegram} from "../hooks/useTelegram.js";
+import {useFavouriteCountQuery} from "../redux/place/place.api.js";
+
 const Header = () => {
-    const [isSideMenu,setIsSideMenu] = useState(false)
-    const handleToggleSideMenu = ()=>{
-        if(isSideMenu) 	document.documentElement.classList.remove("menu-open");
+    const [isSideMenu, setIsSideMenu] = useState(false)
+    const {user} = useTelegram()
+    const {data} = useFavouriteCountQuery('466439009')
+    useEffect(() => console.log(data), [data])
+    const handleToggleSideMenu = () => {
+        if (isSideMenu) document.documentElement.classList.remove("menu-open");
         else document.documentElement.classList.add("menu-open");
-        setIsSideMenu(prev=>!prev)
+        setIsSideMenu(prev => !prev)
 
     }
     return (
@@ -15,9 +21,9 @@ const Header = () => {
                 <div className="header__body">
 
                     <div className="header__info">
-                        <a href="" className="header__logo">
+                        <Link to="/" className="header__logo">
                             <img src={logo} alt=""/>
-                        </a>
+                        </Link>
                         <div className="header__breadcrumbs breadcrumbs">
                             <ul className="breadcrumbs__list">
                                 <li className="breadcrumbs__item"><a href="" className="breadcrumbs__link">главная</a>
@@ -48,12 +54,13 @@ const Header = () => {
                             </form>
                         </div>
                         <div className="actions-header__item"><Link to="/login"
-                                                                 className="actions-header__link _icon-user"></Link></div>
-                        <div className="actions-header__item"><a href="/profile"
-                                                                 className="actions-header__link _icon-favorite active">(2)</a>
+                                                                    className="actions-header__link _icon-user"></Link>
+                        </div>
+                        <div className="actions-header__item"><Link to="/favourites"
+                                                                 className="actions-header__link _icon-favorite active">{!!data ? data : <></>}</Link>
                         </div>
                         <button onClick={handleToggleSideMenu}
-                             type="button" className="menu__icon icon-menu"><span></span></button>
+                                type="button" className="menu__icon icon-menu"><span></span></button>
                     </div>
 
                 </div>

@@ -7,7 +7,7 @@
 //&display=swap - додати при підключенні через плагін
 
 // Підключити, якщо є локальні файли шрифтів
-@import "fonts/fonts";
+//@import "fonts/fonts";
 @font-face {
   font-family: Cannonade;
   font-display: swap;
@@ -192,3 +192,436 @@ body {
 // Підключення стилів окремих сторінок
 @import "home";
 @import "restaurant";
+.favorite {
+  padding: rem(20) 0 rem(30);
+  &__container {
+  }
+
+  &__body {
+  }
+
+  &__title {
+    color: #212121;
+    font-size: 16px;
+    font-family: Gravity;
+    font-weight: 700;
+    margin-bottom: rem(12);
+  }
+
+  &__items {
+  }
+
+  &__item {
+  }
+}
+.item-favorite {
+  padding: rem(16) 0 rem(13);
+  border-bottom: 1px solid #908d8d;
+  &__body {
+    display: flex;
+    @include adaptiveValue("column-gap", 20, 12);
+
+    margin-bottom: rem(10);
+  }
+
+  &__image-ibg {
+    overflow: hidden;
+    border-radius: rem(20);
+    flex: 0 0 rem(140);
+    height: rem(140);
+  }
+
+  &__content {
+  }
+
+  &__labels {
+  }
+
+  &__label {
+  }
+
+  &__mark {
+    border-radius: 12px;
+    border: 1px solid #212121;
+    font-size: 10px;
+    font-family: Gravity;
+    font-weight: 700;
+    padding: rem(3) rem(8);
+    margin-bottom: rem(6);
+    width: max-content;
+  }
+
+  &__name {
+    color: #212121;
+    @include adaptiveValue("font-size", 16, 10);
+    font-family: Gravity;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: rem(5);
+  }
+
+  &__button {
+    color: #212121;
+    font-size: 10px;
+    font-family: Gravity;
+    text-decoration-line: underline;
+    margin-bottom: rem(3);
+    display: block;
+  }
+
+  &__info {
+    color: #212121;
+    font-size: 8px;
+    font-family: Gravity;
+    font-weight: 250;
+    margin-bottom: rem(3);
+    display: block;
+  }
+
+  &__grade {
+    margin-bottom: rem(6);
+    align-items: flex-start;
+  }
+}
+.grade {
+}
+.description-restaurant {
+  &__list {
+  }
+}
+.list-product {
+  &__item {
+  }
+}
+
+//========================================================================================================================================================
+
+.newtop {
+  background-color: #fffafa;
+  border-radius: 50px 50px 7px 7px;
+  border-top: 10px solid #212121;
+  padding-bottom: rem(15);
+
+  @media (max-width: $mobile) {
+    border-top: 3px solid #212121;
+  }
+  &__container {
+  }
+
+  &__body {
+  }
+
+  &__top {
+  }
+
+  &__title {
+    color: #212121;
+    font-size: 26px;
+    font-family: Gravity;
+    font-weight: 700;
+    padding: rem(35) 0 rem(25);
+    border-bottom: 1px solid #212121;
+    text-align: center;
+  }
+
+  &__items {
+  }
+
+  &__item {
+  }
+
+  &__logo {
+  }
+}
+.item-newtop {
+  border-bottom: 1px solid #212121;
+  padding: rem(10) 0 rem(6);
+  &__body {
+    display: flex;
+    align-items: center;
+    column-gap: rem(15);
+    margin-bottom: rem(10);
+  }
+
+  &__name {
+    color: var(--black, #212121);
+    font-size: 14px;
+    font-family: Gravity;
+    font-weight: 700;
+    margin-right: auto;
+  }
+
+  &__reviews {
+    color: #212121;
+    font-size: 10px;
+    font-family: Gravity;
+  }
+
+  &__grade {
+  }
+
+  &__logo {
+    border-radius: 33px;
+    border: 0.688px solid #212121;
+    background: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: row-reverse;
+    column-gap: rem(5);
+    color: #212121;
+    font-size: 10px;
+    font-family: Gravity;
+    font-weight: 700;
+    text-decoration-line: underline;
+  }
+}
+._icon-favorite:before {
+  content: "\e904";
+}
+.grade_small span::before {
+  font-size: 1.375rem;
+  content: "★";
+  color: #fcd400;
+  text-stroke: 0;
+  -webkit-text-stroke: 0;
+  margin-right: 0.25rem;
+}
+.comment {
+  padding: rem(10) 0 rem(15);
+  &__container {
+  }
+
+  &__body {
+  }
+
+  &__top {
+  }
+
+  &__close {
+    margin-bottom: rem(8);
+  }
+
+  &__restaurant {
+    display: flex;
+    align-items: center;
+    column-gap: rem(10);
+    padding: rem(0) rem(30) rem(10);
+    border-bottom: 1px solid #908d8d;
+  }
+
+  &__image-ibg {
+    width: 59px;
+    height: 59px;
+    flex-shrink: 0;
+  }
+
+  &__content {
+  }
+
+  &__name {
+    color: #212121;
+    font-size: 14px;
+    font-family: Gravity;
+    font-weight: 700;
+    margin-bottom: rem(4);
+  }
+
+  &__list-product {
+  }
+
+  &__title {
+    font-size: 26px;
+    font-family: Gravity;
+    max-width: rem(238);
+    margin-bottom: rem(6);
+    margin-top: rem(20);
+  }
+}
+.comment-form {
+  &__title {
+    font-size: 26px;
+    font-family: Gravity;
+    margin-bottom: rem(10);
+  }
+
+  &__block {
+    border-radius: 10px;
+    border: 1px solid #908d8d;
+    padding: rem(11) rem(15);
+  }
+
+  &__textarea {
+    color: #212121;
+    font-size: 16px;
+    font-family: Gravity;
+    font-weight: 250;
+    line-height: 130%;
+
+    min-height: rem(220);
+    background: transparent;
+    width: 100%;
+  }
+
+  &__info {
+    color: #212121;
+    font-size: 10px;
+    font-family: Gravity;
+  }
+
+  &__label {
+    color: #212121;
+    font-size: 10px;
+    font-family: Gravity;
+    margin-left: auto;
+    display: block;
+    width: max-content;
+    padding: rem(9) 0;
+    input {
+      display: none;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      column-gap: rem(5);
+    }
+  }
+
+  &__icon {
+    display: flex;
+    width: 40px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 12px;
+    border: 0.5px solid #908d8d;
+  }
+
+  &__button {
+    cursor: pointer;
+    color: #fffafa;
+    font-size: 10px;
+    font-family: Gravity;
+    border-radius: 5px;
+    border: 1px solid #212121;
+    background: #212121;
+    padding: rem(10);
+    display: block;
+    margin-left: auto;
+  }
+
+  &__rating {
+    margin-bottom: rem(25);
+    align-items: center;
+    display: flex;
+    column-gap: rem(5);
+  }
+  .rating__value {
+    display: none;
+  }
+
+  .rating__text {
+    margin-left: rem(5);
+  }
+}
+// <RATING>
+// Сніппет (HTML): rating
+.rating {
+  display: flex;
+  align-items: flex-end;
+  font-size: 30px;
+  line-height: 0.75;
+  transition: opacity 0.3s ease 0s;
+
+  text-stroke: 0.1px #000;
+  -webkit-text-stroke: 0.1px #000;
+}
+.rating.rating_sending {
+  opacity: 0.2;
+}
+.rating.rating_set .rating__active,
+.rating.rating_set .rating__item {
+  cursor: pointer;
+}
+
+.rating__body {
+  position: relative;
+}
+.rating__body::before {
+  content: "★★★★★";
+  //commented
+  //display: block;
+  display: none !important;
+  color: #fff;
+}
+.rating__active {
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.rating__active::before {
+  content: "★★★★★";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  color: #fcd400;
+}
+
+.rating__items {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.rating__item {
+  flex: 0 0 20%;
+  height: 100%;
+  opacity: 0;
+}
+.rating__value {
+  font-size: 50%;
+  line-height: 1;
+  padding: 0px 0px 0px 10px;
+}
+.rating__text {
+  color: #212121;
+  font-size: 10px;
+  font-family: Gravity;
+  text-transform: uppercase;
+}
+
+//========================================================================================================================================================
+
+.rating_lite {
+  -webkit-text-stroke: 0;
+
+  .rating__active::before {
+  }
+  .rating__body::before {
+    text-stroke: 1px #000;
+    -webkit-text-stroke: 1px #000;
+  }
+
+  .rating__value {
+    display: none;
+  }
+}
+.rating__star{
+  color: #fcd400;
+  font-size: 1.5625rem;
+  text-stroke: .5px #000;
+  -webkit-text-stroke: 0.5px #000;
+}

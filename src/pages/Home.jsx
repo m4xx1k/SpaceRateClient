@@ -7,20 +7,22 @@ import {useFetchAllQuery} from "../redux/category/category.api.js";
 import {useLazyFetchByCategoryQuery} from "../redux/place/place.api.js";
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
+import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
 
 const Home = () => {
     const [activeCategory, setActiveCategory] = useState(null)
     const {data} = useFetchAllQuery()
     const [fetchPlaces] = useLazyFetchByCategoryQuery()
+    const [findUser] = useFindUserMutation()
     const [places,setPlaces] = useState([])
     const {user, tg} = useTelegram()
     const selectCategory = async category => {
-        console.log(1)
         const {data} = await fetchPlaces(category._id)
         setPlaces(data)
         setActiveCategory(category._id)
     }
     useEffect(() => {
+
         tg.ready()
     }, [])
     return (<main className="page menu-open">
@@ -153,8 +155,8 @@ const Home = () => {
                             <div className="ratings__items ratings__items_pc">
                                 {
                                     places.map(e => {
-                                        let info = {}
-                                        e.info.forEach(e => info[e.name] = e.value)
+
+                                        const info = e.info
                                         const id = e.place._id
                                         return <article key={id}
                                                         className="ratings__item item-ratings">
@@ -208,8 +210,7 @@ const Home = () => {
 
                                 {
                                     places?.map((e, i) => {
-                                        let info = {}
-                                        e.info.forEach((e) => info[e.name] = e.value)
+                                        const info = e.info
                                         const id = e.place._id
                                         return <article key={id} className="ratings__item item-ratings">
                                             <div className="item-ratings__content">

@@ -15,7 +15,20 @@ export const placeApi = api.injectEndpoints({
             invalidatesTags: ['Rating']
         }),
         fetchByIdPlace: builder.query({
-            query: id => `place/${id}`,
+            query: ({id, telegramId}) => ({
+                url: `place/${id}`,
+                params: {telegramId}
+            }),
+            providesTags: ['Place']
+
+        }),
+        favouriteCount: builder.query({
+            query: id => `place/favourite_count/${id}`,
+            providesTags: ['Place']
+
+        }),
+        userFavourites: builder.query({
+            query: id => `place/favourites/${id}`,
             providesTags: ['Place']
 
         }),
@@ -31,13 +44,13 @@ export const placeApi = api.injectEndpoints({
             }),
             invalidatesTags: ['Place']
         }),
-        ratePlace:builder.mutation({
+        ratePlace: builder.mutation({
             query: body => ({
                 url: `place/rate`,
                 method: 'POST',
                 body
             }),
-            invalidatesTags:['Rating']
+            invalidatesTags: ['Rating']
         }),
         findUserPlaceRating: builder.mutation({
             query: body => ({
@@ -45,7 +58,16 @@ export const placeApi = api.injectEndpoints({
                 method: 'POST',
                 body
             }),
-            invalidatesTags:['Rating']
+            invalidatesTags: ['Rating']
+
+        }),
+        toggleFavouritePlace: builder.mutation({
+            query: body => ({
+                url: `place/favourite`,
+                method: 'POST',
+                body
+            }),
+            invalidatesTags: ['Rating']
 
         }),
         removePlace: builder.mutation({
@@ -59,11 +81,13 @@ export const placeApi = api.injectEndpoints({
 })
 
 export const {
+    useUserFavouritesQuery,
+    useToggleFavouritePlaceMutation,
     useFetchAllRatingsMutation,
     useFindUserPlaceRatingMutation,
     useLazyFetchByCategoryQuery,
     useRatePlaceMutation,
     useFetchByIdPlaceQuery,
-    useUpdateMutation,
+    useFavouriteCountQuery,
     useRemoveMutation
 } = placeApi

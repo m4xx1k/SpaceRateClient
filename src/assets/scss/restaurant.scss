@@ -107,7 +107,10 @@
       }
     }
   }
-
+  &__liked{
+    background-color: #212121;
+    color: #fff;
+  }
   &__social {
     @media (max-width: $mobile) {
       display: none;

@@ -1,73 +1,78 @@
-import React, {useEffect, useState} from 'react';
-import s from './RateForm.module.scss'
+import React, {useState} from 'react';
 import ReactStars from "react-rating-stars-component/dist/react-stars.js";
-import {useTelegram} from "../../hooks/useTelegram.js";
-import {useFindUserPlaceRatingMutation, useRatePlaceMutation} from "../../redux/place/place.api.js";
-
-const RateForm = ({placeId}) => {
-    const {user, tg} = useTelegram()
-    const [rating, setRating] = useState(0)
-    const [text, setText]  = useState('')
-    const [error, setError] = useState('')
-    const [isShow, setIsShow] = useState(false)
-    const [findUserRating] = useFindUserPlaceRatingMutation()
-    const [ratePlace] = useRatePlaceMutation()
-    useEffect(() => {
-
-        // const fetchdata = async () => {
-        //     const {data} = await findUserRating({placeId, telegramId: user.id})
-        //     // if (data) setRating(data?.value)
-        // }
-        // if (user) fetchdata()
-        tg.ready()
-
-    }, [])
-    const ratingChanged = (newRating) => {
-        // if(!user){
-        //     window.location.replace('https://t.me/spaceratebot')
-        //     return
-        // }
-        setIsShow(true);
-        setRating(newRating);
-    };
-    const handleRateSpace = async () => {
-        if (text && rating) {
-
-
-            const res = await ratePlace({telegramId: `${user.id}`, value: rating, placeId, text})
-            setIsShow(false)
-        }else{
-            setError('Заполните рейтинг и текст')
-        }
+import close from '../../assets/img/close.svg'
+import icon from '../../assets/img/icon.svg'
+const RateForm = ({data,setIsShow, ratingChanged,handleRateSpace,setText, text,rating, error, setError}) => {
+    const [symbols, setSymbols] = useState(100-text.length)
+    const photo = import.meta.env.VITE__API + '/places/' + data.photos[0].photo
+    const location = data.info.location.value
+    const name = data.place.name
+    const handleTextChange = e=>{
+        const text =e.target.value
+        setSymbols(100-text.length)
+        if(100-e.target.value.length!==0) setText(text)
     }
+
     return (
-        <>
-            <div className="restaurant__hide">
-                <button onClick={() => setIsShow(true)} className="rewievs__btn _icon-comment">
-                    <span>ОСТАВИТЬ ОТЗЫВ</span></button>
-                <div className="rating rating_lite rating_set">
-                    <ReactStars
-                        count={5}
-                        onChange={ratingChanged}
-                        size={32}
-                        activeColor="#ffd700"
-                        value={rating}
-                    />
-                    <div className="rating__value"></div>
+
+        <section className="comment">
+            <div className="comment__container">
+                <div className="comment__body">
+                    <div className="comment__close" onClick={()=>setIsShow(false)}><img src={close} alt=""/></div>
+                    <div className="comment__restaurant">
+                        <div className="comment__image-ibg"><img src={photo} alt=""/></div>
+                        <div className="comment__content">
+                            <div className="comment__name">{name}</div>
+                            <div className="comment__list-product list-product">
+                                <div className="list-product__item _icon-location">{location}</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <form action="#" className="comment-form">
+                        <div className="comment__title">Оцените свое
+                            пребывание здесь
+                        </div>
+
+
+                        <div className="comment-form__rating rating rating_set">
+                            <div className="rating__body">
+                                <div className="rating__active"></div>
+                                <ReactStars
+                                    count={5}
+                                    onChange={ratingChanged}
+                                    size={32}
+                                    activeColor="#ffd700"
+                                    value={rating}
+                                />
+                            </div>
+                            <div className="rating__value">{rating}</div>
+                            <div className="rating__text">Неплохо</div>
+
+                        </div>
+                        <div className="comment-form__title">Напишите отзыв</div>
+                        <div className="comment-form__block">
+
+                            <textarea value={text} onChange={handleTextChange} name="" id="" className="comment-form__textarea"
+                                      placeholder={rating ? `Вы оценили этого объекта на ${rating} балла из 5, почему? Расскажите, пожалуйста, подробнее.` : ' Расскажите, пожалуйста, подробнее.'}></textarea>
+                            <div className="comment-form__info">Осталось символов {symbols}/100</div>
+                        </div>
+                        <div className="comment-form__label">
+                            <label htmlFor="inp1">
+                                <div className="comment-form__icon"><img src={icon} alt=""/></div>
+                                Прикрепите фото с Вашего визита
+                            </label>
+                            <input type="file" name="" id="inp1"/>
+                        </div>
+                        <button onClick={handleRateSpace} className="comment-form__button button">Отправить</button>
+                    </form>
                 </div>
-
             </div>
-            {
-                isShow ? <div className={s.form}>
-                    <textarea value={text} onChange={e=>setText(e.target.value)} placeholder={'Ваш ОТЗЫВ'} className={s.textarea} name="" id="" rows="4"></textarea>
-                    <span className={s.error}>{error}</span>
-                    <button onClick={handleRateSpace} className={s.btn}>Отправить</button>
-                </div> : <></>
-            }
-        </>
+        </section>
 
 
-    );
+);
 };
 
 export default RateForm;
