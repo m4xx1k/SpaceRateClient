@@ -21,6 +21,13 @@ export const placeApi = api.injectEndpoints({
             providesTags: ['Place']
 
         }),
+        fetchCountRatings: builder.query({
+            query: id => ({
+                url: `place/countratings/${id}`,
+            }),
+            providesTags: ['Place']
+
+        }),
         favouriteCount: builder.query({
             query: id => `place/favourite_count/${id}`,
             providesTags: ['Place']
@@ -88,5 +95,5 @@ export const {
     useRatePlaceMutation,
     useFetchByIdPlaceQuery,
     useFavouriteCountQuery,
-    useRemoveMutation
+    useFetchCountRatingsQuery
 } = placeApi

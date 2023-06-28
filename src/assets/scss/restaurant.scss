@@ -66,10 +66,10 @@
     justify-content: space-between;
     column-gap: rem(20);
     margin-bottom: rem(40);
-
-    @media (max-width: $mobile) {
-      display: none;
-    }
+    //commented
+    //@media (max-width: $mobile) {
+    //  display: none;
+    //}
   }
 
   &__hide {

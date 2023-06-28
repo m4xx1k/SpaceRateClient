@@ -7,12 +7,14 @@ import {useFetchAllQuery} from "../redux/category/category.api.js";
 import {useLazyFetchByCategoryQuery} from "../redux/place/place.api.js";
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
+import MobilePlace from "../components/MobilePlace.jsx";
+import PlaceItem from "../components/PlaceItem.jsx";
 
 const Home = ({VITE__API}) => {
     const [activeCategory, setActiveCategory] = useState(null)
     const {data} = useFetchAllQuery()
     const [fetchPlaces] = useLazyFetchByCategoryQuery()
-    const [places,setPlaces] = useState([])
+    const [places, setPlaces] = useState([])
     const {user, tg} = useTelegram()
     const selectCategory = async category => {
         const {data} = await fetchPlaces(category._id)
@@ -67,8 +69,8 @@ const Home = ({VITE__API}) => {
                             </SwiperSlide>
                             <SwiperSlide className="hero__slide slide-hero swiper-slide">
                                 <div className="slide-hero__title">
-                                    {!!user?.username ? user.username : 'is not tg'}
-                                    {/*Думать нужно думать куда пойти*/}
+                                    {/*{!!user?.username ? user.username : 'is not tg'}*/}
+                                    Думать нужно думать куда пойти
                                 </div>
                                 <div className="slide-hero__decors">
                                     <div className="slide-hero__decor slide-hero__decor_10"></div>
@@ -148,55 +150,15 @@ const Home = ({VITE__API}) => {
                 <section className="ratings">
                     <div className="ratings__container">
                         <div className="ratings__body">
-                            <h2 className="ratings__title title title_1">рейтинги РЕСТОРАНОВ Санкт-Петербурга</h2>
+                            <h2 className="ratings__title title title_1">TOP 10</h2>
 
                             <div className="ratings__items ratings__items_pc">
                                 {
-                                    places.map(e => {
+                                    places.slice(0, 10).map(e => {
 
                                         const info = e.info
                                         const id = e.place._id
-                                        return <article key={id}
-                                                        className="ratings__item item-ratings">
-                                            <div className="item-ratings__content">
-                                                <div className="item-ratings__top">
-                                                    <Link to={`/place/${id}`}
-                                                          className="item-ratings__name">{e.place.name}</Link>
-                                                    <div className="item-ratings__grade">
-                                                        <div className="grade">
-                                                            {/*ИДЕАЛЬНО */}
-                                                            <span>{e.place.rating?.toFixed(1)}</span></div>
-                                                        <Link to={`/place/${id}`}
-                                                              className="link">читать все отзывы</Link>
-                                                    </div>
-                                                </div>
-                                                <div className="item-ratings__text">{
-                                                    e.place.description
-                                                }
-                                                </div>
-                                                <div className="item-ratings__bottom">
-                                                    <div className="item-ratings__list list-product">
-                                                        <div
-                                                            className="list-product__item _icon-ruble">{info.time.value}</div>
-                                                        <div
-                                                            className="list-product__item _icon-location">{info.location.value}</div>
-                                                        <div className="list-product__item _icon-kitchen">{info.type.value}
-                                                        </div>
-                                                    </div>
-                                                    <Link to={`/place/${id}`}
-                                                          className="item-ratings__goto _icon-link"></Link>
-                                                </div>
-                                            </div>
-                                            <div className="item-ratings__image-ibg">
-                                                <Link to={`/place/${id}`}>
-
-
-                                                    <img
-                                                        src={`${VITE__API}/places/${e.photos[0].photo}`}
-                                                        alt=""/></Link>
-                                                <button className="item-ratings__favorite _icon-favorite"></button>
-                                            </div>
-                                        </article>
+                                        return <PlaceItem e={e} id={id} info={info} key={id}/>
 
                                     })
                                 }
@@ -207,26 +169,7 @@ const Home = ({VITE__API}) => {
                             <div className="ratings__items ratings__items_mob">
 
                                 {
-                                    places?.map((e, i) => {
-                                        const info = e.info
-                                        const id = e.place._id
-                                        return <article key={id} className="ratings__item item-ratings">
-                                            <div className="item-ratings__content">
-                                                <div className="item-ratings__top">
-                                                    <Link to={`/place/${id}`}
-                                                          className="item-ratings__name">{`${i + 1}. ${e.place.name}`}</Link>
-                                                    <Link to={`/place/${id}`}
-                                                          className="item-ratings__goto _icon-link"></Link>
-                                                </div>
-                                                <div className="item-ratings__grade">
-                                                    <div className="grade"><span>{e.place.rating}</span></div>
-                                                    <Link to={`/place/${id}`} className="link">(X)
-                                                        отзывы</Link>
-                                                </div>
-                                            </div>
-                                        </article>
-
-                                    })
+                                    places?.slice(0, 10)?.map((e, i) => <MobilePlace key={i} e={e} i={i}/>)
                                 }
 
 

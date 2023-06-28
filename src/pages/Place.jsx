@@ -12,8 +12,9 @@ import dayjs from "dayjs";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {clsx} from 'clsx';
 import ReactStars from "react-rating-stars-component";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
+
 SwiperCore.use([Pagination, Navigation]);
 const Place = ({VITE__API}) => {
     const {id} = useParams()
@@ -34,25 +35,29 @@ const Place = ({VITE__API}) => {
     const [isShow, setIsShow] = useState(false)
     const [findUserRating] = useFindUserPlaceRatingMutation()
     const [ratePlace] = useRatePlaceMutation()
-    const ratingChanged = (newRating) => {
-        if(!user){
+    const ratingChanged = async (newRating) => {
+        if (!user) {
             window.location.replace('https://t.me/spaceratebot')
             return
         }
+
         setIsShow(true);
         setRating(newRating);
     };
-    const handleRateSpace = async e=> {
+    const navigate = useNavigate()
+    const handleRateSpace = async e => {
         e?.preventDefault()
-        const user = findUser({telegramId:user?.id})
-        console.log(user)
-        // if()
-        if (text && rating) {
-             await ratePlace({telegramId: `${user.id}`, value: rating, placeId:id, text})
-            setIsShow(false)
-        } else {
-            setError('Заполните рейтинг и текст')
-        }
+        const {data} = await findUser({telegramId: user.id})
+
+        if (data) {
+            if (text && rating) {
+                await ratePlace({telegramId: `${user.id}`, value: rating, placeId: id, text})
+                setIsShow(false)
+            } else {
+                setError('Заполните рейтинг и текст')
+            }
+        } else navigate('/login')
+
     }
     useEffect(() => {
         tg.ready()
@@ -71,24 +76,36 @@ const Place = ({VITE__API}) => {
     }, [data, isSuccess, isError, error])
 
     const handleToggleFavourite = async () => {
-        try {
-            const res = await toggleFavourite({placeId: id, telegramId: user?.id})
-            console.log(res)
-            setIsLiked(prev => !prev)
-        } catch (e) {
-            console.log(e)
+        if (!user) {
+            window.location.replace('https://t.me/spaceratebot')
+            return
         }
+        const {data} = await findUser({telegramId: user.id})
+
+        if (data) {
+            try {
+                const res = await toggleFavourite({placeId: id, telegramId: user?.id})
+                console.log(res)
+                setIsLiked(prev => !prev)
+            } catch (e) {
+                console.log(e)
+            }
+        } else {
+            navigate('/login')
+        }
+
     }
 
     const swiperRef = useRef();
-    if (isLoading) return <p>loading</p>
-    if (isError) return <p>'error'</p>
-    if (!data || !ratings) return <p>no data</p>
+    if (isLoading) return <p></p>
+    if (isError) return <p>error:/</p>
+    if (!data || !ratings) return <p></p>
     return (<>
 
             {
                 isShow ?
-                    <RateForm data={data} placeId={id} text={text} rating={rating} error={error} setError={setError} setIsShow={setIsShow} setText={setText} ratingChanged={ratingChanged}
+                    <RateForm data={data} placeId={id} text={text} rating={rating} error={error} setError={setError}
+                              setIsShow={setIsShow} setText={setText} ratingChanged={ratingChanged}
                               handleRateSpace={handleRateSpace}/>
                     : <>
                         <section className="restaurant">
@@ -173,10 +190,14 @@ const Place = ({VITE__API}) => {
                                             НРАВИТСЯ
                                         </button>
                                         <div className="restaurant__social social">
-                                            <a rel={'nofollow'} target={'_blank'} href={data.info.email.value} className="social__link _icon-vk"></a>
-                                            <a rel={'nofollow'} target={'_blank'} href={data.info.tg.value} className="social__link _icon-telegram"></a>
-                                            <a rel={'nofollow'} target={'_blank'} href={data.info?.fb?.value} className="social__link _icon-facebook"></a>
-                                            <a rel={'nofollow'} target={'_blank'} href={data.info.inst.value} className="social__link _icon-instagram"></a>
+                                            <a rel={'nofollow'} target={'_blank'} href={data.info.email.value}
+                                               className="social__link _icon-vk"></a>
+                                            <a rel={'nofollow'} target={'_blank'} href={data.info.tg.value}
+                                               className="social__link _icon-telegram"></a>
+                                            <a rel={'nofollow'} target={'_blank'} href={data.info?.fb?.value}
+                                               className="social__link _icon-facebook"></a>
+                                            <a rel={'nofollow'} target={'_blank'} href={data.info.inst.value}
+                                               className="social__link _icon-instagram"></a>
                                         </div>
                                     </div>
                                     <div className="restaurant__hide">
@@ -312,7 +333,6 @@ const Place = ({VITE__API}) => {
 
                     </>
             }
-
 
 
         </>
