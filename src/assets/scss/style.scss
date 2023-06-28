@@ -635,3 +635,95 @@ body {
   text-stroke: .5px #000;
   -webkit-text-stroke: 0.5px #000;
 }
+.newtop {
+  background-color: #fffafa;
+  border-radius: 50px 50px 7px 7px;
+  border-top: 10px solid #212121;
+  padding-bottom: rem(15);
+
+  @media (max-width: $mobile) {
+    border-top: 3px solid #212121;
+  }
+  &__container {
+  }
+
+  &__body {
+  }
+
+  &__top {
+  }
+
+  &__title {
+    color: #212121;
+    font-size: 26px;
+    font-family: Gravity;
+    font-weight: 700;
+    padding: rem(35) 0 rem(25);
+    border-bottom: 1px solid #212121;
+    text-align: center;
+  }
+
+  &__items {
+  }
+
+  &__item {
+  }
+
+  &__logo {
+  }
+}
+.item-newtop {
+  border-bottom: 1px solid #212121;
+  padding: rem(10) 0 rem(6);
+  &__body {
+    display: flex;
+    align-items: center;
+    column-gap: rem(15);
+    margin-bottom: rem(10);
+  }
+
+  &__name {
+    color: var(--black, #212121);
+    font-size: 14px;
+    font-family: Gravity;
+    font-weight: 700;
+    margin-right: auto;
+  }
+
+  &__reviews {
+    color: #212121;
+    font-size: 10px;
+    font-family: Gravity;
+  }
+
+  &__grade {
+  }
+
+  &__logo {
+    border-radius: 50%;
+    border: 0.688px solid #212121;
+    background: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & img{
+      border-radius: 50%;
+
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &__link {
+    display: flex;
+    flex-direction: row-reverse;
+    column-gap: rem(5);
+    color: #212121;
+    font-size: 10px;
+    font-family: Gravity;
+    font-weight: 700;
+    text-decoration-line: underline;
+  }
+}

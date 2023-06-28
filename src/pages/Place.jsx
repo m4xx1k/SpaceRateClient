@@ -131,8 +131,8 @@ const Place = ({VITE__API}) => {
                                                                name="rating"/>
                                                     </div>
                                                 </div>
-                                                <span className={'rating__star'}>★</span>
-                                                <div className="rating__value">4</div>
+                                                {/*<span className={'rating__star'}>★</span>*/}
+                                                <div className="rating__value">{data.place.rating.toFixed(1)}</div>
                                             </div>
 
                                         </div>

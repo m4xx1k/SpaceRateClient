@@ -150,7 +150,7 @@ const Home = ({VITE__API}) => {
                 <section className="ratings">
                     <div className="ratings__container">
                         <div className="ratings__body">
-                            <h2 className="ratings__title title title_1">TOP 10</h2>
+                            <h2 className="ratings__title title title_1">ТОП 10</h2>
 
                             <div className="ratings__items ratings__items_pc">
                                 {
