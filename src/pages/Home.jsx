@@ -7,13 +7,11 @@ import {useFetchAllQuery} from "../redux/category/category.api.js";
 import {useLazyFetchByCategoryQuery} from "../redux/place/place.api.js";
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
-import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
 
 const Home = ({VITE__API}) => {
     const [activeCategory, setActiveCategory] = useState(null)
     const {data} = useFetchAllQuery()
     const [fetchPlaces] = useLazyFetchByCategoryQuery()
-    const [findUser] = useFindUserMutation()
     const [places,setPlaces] = useState([])
     const {user, tg} = useTelegram()
     const selectCategory = async category => {

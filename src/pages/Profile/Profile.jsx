@@ -22,14 +22,19 @@ const Profile = () => {
             <h2 className={s.title}>Профиль</h2>
             <ul className={s.info}>
                 <img src={user.picture} style={{width: 64, height: 64, borderRadius: '50%'}} alt=""/>
-                {Object.keys(user).map(elem => {
-                    if (elem !== '_id' && elem !== '__v' && elem !== 'password')
-                        return (
-                            <li key={elem} className={s.info_item}>
-                                <span className={s.info_name}>{`${elem}:`}</span>
-                                <span className={s.info_value}>{user[elem]}</span>
-                            </li>)
-                })}
+
+                <li key={elem} className={s.info_item}>
+                    <span className={s.info_name}>{`ID:`}</span>
+                    <span className={s.info_value}>{user.telegramId}</span>
+                </li>
+                <li key={elem} className={s.info_item}>
+                    <span className={s.info_name}>{`Username:`}</span>
+                    <span className={s.info_value}>{user.username}</span>
+                </li>
+                <li key={elem} className={s.info_item}>
+                    <span className={s.info_name}>{`Name:`}</span>
+                    <span className={s.info_value}>{user.name}</span>
+                </li>
             </ul>
 
         </div>

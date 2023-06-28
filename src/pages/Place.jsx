@@ -13,6 +13,7 @@ import {useTelegram} from "../hooks/useTelegram.js";
 import {clsx} from 'clsx';
 import ReactStars from "react-rating-stars-component";
 import {Link} from "react-router-dom";
+import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
 SwiperCore.use([Pagination, Navigation]);
 const Place = ({VITE__API}) => {
     const {id} = useParams()
@@ -25,6 +26,8 @@ const Place = ({VITE__API}) => {
     })
     const [toggleFavourite] = useToggleFavouritePlaceMutation()
     const [fetchRatings] = useLazyFetchAllRatingsQuery()
+    const [findUser] = useFindUserMutation()
+
     const [rating, setRating] = useState(0)
     const [text, setText] = useState('')
     const [error, setError] = useState('')
@@ -32,15 +35,18 @@ const Place = ({VITE__API}) => {
     const [findUserRating] = useFindUserPlaceRatingMutation()
     const [ratePlace] = useRatePlaceMutation()
     const ratingChanged = (newRating) => {
-        // if(!user){
-        //     window.location.replace('https://t.me/spaceratebot')
-        //     return
-        // }
+        if(!user){
+            window.location.replace('https://t.me/spaceratebot')
+            return
+        }
         setIsShow(true);
         setRating(newRating);
     };
     const handleRateSpace = async e=> {
         e?.preventDefault()
+        const user = findUser({telegramId:user?.id})
+        console.log(user)
+        // if()
         if (text && rating) {
              await ratePlace({telegramId: `${user.id}`, value: rating, placeId:id, text})
             setIsShow(false)
