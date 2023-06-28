@@ -44,7 +44,6 @@ const Login = () => {
         }
     }
 
-    if (!isLoaded) return null
     return (
         <div className={s.container}>
 
