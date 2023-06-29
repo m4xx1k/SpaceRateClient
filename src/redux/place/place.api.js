@@ -25,17 +25,17 @@ export const placeApi = api.injectEndpoints({
             query: id => ({
                 url: `place/countratings/${id}`,
             }),
-            providesTags: ['Place']
+            providesTags: ['Rating']
 
         }),
         favouriteCount: builder.query({
             query: id => `place/favourite_count/${id}`,
-            providesTags: ['Place']
+            providesTags: ['Favourite']
 
         }),
         userFavourites: builder.query({
             query: id => `place/favourites/${id}`,
-            providesTags: ['Place']
+            providesTags: ['Favourite']
 
         }),
         fetchByCategory: builder.query({
@@ -73,7 +73,7 @@ export const placeApi = api.injectEndpoints({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['Rating']
+            invalidatesTags: ['Favourite']
 
         }),
         removePlace: builder.mutation({
