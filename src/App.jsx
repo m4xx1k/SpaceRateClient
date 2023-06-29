@@ -9,7 +9,7 @@ import Login from "./pages/Login/Login.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import Favourites from "./pages/Favourites.jsx";
 
-const VITE__API = 'https://spacerateserver-production.up.railway.app'
+const VITE__API = 'https://api.goodjoy.uz'
 
 function App() {
     return (

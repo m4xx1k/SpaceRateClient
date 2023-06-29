@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-const VITE__API = 'https://spacerateserver-production.up.railway.app'
+const VITE__API = 'https://api.goodjoy.uz'
 
 const PlaceItem = ({id, info, e}) => {
     return (

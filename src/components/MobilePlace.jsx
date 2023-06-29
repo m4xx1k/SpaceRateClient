@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {useFetchCountRatingsQuery} from "../redux/place/place.api.js";
-const VITE__API = 'https://spacerateserver-production.up.railway.app'
+const VITE__API = 'https://api.goodjoy.uz'
 
 const MobilePlace = ({e, i}) => {
     const id = e.place._id
