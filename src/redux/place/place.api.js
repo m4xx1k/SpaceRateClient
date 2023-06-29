@@ -89,7 +89,7 @@ export const placeApi = api.injectEndpoints({
 export const {
     useUserFavouritesQuery,
     useToggleFavouritePlaceMutation,
-    useLazyFetchAllRatingsQuery,
+    useFetchAllRatingsQuery,
     useFindUserPlaceRatingMutation,
     useLazyFetchByCategoryQuery,
     useRatePlaceMutation,

@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useParams} from "react-router";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {
-    useLazyFetchAllRatingsQuery,
+    useFetchAllRatingsQuery,
     useFetchByIdPlaceQuery, useFindUserPlaceRatingMutation, useRatePlaceMutation,
     useToggleFavouritePlaceMutation
 } from "../redux/place/place.api.js";
@@ -19,14 +19,15 @@ SwiperCore.use([Pagination, Navigation]);
 const Place = ({VITE__API}) => {
     const {id} = useParams()
     const {user, tg} = useTelegram()
-    const [ratings, setRatings] = useState(null)
+    const navigate = useNavigate()
+    // const [ratings, setRatings] = useState(null)
     const [isLiked, setIsLiked] = useState(false)
     const {data, isSuccess, isLoading, isError, error: placeError} = useFetchByIdPlaceQuery({
         id,
         telegramId: user?.id
     })
     const [toggleFavourite] = useToggleFavouritePlaceMutation()
-    const [fetchRatings] = useLazyFetchAllRatingsQuery()
+    const {data:ratings} = useFetchAllRatingsQuery()
     const [findUser] = useFindUserMutation()
 
     const [rating, setRating] = useState(0)
@@ -44,7 +45,6 @@ const Place = ({VITE__API}) => {
         setIsShow(true);
         setRating(newRating);
     };
-    const navigate = useNavigate()
     const handleRateSpace = async e => {
         e?.preventDefault()
         const {data} = await findUser({telegramId: user.id})
@@ -67,12 +67,12 @@ const Place = ({VITE__API}) => {
 
             setIsLiked(data?.isFavourite)
         }
-        const handleFetchAllRatings = async () => {
-            const {data} = await fetchRatings({placeId: id})
-            setRatings(data.ratings)
-        }
-        if (ratings === null) handleFetchAllRatings()
-        console.log({data, isSuccess, isError, placeError})
+        // const handleFetchAllRatings = async () => {
+        //     const {data} = await fetchRatings({placeId: id})
+        //     setRatings(data.ratings)
+        // }
+        // if (ratings === null) handleFetchAllRatings()
+        // console.log({data, isSuccess, isError, placeError})
     }, [data, isSuccess, isError, error])
 
     const handleToggleFavourite = async () => {
@@ -99,7 +99,7 @@ const Place = ({VITE__API}) => {
     const swiperRef = useRef();
     if (isLoading) return <p></p>
     if (isError) return <p>error:/</p>
-    if (!data || !ratings) return <p></p>
+    if (!data || !ratings?.ratings) return <p></p>
     return (<>
 
             {
@@ -252,7 +252,7 @@ const Place = ({VITE__API}) => {
                             </div>
                         </section>
                         {
-                            !!ratings?.length && ratings.length > 0 ?
+                            !!ratings?.ratings?.length && ratings.ratings.length > 0 ?
                                 <section className="rewievs">
                                     <div className="rewievs__container">
                                         <div className="rewievs__body">
@@ -294,7 +294,7 @@ const Place = ({VITE__API}) => {
                                                 className="rewievs__slider slider-rewievs swiper slider-rewievs__wrapper swiper-wrapper"
                                             >
 
-                                                {ratings.map((e, index) => {
+                                                {ratings.ratings.map((e, index) => {
                                                     // const {data} = await fetchRatings({placeId: id})
                                                     // const e = data.ratings[index]
                                                     return (
