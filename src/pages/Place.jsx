@@ -24,10 +24,13 @@ const Place = ({VITE__API}) => {
     const [isLiked, setIsLiked] = useState(false)
     const {data, isSuccess, isLoading, isError, error: placeError} = useFetchByIdPlaceQuery({
         id,
-        telegramId: user?.id
+            telegramId: user?.id
     })
     const [toggleFavourite] = useToggleFavouritePlaceMutation()
-    const {data:ratings} = useFetchAllRatingsQuery()
+    const {data:ratings} = useFetchAllRatingsQuery({
+        placeId:id,
+        telegramId: user?.id
+    })
     const [findUser] = useFindUserMutation()
 
     const [rating, setRating] = useState(0)
