@@ -24,12 +24,26 @@ const PlaceItem = ({id, info, e}) => {
                 </div>
                 <div className="item-ratings__bottom">
                     <div className="item-ratings__list list-product">
-                        <div
-                            className="list-product__item _icon-ruble">{info.price.value}</div>
-                        <div
-                            className="list-product__item _icon-location">{info.location.value}</div>
-                        <div className="list-product__item _icon-kitchen">{info.type.value}
-                        </div>
+                        {info?.price?.value
+                            ?
+                                <div
+                                    className="list-product__item _icon-ruble">{info.price.value}</div>
+                                : <></>
+                        }
+
+                        {info?.location?.value
+                            ?
+                                <div
+                                    className="list-product__item _icon-location">{info.location.value}</div>
+                                : <></>
+                        }
+
+                        {info.location.value
+                            ?
+                            <div className="list-product__item _icon-kitchen">{info.type.value}
+                            </div>
+                                : <></>
+                        }
                     </div>
                     <Link to={`/place/${id}`}
                           className="item-ratings__goto _icon-link"></Link>
