@@ -125,6 +125,9 @@ const Favourites = ({VITE__API}) => {
 
                                 data.map(e => (
                                     <div className="favorite__item item-favorite">
+                                        <div onClick={() => handleToggleFavourite(e?.place._id)}
+                                             className="item-favorite_unlike">✛
+                                        </div>
                                         <Link to={`/place/${e.place._id}`} className="item-favorite__body">
                                             <div className="item-favorite__image-ibg">
                                                 <img
@@ -135,9 +138,7 @@ const Favourites = ({VITE__API}) => {
                                                 </div>
                                             </div>
                                             <div className="item-favorite__content">
-                                                <div onClick={() => handleToggleFavourite(e?.place._id)}
-                                                     className="item-favorite_unlike">✛
-                                                </div>
+
                                                 <div className="item-favorite__mark">{e.category.name}</div>
                                                 <div className="item-favorite__name">{e.place.name}</div>
                                                 <div className="item-favorite__grade grade grade_small">
