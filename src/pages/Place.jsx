@@ -21,7 +21,7 @@ const Place = ({VITE__API}) => {
     const {id} = useParams()
     const {user, tg} = useTelegram()
     const navigate = useNavigate()
-    const {ratingsNames} = useSelector(state=>state.place)
+    const {ratingsNames} = useSelector(state => state.place)
     // const [ratings, setRatings] = useState(null)
     const [isLiked, setIsLiked] = useState(false)
     const {data, isSuccess, isLoading, isError, error: placeError} = useFetchByIdPlaceQuery({
@@ -119,7 +119,7 @@ const Place = ({VITE__API}) => {
                                     <div className="restaurant__top">
                                         <h1 className="restaurant__title">{data?.place?.name}</h1>
                                         <div className="restaurant__grade grade-restaurant">
-                                            <span>{ratingsNames[Math.floor(data.place.rating)].toUpperCase()}</span>
+                                            <span>{ratingsNames[Math.ceil(data.place.rating) - 1].toUpperCase()}</span>
                                             <div className="grade-restaurant__rating rating">
                                                 <div className="rating__body">
                                                     <div className="rating__active"></div>

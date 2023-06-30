@@ -51,7 +51,7 @@ const RateForm = ({data,setIsShow, ratingChanged,handleRateSpace,setText, text,r
                                 />
                             </div>
                             <div className="rating__value">{rating}</div>
-                            <div className="rating__text">{ratingsNames[rating].toUpperCase()}</div>
+                            <div className="rating__text">{ratingsNames[rating-1].toUpperCase()}</div>
 
                         </div>
                         <div className="comment-form__title">Напишите отзыв</div>
