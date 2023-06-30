@@ -124,7 +124,7 @@ const Favourites = ({VITE__API}) => {
                                             <div className="item-favorite__content">
                                                 <div className="item-favorite__mark">{e.category.name}</div>
                                                 <div className="item-favorite__name">{e.place.name}</div>
-                                                <div className="item-favorite__grade grade grade_small"><span>{e.place.rating}</span></div>
+                                                <div className="item-favorite__grade grade grade_small"><span>{e.place.rating.toFixed(1)}</span></div>
                                                 <div className="list-product">
                                                     <div className="list-product__item _icon-kitchen">{e.info.type.value}
                                                     </div>

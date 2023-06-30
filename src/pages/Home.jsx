@@ -150,11 +150,11 @@ const Home = ({VITE__API}) => {
                 <section className="ratings">
                     <div className="ratings__container">
                         <div className="ratings__body">
-                            <h2 className="ratings__title title title_1">ТОП 10</h2>
+                            <h2 className="ratings__title title title_1">ТОП</h2>
 
                             <div className="ratings__items ratings__items_pc">
                                 {
-                                    places.slice(0, 10).map(e => {
+                                    places.map(e => {
 
                                         const info = e.info
                                         const id = e.place._id
@@ -169,7 +169,7 @@ const Home = ({VITE__API}) => {
                             <div className="ratings__items ratings__items_mob">
 
                                 {
-                                    places?.slice(0, 10)?.map((e, i) => <MobilePlace key={i} e={e} i={i}/>)
+                                    places?.map((e, i) => <MobilePlace key={i} e={e} i={i}/>)
                                 }
 
 
