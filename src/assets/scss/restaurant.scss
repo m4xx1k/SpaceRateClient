@@ -280,7 +280,15 @@
     //justify-content: space-between;
     justify-content: flex-end;
   }
-
+  &__list{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    &_item{
+      width: 100%;
+    }
+  }
   &__btn {
 
     display: flex;

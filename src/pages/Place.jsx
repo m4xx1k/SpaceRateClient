@@ -330,28 +330,7 @@ const Place = ({VITE__API}) => {
                                                 </div>
                                             </div>
 
-
-                                            <Swiper
-                                                pagination={{clickable: true}}
-                                                navigation={true}
-                                                breakpoints={{
-                                                    320: {
-                                                        slidesPerView: 1, spaceBetween: 10,
-                                                    }, 768: {
-                                                        slidesPerView: 1.5, spaceBetween: 40,
-                                                    }, 992: {
-                                                        slidesPerView: 2, spaceBetween: 40,
-                                                    }, 1268: {
-                                                        slidesPerView: 2, spaceBetween: 60,
-                                                    },
-                                                }}
-                                                onSwiper={(swiper) => {
-                                                    swiperRef.current = swiper;
-                                                }}
-
-                                                className="rewievs__slider slider-rewievs swiper slider-rewievs__wrapper swiper-wrapper"
-                                            >
-
+                                            <div className={'rewievs__list'}>
                                                 {ratings.ratings.map((e, index) => {
                                                     // const {data} = await fetchRatings({placeId: id})
                                                     // const e = data.ratings[index]
@@ -359,8 +338,8 @@ const Place = ({VITE__API}) => {
                                                         // <div className="swiper-slide" key={index}>
                                                         //     <ReviewSlide key={e._id} e={e} index={index}/>
                                                         // </div>
-                                                        <SwiperSlide
-                                                            className="slider-rewievs__slide slide-rewievs swiper-slide"
+                                                        <div
+                                                            className="rewievs__list_item slider-rewievs__slide slide-rewievs swiper-slide"
                                                             key={index}>
                                                             <div className="slide-rewievs__top">
                                                                 <div className="slide-rewievs__ico"><img
@@ -378,11 +357,34 @@ const Place = ({VITE__API}) => {
                                                             </div>
                                                             <div
                                                                 className="slide-rewievs__date">{dayjs(e.date).format('DD.MM.YYYY HH:mm')}</div>
-                                                        </SwiperSlide>
+                                                        </div>
 
                                                     )
                                                 })}
-                                            </Swiper>
+
+                                            </div>
+                                            {/*<Swiper*/}
+                                            {/*    pagination={{clickable: true}}*/}
+                                            {/*    navigation={true}*/}
+                                            {/*    breakpoints={{*/}
+                                            {/*        320: {*/}
+                                            {/*            slidesPerView: 1, spaceBetween: 10,*/}
+                                            {/*        }, 768: {*/}
+                                            {/*            slidesPerView: 1.5, spaceBetween: 40,*/}
+                                            {/*        }, 992: {*/}
+                                            {/*            slidesPerView: 2, spaceBetween: 40,*/}
+                                            {/*        }, 1268: {*/}
+                                            {/*            slidesPerView: 2, spaceBetween: 60,*/}
+                                            {/*        },*/}
+                                            {/*    }}*/}
+                                            {/*    onSwiper={(swiper) => {*/}
+                                            {/*        swiperRef.current = swiper;*/}
+                                            {/*    }}*/}
+
+                                            {/*    className="rewievs__slider slider-rewievs swiper slider-rewievs__wrapper swiper-wrapper"*/}
+                                            {/*>*/}
+
+                                            {/*</Swiper>*/}
 
 
                                         </div>
