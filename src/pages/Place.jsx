@@ -322,10 +322,10 @@ const Place = ({VITE__API}) => {
                                                     </button>
                                                     <div
                                                         className="rewievs__navigation navigation navigation_small navigation_black">
-                                                        <button onClick={() => swiperRef.current.slidePrev()}
-                                                                className="navigation__button button-prev"></button>
-                                                        <button onClick={() => swiperRef.current.slideNext()}
-                                                                className="navigation__button button-next"></button>
+                                                        {/*<button onClick={() => swiperRef.current.slidePrev()}*/}
+                                                        {/*        className="navigation__button button-prev"></button>*/}
+                                                        {/*<button onClick={() => swiperRef.current.slideNext()}*/}
+                                                        {/*        className="navigation__button button-next"></button>*/}
                                                     </div>
                                                 </div>
                                             </div>
