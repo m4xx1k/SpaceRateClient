@@ -14,21 +14,23 @@ import {clsx} from 'clsx';
 import ReactStars from "react-rating-stars-component";
 import {Link, useNavigate} from "react-router-dom";
 import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
+import {useSelector} from "react-redux";
 
 SwiperCore.use([Pagination, Navigation]);
 const Place = ({VITE__API}) => {
     const {id} = useParams()
     const {user, tg} = useTelegram()
     const navigate = useNavigate()
+    const {ratingsNames} = useSelector(state=>state.place)
     // const [ratings, setRatings] = useState(null)
     const [isLiked, setIsLiked] = useState(false)
     const {data, isSuccess, isLoading, isError, error: placeError} = useFetchByIdPlaceQuery({
         id,
-            telegramId: user?.id
+        telegramId: user?.id
     })
     const [toggleFavourite] = useToggleFavouritePlaceMutation()
-    const {data:ratings} = useFetchAllRatingsQuery({
-        placeId:id,
+    const {data: ratings} = useFetchAllRatingsQuery({
+        placeId: id,
         telegramId: user?.id
     })
     const [findUser] = useFindUserMutation()
@@ -117,7 +119,7 @@ const Place = ({VITE__API}) => {
                                     <div className="restaurant__top">
                                         <h1 className="restaurant__title">{data?.place?.name}</h1>
                                         <div className="restaurant__grade grade-restaurant">
-                                            <span>ИДЕАЛЬНО</span>
+                                            <span>{ratingsNames[Math.floor(data.place.rating)].toUpperCase()}</span>
                                             <div className="grade-restaurant__rating rating">
                                                 <div className="rating__body">
                                                     <div className="rating__active"></div>
@@ -164,22 +166,7 @@ const Place = ({VITE__API}) => {
                                                 <img src={`${VITE__API}/places/${e.photo}`} alt={e.photo}/>
                                             </SwiperSlide>))}
                                         </Swiper>
-                                        {/*<Swiper className="slider-restaurant__wrapper swiper-wrapper"*/}
-                                        {/*        observer={true}*/}
-                                        {/*        observeParents={true}*/}
-                                        {/*        spaceBetween={10 * 4}*/}
-                                        {/*>*/}
-                                        {/*    {*/}
-                                        {/*        data.photos.map(e => (*/}
-                                        {/*            <SwiperSlide key={e._id}*/}
-                                        {/*                         className="slider-restaurant__slide slide-restaurant-ibg swiper-slide">*/}
-                                        {/*                <img src={`${import.meta.env.VITE__API}/places/${e.photo}`}*/}
-                                        {/*                     alt=""/>*/}
-                                        {/*            </SwiperSlide>*/}
-                                        {/*        ))*/}
-                                        {/*    }*/}
 
-                                        {/*</Swiper>*/}
                                         <div className="slider-restaurant__pagination pagination"></div>
                                         <div className="slider-restaurant__navigation navigation">
                                             <button className="navigation__button button-prev"></button>
@@ -193,14 +180,32 @@ const Place = ({VITE__API}) => {
                                             НРАВИТСЯ
                                         </button>
                                         <div className="restaurant__social social">
-                                            <a rel={'nofollow'} target={'_blank'} href={data.info.email.value}
-                                               className="social__link _icon-vk"></a>
-                                            <a rel={'nofollow'} target={'_blank'} href={data.info.tg.value}
-                                               className="social__link _icon-telegram"></a>
-                                            <a rel={'nofollow'} target={'_blank'} href={data.info?.fb?.value}
-                                               className="social__link _icon-facebook"></a>
-                                            <a rel={'nofollow'} target={'_blank'} href={data.info.inst.value}
-                                               className="social__link _icon-instagram"></a>
+                                            {
+                                                data?.info?.email?.value ?
+                                                    <a rel={'nofollow'} target={'_blank'} href={data.info.email.value}
+                                                       className="social__link _icon-vk"></a>
+                                                    : <></>
+                                            }
+                                            {data?.info?.tg?.value
+                                                ?
+                                                <a rel={'nofollow'} target={'_blank'} href={data.info.tg.value}
+                                                   className="social__link _icon-telegram"></a>
+                                                : <></>
+                                            }
+                                            {data?.info?.fb?.value
+                                                ?
+                                                <a rel={'nofollow'} target={'_blank'} href={data.info.fb.value}
+                                                   className="social__link _icon-facebook"></a>
+                                                : <></>
+                                            }
+                                            {data?.info?.inst?.value
+                                                ?
+                                                <a rel={'nofollow'} target={'_blank'} href={data.info.inst.value}
+                                                   className="social__link _icon-instagram"></a>
+                                                : <></>
+                                            }
+
+
                                         </div>
                                     </div>
                                     <div className="restaurant__hide">
@@ -226,25 +231,75 @@ const Place = ({VITE__API}) => {
                                                 {data.place.description}
                                             </div>
                                             <div className="description-restaurant__list list-product">
-                                                <div
-                                                    className="list-product__item _icon-ruble">{data.info.price.value}</div>
-                                                <div className="list-product__item _icon-time">{data.info.time.value}</div>
-                                                <div
-                                                    className="list-product__item _icon-location">{data.info.location.value}</div>
-                                                <div className="list-product__item _icon-kitchen">{data.info.type.value}
+
+
+                                                {data?.info?.price?.value
+                                                    ?
+                                                    <div className="list-product__item _icon-ruble">
+                                                        {data.info.price.value}
+                                                    </div>
+                                                    : <></>
+                                                }{data?.info?.time?.value
+                                                ?
+                                                <div className="list-product__item _icon-time">
+                                                    {data.info.time.value}
                                                 </div>
-                                                <a href={`mailto:${data.info.email.value}`}
-                                                   className="list-product__item _icon-mail">{data.info.site.value}</a>
-                                                <a href="tel:89291052929"
+                                                : <></>
+                                            }{data?.info?.location?.value
+                                                ?
+                                                <div
+                                                    className="list-product__item _icon-location">
+                                                    {data.info.location.value}
+                                                </div>
+                                                : <></>
+                                            }{data?.info?.type?.value
+                                                ?
+                                                <div className="list-product__item _icon-kitchen">
+                                                    {data.info.type.value}
+                                                </div>
+                                                : <></>
+                                            }{data?.info?.site?.value
+                                                ?
+                                                <a href={`mailto:${data.info.site.value}`}
+                                                   className="list-product__item _icon-mail">{data.info.email.value}</a>
+                                                : <></>
+                                            }{data?.info?.telephone?.value
+                                                ?
+                                                <a href={`tel:${data.info.telephone.value}`}
                                                    className="list-product__item _icon-phone">{data.info.telephone.value}</a>
 
+                                                : <></>
+                                            }
+
+
                                                 <div className="description-restaurant__social social">
-                                                    <a href={data.info.tg.value} className="social__link _icon-vk"></a>
-                                                    <a href={data.info.tg.value}
-                                                       className="social__link _icon-telegram"></a>
-                                                    {/*<a href={data.info.fb.value} className="social__link _icon-facebook"></a>*/}
-                                                    <a href={data.info.inst.value}
-                                                       className="social__link _icon-instagram"></a>
+                                                    {data?.info?.tg?.value
+                                                        ?
+                                                        <a href={data.info.tg.value} className="social__link _icon-vk"></a>
+
+                                                        : <></>
+                                                    }
+                                                    {data?.info?.tg?.value
+                                                        ?
+                                                        <a href={data.info.tg.value}
+                                                           className="social__link _icon-telegram"></a>
+                                                        : <></>
+                                                    }
+                                                    {data?.info?.fb?.value
+                                                        ?
+                                                        <a href={data.info.fb.value}
+                                                           className="social__link _icon-facebook"></a>
+
+                                                        : <></>
+                                                    }
+                                                    {data.info?.inst?.value
+                                                        ?
+                                                        <a href={data.info.inst.value}
+                                                           className="social__link _icon-instagram"></a>
+                                                        : <></>
+                                                    }
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -332,8 +387,9 @@ const Place = ({VITE__API}) => {
 
                                         </div>
                                     </div>
-                                </section> : null}
-
+                                </section>
+                                :
+                                null}
                     </>
             }
 

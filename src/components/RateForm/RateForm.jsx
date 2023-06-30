@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import ReactStars from "react-rating-stars-component/dist/react-stars.js";
 import close from '../../assets/img/close.svg'
 import icon from '../../assets/img/icon.svg'
+import {useSelector} from "react-redux";
 const VITE__API = 'https://api.goodjoy.uz'
 const RateForm = ({data,setIsShow, ratingChanged,handleRateSpace,setText, text,rating, error}) => {
     const [symbols, setSymbols] = useState(100-text.length)
+    const {ratingsNames} = useSelector(state=>state.place)
     const photo = VITE__API + '/places/' + data.photos[0].photo
     const location = data.info.location.value
     const name = data.place.name
@@ -49,7 +51,7 @@ const RateForm = ({data,setIsShow, ratingChanged,handleRateSpace,setText, text,r
                                 />
                             </div>
                             <div className="rating__value">{rating}</div>
-                            <div className="rating__text">Неплохо</div>
+                            <div className="rating__text">{ratingsNames[rating].toUpperCase()}</div>
 
                         </div>
                         <div className="comment-form__title">Напишите отзыв</div>

@@ -871,6 +871,7 @@
   border-radius: 50px 50px 7px 7px;
   background-color: #fffafa;
   border-top: 10px solid #212121;
+  position: relative;
 
   @media (max-width: $mobile) {
     border-top: 3px solid #212121;
@@ -890,7 +891,16 @@
     align-items: center;
     gap: rem(12);
   }
+  &__back-btn{
+    font-size: 32px;
+    font-weight: 700;
+    position: absolute;
+    top: 48%;
+    transform: translateY(-50%);
+    left: 10px;
+    cursor:pointer;
 
+  }
   &__item {
     position: relative;
     font-weight: 400;

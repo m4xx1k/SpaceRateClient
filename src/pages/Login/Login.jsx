@@ -35,7 +35,7 @@ const Login = () => {
                     username,
                     name
                 })
-                navigate('/profile')
+                navigate('/profile',{replace:true})
             } else {
                 setError('Поле не может быть пустым')
             }

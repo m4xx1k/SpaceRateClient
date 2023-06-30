@@ -8,8 +8,8 @@ import {useTelegram} from "../hooks/useTelegram.js";
 const Favourites = ({VITE__API}) => {
     const {user} = useTelegram()
     const {data, isLoading} = useUserFavouritesQuery(user?.id)
-    useEffect(()=>console.log(data),[data])
-    if(!data || isLoading) return <p>loading</p>
+    // useEffect(() => console.log(data), [data])
+    if (data === undefined || data === null || isLoading) return <p>loading</p>
     return (
         <>
             <section className="hero">
@@ -112,11 +112,13 @@ const Favourites = ({VITE__API}) => {
                         <div className="favorite__items">
                             {
 
-                                data.map(e=>(
+                                data.map(e => (
                                     <div className="favorite__item item-favorite">
                                         <Link to={`/place/${e.place._id}`} className="item-favorite__body">
                                             <div className="item-favorite__image-ibg">
-                                                <img src={`${VITE__API}/places/${e.photos[0].photo}`} alt=""/>
+                                                <img
+                                                    src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}
+                                                    alt=""/>
                                                 <div className="item-favorite__labels">
                                                     <button className="item-favorite__label _icon-favorite"></button>
                                                 </div>
@@ -124,12 +126,20 @@ const Favourites = ({VITE__API}) => {
                                             <div className="item-favorite__content">
                                                 <div className="item-favorite__mark">{e.category.name}</div>
                                                 <div className="item-favorite__name">{e.place.name}</div>
-                                                <div className="item-favorite__grade grade grade_small"><span>{e.place.rating.toFixed(1)}</span></div>
+                                                <div className="item-favorite__grade grade grade_small">
+                                                    <span>{e.place.rating.toFixed(1)}</span></div>
                                                 <div className="list-product">
-                                                    <div className="list-product__item _icon-kitchen">{e.info.type.value}
-                                                    </div>
-                                                    <div className="list-product__item _icon-location">{e.info.location.value}
-                                                    </div>
+                                                    {!!e?.info?.type?.value ?
+                                                        <div
+                                                            className="list-product__item _icon-kitchen">{e.info.type.value}
+                                                        </div> : <></>
+                                                    }
+                                                    {
+                                                        e?.info?.location?.value ? <div
+                                                            className="list-product__item _icon-location">{e.info.location.value}
+                                                        </div> : <></>
+                                                    }
+
                                                 </div>
 
                                             </div>
