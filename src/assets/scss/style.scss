@@ -227,13 +227,20 @@ body {
 .item-favorite {
   padding: rem(16) 0 rem(13);
   border-bottom: 1px solid #908d8d;
+  position: absolute;
   &__body {
     display: flex;
     @include adaptiveValue("column-gap", 20, 12);
 
     margin-bottom: rem(10);
   }
-
+  &_unlike{
+    top: 40px;
+    right: 40px;
+    font-size: 24px;
+    cursor:pointer;
+    font-weight: 700;
+  }
   &__image-ibg {
     overflow: hidden;
     border-radius: rem(20);

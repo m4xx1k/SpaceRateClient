@@ -1,14 +1,24 @@
 import React, {useEffect} from 'react';
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Autoplay, EffectFade} from "swiper";
-import {useUserFavouritesQuery} from "../redux/place/place.api.js";
+import {useToggleFavouritePlaceMutation, useUserFavouritesQuery} from "../redux/place/place.api.js";
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
 
 const Favourites = ({VITE__API}) => {
     const {user} = useTelegram()
     const {data, isLoading, isError} = useUserFavouritesQuery(user?.id)
-    // useEffect(() => console.log(data), [data])
+    const [toggleFavourite] = useToggleFavouritePlaceMutation()
+    const handleToggleFavourite = async (id) => {
+        if (!id) {
+            try {
+                const res = await toggleFavourite({placeId: id, telegramId: user?.id})
+                console.log(res)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
     if (isLoading) return <p className={'center'}>loading</p>
     if (isError) return <p className={'center'}>error :/</p>
     return (
@@ -125,6 +135,9 @@ const Favourites = ({VITE__API}) => {
                                                 </div>
                                             </div>
                                             <div className="item-favorite__content">
+                                                <div onClick={() => handleToggleFavourite(e?.place._id)}
+                                                     className="item-favorite_unlike">✛
+                                                </div>
                                                 <div className="item-favorite__mark">{e.category.name}</div>
                                                 <div className="item-favorite__name">{e.place.name}</div>
                                                 <div className="item-favorite__grade grade grade_small">
