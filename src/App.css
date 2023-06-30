@@ -5,3 +5,7 @@
   font-weight: inherit;
   box-sizing: inherit;
 }
+.center{
+  width: fit-content;
+  margin: 0 auto;
+}

@@ -7,9 +7,10 @@ import {useTelegram} from "../hooks/useTelegram.js";
 
 const Favourites = ({VITE__API}) => {
     const {user} = useTelegram()
-    const {data, isLoading} = useUserFavouritesQuery(user?.id)
+    const {data, isLoading, isError} = useUserFavouritesQuery(user?.id)
     // useEffect(() => console.log(data), [data])
-    if (data === undefined || data === null || isLoading) return <p>loading</p>
+    if (isLoading) return <p className={'center'}>loading</p>
+    if (isError) return <p className={'center'}>error :/</p>
     return (
         <>
             <section className="hero">

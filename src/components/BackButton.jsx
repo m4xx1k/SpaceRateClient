@@ -7,7 +7,7 @@ export function BackButton({classname, children}) {
     const navigationStack = useContext(NavigationContext);
     console.log(navigationStack)
     // Не показуємо кнопку, якщо користувач ще не переходив за посиланнями в межах додатку
-    if (navigationStack.length <= 1) {
+    if (navigationStack.length <= 1 || navigationStack.every(elem=>elem==='/')) {
         return null;
     }
     const handleGoBack = () => {
