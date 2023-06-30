@@ -227,7 +227,7 @@ body {
 .item-favorite {
   padding: rem(16) 0 rem(13);
   border-bottom: 1px solid #908d8d;
-  position: absolute;
+  position: relative;
   &__body {
     display: flex;
     @include adaptiveValue("column-gap", 20, 12);
@@ -235,6 +235,8 @@ body {
     margin-bottom: rem(10);
   }
   &_unlike{
+    position: absolute;
+    transform: rotate(45deg);
     top: 40px;
     right: 40px;
     font-size: 24px;
