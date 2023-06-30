@@ -10,7 +10,7 @@ const Favourites = ({VITE__API}) => {
     const {data, isLoading, isError} = useUserFavouritesQuery(user?.id)
     const [toggleFavourite] = useToggleFavouritePlaceMutation()
     const handleToggleFavourite = async (id) => {
-        if (!id) {
+        if (!!id) {
             try {
                 const res = await toggleFavourite({placeId: id, telegramId: user?.id})
                 console.log(res)
