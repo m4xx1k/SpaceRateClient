@@ -14,7 +14,7 @@ const MobilePlace = ({e, i}) => {
                 <div className="item-newtop__grade grade grade_small"><span>{e.place.rating.toFixed(1)}</span></div>
                 <Link to={`/place/${id}`}
                       className="item-newtop__reviews">({!!data && typeof data === 'number' ? data : '-'}) ОТЗЫВЫ</Link>
-                <Link to={`/place/${id}`} className="item-newtop__logo"><img  src={`${VITE__API}/places/${e.photos[0].photo}`} alt=""/></Link>
+                <Link to={`/place/${id}`} className="item-newtop__logo"><img  src={`${VITE__API}/places/${e?.photos[0]?.photo}`} alt=""/></Link>
             </div>
             <Link to={`/place/${id}`} className="item-newtop__link _icon-link">Подробнее</Link>
         </div>

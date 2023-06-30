@@ -119,7 +119,7 @@ const Place = ({VITE__API}) => {
                                     <div className="restaurant__top">
                                         <h1 className="restaurant__title">{data?.place?.name}</h1>
                                         <div className="restaurant__grade grade-restaurant">
-                                            <span>{ratingsNames[Math.ceil(data.place.rating) - 1].toUpperCase()}</span>
+                                            <span>{ratingsNames[!rating ? 0 : Math.ceil(data.place.rating) - 1].toUpperCase()}</span>
                                             <div className="grade-restaurant__rating rating">
                                                 <div className="rating__body">
                                                     <div className="rating__active"></div>

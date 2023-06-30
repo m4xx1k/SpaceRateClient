@@ -38,7 +38,7 @@ const PlaceItem = ({id, info, e}) => {
                                 : <></>
                         }
 
-                        {info.location.value
+                        {info?.location?.value
                             ?
                             <div className="list-product__item _icon-kitchen">{info.type.value}
                             </div>
@@ -54,7 +54,7 @@ const PlaceItem = ({id, info, e}) => {
 
 
                     <img
-                        src={`${VITE__API}/places/${e.photos[0].photo}`}
+                        src={`${VITE__API}/places/${e.photos[0]?.photo}`}
                         alt=""/></Link>
                 <button className="item-ratings__favorite _icon-favorite"></button>
             </div>
