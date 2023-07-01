@@ -3,17 +3,18 @@ import ReactStars from "react-rating-stars-component/dist/react-stars.js";
 import close from '../../assets/img/close.svg'
 import icon from '../../assets/img/icon.svg'
 import {useSelector} from "react-redux";
+
 const VITE__API = 'https://api.goodjoy.uz'
-const RateForm = ({data,setIsShow, ratingChanged,handleRateSpace,setText, text,rating, error}) => {
-    const [symbols, setSymbols] = useState(100-text.length)
-    const {ratingsNames} = useSelector(state=>state.place)
-    const photo = VITE__API + '/places/' + data.photos[0].photo
-    const location = data.info.location.value
+const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error}) => {
+    const [symbols, setSymbols] = useState(100 - text.length)
+    const {ratingsNames} = useSelector(state => state.place)
+    const photo = VITE__API + '/places/' + !!data?.photos?.length ? data.photos[0].photo : ''
+    const location = data?.info?.location?.value ? data.info.location.value : ''
     const name = data.place.name
-    const handleTextChange = e=>{
-        const text =e.target.value
-        setSymbols(100-text.length)
-        if(100-e.target.value.length!==0) setText(text)
+    const handleTextChange = e => {
+        const text = e.target.value
+        setSymbols(1000 - text.length)
+        if (1000 - e.target.value.length !== 0) setText(text)
     }
 
     return (
@@ -21,13 +22,17 @@ const RateForm = ({data,setIsShow, ratingChanged,handleRateSpace,setText, text,r
         <section className="comment">
             <div className="comment__container">
                 <div className="comment__body">
-                    <div className="comment__close" onClick={()=>setIsShow(false)}><img src={close} alt=""/></div>
+                    <div className="comment__close" onClick={() => setIsShow(false)}><img src={close} alt=""/></div>
                     <div className="comment__restaurant">
                         <div className="comment__image-ibg"><img src={photo} alt=""/></div>
                         <div className="comment__content">
                             <div className="comment__name">{name}</div>
                             <div className="comment__list-product list-product">
-                                <div className="list-product__item _icon-location">{location}</div>
+                                {
+                                    location ?
+                                        <div className="list-product__item _icon-location">{location}</div> : <></>
+
+                                }
                             </div>
                         </div>
                     </div>
@@ -51,15 +56,16 @@ const RateForm = ({data,setIsShow, ratingChanged,handleRateSpace,setText, text,r
                                 />
                             </div>
                             <div className="rating__value">{rating}</div>
-                            <div className="rating__text">{ratingsNames[rating-1].toUpperCase()}</div>
+                            <div className="rating__text">{ratingsNames[rating - 1].toUpperCase()}</div>
 
                         </div>
                         <div className="comment-form__title">Напишите отзыв</div>
                         <div className="comment-form__block">
 
-                            <textarea value={text} onChange={handleTextChange} name="" id="" className="comment-form__textarea"
+                            <textarea value={text} onChange={handleTextChange} name="" id=""
+                                      className="comment-form__textarea"
                                       placeholder={rating ? `Вы оценили этого объекта на ${rating} балла из 5, почему? Расскажите, пожалуйста, подробнее.` : ' Расскажите, пожалуйста, подробнее.'}></textarea>
-                            <div className="comment-form__info">Осталось символов {symbols}/100</div>
+                            <div className="comment-form__info">Осталось символов {symbols}/1000</div>
                         </div>
                         <div className="comment-form__label">
                             <label htmlFor="inp1">
@@ -76,7 +82,7 @@ const RateForm = ({data,setIsShow, ratingChanged,handleRateSpace,setText, text,r
         </section>
 
 
-);
+    );
 };
 
 export default RateForm;
