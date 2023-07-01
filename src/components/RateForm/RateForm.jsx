@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 
 const VITE__API = 'https://api.goodjoy.uz'
 const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error}) => {
-    const [symbols, setSymbols] = useState(100 - text.length)
+    const [symbols, setSymbols] = useState(1000 - text.length)
     const {ratingsNames} = useSelector(state => state.place)
     const photo = VITE__API + '/places/' + !!data?.photos?.length ? data.photos[0].photo : ''
     const location = data?.info?.location?.value ? data.info.location.value : ''
@@ -56,7 +56,10 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                                 />
                             </div>
                             <div className="rating__value">{rating}</div>
-                            <div className="rating__text">{ratingsNames[rating - 1].toUpperCase()}</div>
+                            {
+                                rating ?  <div className="rating__text">{ratingsNames[rating - 1].toUpperCase()}</div> : <></>
+                            }
+
 
                         </div>
                         <div className="comment-form__title">Напишите отзыв</div>
