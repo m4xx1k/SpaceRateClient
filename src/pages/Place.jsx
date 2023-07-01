@@ -83,13 +83,16 @@ const Place = ({VITE__API}) => {
         if(isUserLogged){
             setIsShow(true);
             if(newRating) setRating(newRating);
+        }else{
+            navigate('/login')
         }
 
     };
     const handleRateSpace = async e => {
         e?.preventDefault()
+        const {data:isUserLogged} = await findUser({telegramId: user.id})
 
-        if (data) {
+        if (isUserLogged) {
             if (text && rating) {
                 await ratePlace({telegramId: `${user.id}`, value: rating, placeId: id, text})
                 setIsShow(false)
