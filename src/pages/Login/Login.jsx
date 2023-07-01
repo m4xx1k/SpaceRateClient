@@ -18,7 +18,7 @@ const Login = () => {
         const handleFindUser = async () => {
             const {data} = await findUser({telegramId: tgUser?.id})
             if (data) {
-                navigate('/profile', {replace:true})
+                navigate('/profile', {replace: true})
             }
             setIsLoaded(true)
         }
@@ -43,7 +43,7 @@ const Login = () => {
             alert(JSON.stringify(e))
         }
     }
-
+    if (isLoaded) return <p className={'center'}>загрузка</p>
     return (
         <div className={s.container}>
 
