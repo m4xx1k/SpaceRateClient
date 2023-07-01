@@ -3,6 +3,7 @@ import logo from '../assets/img/new_logo.png'
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {useFavouriteCountQuery} from "../redux/place/place.api.js";
+import {BackButton} from "./BackButton";
 
 const Header = () => {
     const [isSideMenu, setIsSideMenu] = useState(false)
@@ -19,8 +20,9 @@ const Header = () => {
         <header className="header">
             <div className="header__container">
                 <div className="header__body">
-
                     <div className="header__info">
+                        <BackButton classname={'links__back-btn'}>{'⇦'}</BackButton>
+
                         <Link to="/" className="header__logo">
                             <img src={logo} alt=""/>
                         </Link>

@@ -1,7 +1,21 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-const VITE__API = 'https://api.goodjoy.uz'
 
+const VITE__API = 'https://api.goodjoy.uz'
+const infos = [
+    {
+        icon: 'ruble',
+        name: 'price'
+    },
+    {
+        icon: 'location',
+        name: 'location'
+    },
+    {
+        icon: 'kitchen',
+        name: 'type'
+    }
+]
 const PlaceItem = ({id, info, e}) => {
     return (
         <article key={id}
@@ -24,26 +38,37 @@ const PlaceItem = ({id, info, e}) => {
                 </div>
                 <div className="item-ratings__bottom">
                     <div className="item-ratings__list list-product">
-                        {info?.price?.value
-                            ?
-                                <div
-                                    className="list-product__item _icon-ruble">{info.price.value}</div>
-                                : <></>
+                        {
+                            infos.map(elem => {
+                                if (info[elem.name]?.value) {
+                                    return <div
+                                        className={`list-product__item _icon-${elem.icon}`}
+                                        key={elem.name}>
+                                        {info[elem.name].value}
+                                    </div>
+                                }
+                            })
                         }
+                        {/*{info?.price?.value*/}
+                        {/*    ?*/}
+                        {/*    <div*/}
+                        {/*        className="list-product__item _icon-ruble">{info.price.value}</div>*/}
+                        {/*    : <></>*/}
+                        {/*}*/}
 
-                        {info?.location?.value
-                            ?
-                                <div
-                                    className="list-product__item _icon-location">{info.location.value}</div>
-                                : <></>
-                        }
+                        {/*{info?.location?.value*/}
+                        {/*    ?*/}
+                        {/*    <div*/}
+                        {/*        className="list-product__item _icon-location">{info.location.value}</div>*/}
+                        {/*    : <></>*/}
+                        {/*}*/}
 
-                        {info?.type?.value
-                            ?
-                            <div className="list-product__item _icon-kitchen">{info.type.value}
-                            </div>
-                                : <></>
-                        }
+                        {/*{info?.type?.value*/}
+                        {/*    ?*/}
+                        {/*    <div className="list-product__item _icon-kitchen">{info.type.value}*/}
+                        {/*    </div>*/}
+                        {/*    : <></>*/}
+                        {/*}*/}
                     </div>
                     <Link to={`/place/${id}`}
                           className="item-ratings__goto _icon-link"></Link>

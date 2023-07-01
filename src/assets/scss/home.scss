@@ -895,12 +895,8 @@
   &__back-btn{
     font-size: 32px;
     font-weight: 700;
-    position: absolute;
-    top: 48%;
     transform: translateY(-50%);
-    left: 10px;
     cursor:pointer;
-
   }
   &__item {
     position: relative;

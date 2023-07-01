@@ -92,6 +92,7 @@ export const {
     useFetchAllRatingsQuery,
     useFindUserPlaceRatingMutation,
     useLazyFetchByCategoryQuery,
+    useFetchByCategoryQuery,
     useRatePlaceMutation,
     useFetchByIdPlaceQuery,
     useFavouriteCountQuery,

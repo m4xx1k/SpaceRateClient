@@ -29,8 +29,11 @@ export const categoryApi = api.injectEndpoints({
                 method:'DELETE',
             }),
             invalidatesTags:['Category']
+        }),
+        findCategoryById:builder.query({
+            query:id=>`category/${id}`
         })
     })
 })
 
-export const { useCreateMutation, useFetchAllQuery,useUpdateMutation, useRemoveMutation} = categoryApi
+export const { useFindCategoryByIdQuery, useFetchAllQuery,useUpdateMutation, useRemoveMutation} = categoryApi

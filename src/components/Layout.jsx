@@ -14,7 +14,7 @@ const Layout = () => {
             </main>
 
             <section className="links">
-                <BackButton classname={'links__back-btn'}>{'⇦'}</BackButton>
+                {/*<BackButton classname={'links__back-btn'}>{'⇦'}</BackButton>*/}
                 <div className="links__container">
                     <div className="links__body">
                         <Link to="/"

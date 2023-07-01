@@ -58,7 +58,11 @@
   content: "\e90d";
 }
 ._icon-ruble:before {
-  content: "\e90e";
+  width: 14px;
+  height: 14px;
+  padding-left: 3px;
+  margin-top: -3px;
+  content: "$";
 }
 ._icon-search:before {
   content: "\e90f";
