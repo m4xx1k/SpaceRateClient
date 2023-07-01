@@ -37,10 +37,10 @@ const Header = () => {
                     <div className="header__menu menu">
                         <nav className="menu__body">
                             <ul className="menu__list">
-                                <li className="menu__item"><a href="https://t.me/spaceratebot" className="menu__link active">Рейтинги</a></li>
-                                <li className="menu__item"><a href="https://t.me/spaceratebot" className="menu__link">Сообщество</a></li>
-                                <li className="menu__item"><a href="https://t.me/spaceratebot" className="menu__link">Обзоры</a></li>
-                                <li className="menu__item"><a href="https://t.me/spaceratebot" className="menu__link">ОТДЕЛ ЗАБОТЫ</a></li>
+                                <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link active">Рейтинги</a></li>
+                                <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link">Сообщество</a></li>
+                                <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link">Обзоры</a></li>
+                                <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link">ОТДЕЛ ЗАБОТЫ</a></li>
                             </ul>
                         </nav>
                     </div>

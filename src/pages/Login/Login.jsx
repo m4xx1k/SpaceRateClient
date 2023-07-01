@@ -23,7 +23,7 @@ const Login = () => {
             setIsLoaded(true)
         }
         if (!tgUser) {
-            window.location.replace('https://t.me/spaceratebot')
+            window.location.replace('https://t.me/goodjoyuz_bot')
         } else handleFindUser()
     }, [])
     const handleLogin = async () => {

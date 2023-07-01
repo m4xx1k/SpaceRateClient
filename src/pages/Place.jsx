@@ -43,7 +43,7 @@ const Place = ({VITE__API}) => {
     const [ratePlace] = useRatePlaceMutation()
     const ratingChanged = async (newRating) => {
         if (!user) {
-            window.location.replace('https://t.me/spaceratebot')
+            window.location.replace('https://t.me/goodjoyuz_bot')
             return
         }
 
@@ -82,7 +82,7 @@ const Place = ({VITE__API}) => {
 
     const handleToggleFavourite = async () => {
         if (!user) {
-            window.location.replace('https://t.me/spaceratebot')
+            window.location.replace('https://t.me/goodjoyuz_bot')
             return
         }
         const {data} = await findUser({telegramId: user.id})

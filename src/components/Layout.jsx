@@ -22,7 +22,7 @@ const Layout = () => {
                         <Link to="/favourites"
                               className={`links__item ${pathname === '/favourites' ? 'links__item_btn' : ''}`}>МНЕ
                             НРАВИТСЯ</Link>
-                        <a href="https://t.me/spaceratebot" className="links__item">ОТДЕЛ ЗАБОТЫ</a>
+                        <a href="https://t.me/goodjoyuz_bot" className="links__item">ОТДЕЛ ЗАБОТЫ</a>
                     </div>
                 </div>
             </section>
