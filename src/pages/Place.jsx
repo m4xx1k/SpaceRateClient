@@ -72,7 +72,7 @@ const Place = ({VITE__API}) => {
     const [text, setText] = useState('')
     const [error, setError] = useState('')
     const [isShow, setIsShow] = useState(false)
-    const [findUserRating] = useFindUserPlaceRatingMutation()
+    // const [findUserRating] = useFindUserPlaceRatingMutation()
     const [ratePlace] = useRatePlaceMutation()
     const ratingChanged = async (newRating) => {
         if (!user) {

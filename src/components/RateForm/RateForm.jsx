@@ -57,7 +57,7 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                             </div>
                             <div className="rating__value">{rating}</div>
                             {
-                                rating ?  <div className="rating__text">{ratingsNames[rating - 1].toUpperCase()}</div> : <></>
+                                rating ?  <div className="rating__text">{ratingsNames[rating - 1]}</div> : <></>
                             }
 
 
