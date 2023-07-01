@@ -38,7 +38,7 @@ const PlaceItem = ({id, info, e}) => {
                                 : <></>
                         }
 
-                        {info?.location?.value
+                        {info?.type?.value
                             ?
                             <div className="list-product__item _icon-kitchen">{info.type.value}
                             </div>
