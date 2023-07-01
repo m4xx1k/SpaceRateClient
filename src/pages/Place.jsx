@@ -57,7 +57,7 @@ const Place = ({VITE__API}) => {
     const {ratingsNames} = useSelector(state => state.place)
     // const [ratings, setRatings] = useState(null)
     const [isLiked, setIsLiked] = useState(false)
-    const {data, isSuccess, isLoading, isError, error: placeError} = useFetchByIdPlaceQuery({
+    const {data, isSuccess, isLoading, isError} = useFetchByIdPlaceQuery({
         id,
         telegramId: user?.id
     })
@@ -79,13 +79,15 @@ const Place = ({VITE__API}) => {
             window.location.replace('https://t.me/goodjoyuz_bot')
             return
         }
+        const {data:isUserLogged} = await findUser({telegramId: user.id})
+        if(isUserLogged){
+            setIsShow(true);
+            if(newRating) setRating(newRating);
+        }
 
-        setIsShow(true);
-        setRating(newRating);
     };
     const handleRateSpace = async e => {
         e?.preventDefault()
-        const {data} = await findUser({telegramId: user.id})
 
         if (data) {
             if (text && rating) {
@@ -154,7 +156,7 @@ const Place = ({VITE__API}) => {
                                         <div className="restaurant__grade grade-restaurant">
 
                                             <span>
-                                                {   !!data.place.rating ?
+                                                {!!data.place.rating ?
 
                                                     ratingsNames[Math.ceil(data.place.rating) - 1].toUpperCase()
                                                     : '-'
@@ -253,7 +255,7 @@ const Place = ({VITE__API}) => {
                                         </div>
                                     </div>
                                     <div className="restaurant__hide">
-                                        <button onClick={() => setIsShow(true)} className="rewievs__btn _icon-comment">
+                                        <button onClick={ratingChanged} className="rewievs__btn _icon-comment">
                                             <span>ОСТАВИТЬ ОТЗЫВ</span></button>
                                         <div className="rating rating_lite rating_set">
                                             <ReactStars
