@@ -18,7 +18,7 @@ const Login = () => {
         const handleFindUser = async () => {
             const {data} = await findUser({telegramId: tgUser?.id})
             if (data) {
-                navigate('/profile')
+                navigate('/profile', {replace:true})
             }
             setIsLoaded(true)
         }
