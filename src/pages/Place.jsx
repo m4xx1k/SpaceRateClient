@@ -258,10 +258,15 @@ const Place = ({VITE__API}) => {
                                                     {data.info.type.value}
                                                 </div>
                                                 : <></>
+                                            }{data?.info?.email?.value
+                                                ?
+                                                <a href={`mailto:${data.info.email.value}`}
+                                                   className="list-product__item _icon-mail">{data.info.email.value}</a>
+                                                : <></>
                                             }{data?.info?.site?.value
                                                 ?
-                                                <a href={`mailto:${data.info.site.value}`}
-                                                   className="list-product__item _icon-mail">{data.info.email.value}</a>
+                                                <a href={`${data.info.site.value}`}
+                                                   className="list-product__item _icon-mail">{data.info.site.value}</a>
                                                 : <></>
                                             }{data?.info?.telephone?.value
                                                 ?
