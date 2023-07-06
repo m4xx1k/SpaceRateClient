@@ -258,7 +258,7 @@ const Place = ({VITE__API}) => {
                                         </div>
                                     </div>
                                     <div className="restaurant__hide">
-                                        <button onClick={ratingChanged} className="rewievs__btn _icon-comment">
+                                        <button onClick={()=>ratingChanged(0)} className="rewievs__btn _icon-comment">
                                             <span>ОСТАВИТЬ ОТЗЫВ</span></button>
                                         <div className="rating rating_lite rating_set">
                                             <ReactStars
