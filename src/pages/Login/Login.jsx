@@ -20,7 +20,7 @@ const Login = () => {
             if (data) {
                 navigate('/profile', {replace: true})
             }
-            setIsLoaded(true)
+            // setIsLoaded(true)
         }
         if (!tgUser) {
             window.location.replace('https://t.me/goodjoyuz_bot')
@@ -43,7 +43,7 @@ const Login = () => {
             alert(JSON.stringify(e))
         }
     }
-    if (isLoaded) return <p className={'center'}>загрузка</p>
+    // if (isLoaded) return <p className={'center'}>загрузка</p>
     return (
         <div className={s.container}>
 
