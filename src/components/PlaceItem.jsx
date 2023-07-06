@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {toWebp} from "../utils.js";
 
 const VITE__API = 'https://api.goodjoy.uz'
 const infos = [
@@ -77,10 +78,15 @@ const PlaceItem = ({id, info, e}) => {
             <div className="item-ratings__image-ibg">
                 <Link to={`/place/${id}`}>
 
+                    <picture>
+                        <source srcSet={toWebp(`${VITE__API}/places/${e.photos[0]?.photo}`)}/>
+                        <img src={`${VITE__API}/places/${e.photos[0]?.photo}`} alt=""/>
+                    </picture>
+                    {/*<img*/}
+                    {/*    src={`${VITE__API}/places/${e.photos[0]?.photo}`}*/}
+                    {/*    alt=""/>*/}
 
-                    <img
-                        src={`${VITE__API}/places/${e.photos[0]?.photo}`}
-                        alt=""/></Link>
+                </Link>
                 <button className="item-ratings__favorite _icon-favorite"></button>
             </div>
         </article>

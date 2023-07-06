@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {useFetchCountRatingsQuery} from "../redux/place/place.api.js";
+import {toWebp} from "../utils.js";
 
 const VITE__API = 'https://api.goodjoy.uz'
 
@@ -22,7 +23,11 @@ const MobilePlace = ({e, i}) => {
                     ({!!data && typeof data === 'number' ? data : '-'}) ОТЗЫВЫ
                 </Link>
                 <Link to={`/place/${id}`} className="item-newtop__logo">
-                    <img src={`${VITE__API}/places/${e?.photos[0]?.photo}`} alt=""/>
+                    <picture>
+                        <source className="item-newtop__logo_img" srcSet={toWebp(`${VITE__API}/places/${e?.photos[0]?.photo}`)}/>
+                        <img className="item-newtop__logo_img" src={`${VITE__API}/places/${e?.photos[0]?.photo}`} alt=""/>
+                    </picture>
+                    {/*<img src={`${VITE__API}/places/${e?.photos[0]?.photo}`} alt=""/>*/}
                 </Link>
             </div>
             <Link to={`/place/${id}`} className="item-newtop__link _icon-link">Подробнее</Link>

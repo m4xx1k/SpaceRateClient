@@ -15,6 +15,7 @@ import ReactStars from "react-rating-stars-component";
 import {Link, useNavigate} from "react-router-dom";
 import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
 import {useSelector} from "react-redux";
+import {toWebp} from "../utils.js";
 
 SwiperCore.use([Pagination, Navigation]);
 const infos = [
@@ -213,7 +214,12 @@ const Place = ({VITE__API}) => {
 
                                             {data.photos.map((e, index) => (<SwiperSlide key={index}
                                                                                          className="restaurant__slide slide-restaurant-ibg swiper-slide">
-                                                <img src={`${VITE__API}/places/${e.photo}`} alt={e.photo}/>
+                                                <picture>
+                                                    <source srcSet={toWebp(`${VITE__API}/places/${e.photo}`)}/>
+                                                    <img
+                                                         src={`${VITE__API}/places/${e.photo}`} alt={`${VITE__API}/places/${e.photo}`}/>
+                                                </picture>
+
                                             </SwiperSlide>))}
                                         </Swiper>
 

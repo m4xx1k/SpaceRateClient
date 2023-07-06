@@ -39,9 +39,12 @@ const Favourites = ({VITE__API}) => {
                                         </div>
                                         <Link to={`/place/${e.place._id}`} className="item-favorite__body">
                                             <div className="item-favorite__image-ibg">
-                                                <img
-                                                    src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}
-                                                    alt=""/>
+                                                <picture>
+                                                    <source srcSet={toWebp(`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`)}/>
+                                                    <img src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`} alt=""/>
+                                                </picture>
+                                                {/*<img src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}*/}
+                                                {/*    alt=""/>*/}
                                                 <div className="item-favorite__labels">
                                                     <button className="item-favorite__label _icon-favorite"></button>
                                                 </div>

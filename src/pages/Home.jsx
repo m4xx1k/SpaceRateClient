@@ -1,15 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {Swiper, SwiperSlide} from 'swiper/react';
-import {Autoplay, EffectFade} from "swiper";
+import React from 'react';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import {useFetchAllQuery} from "../redux/category/category.api.js";
-import {useLazyFetchByCategoryQuery} from "../redux/place/place.api.js";
-import {Link, useNavigate} from "react-router-dom";
-import {useTelegram} from "../hooks/useTelegram.js";
-import MobilePlace from "../components/MobilePlace.jsx";
-import PlaceItem from "../components/PlaceItem.jsx";
+import { useNavigate} from "react-router-dom";
 import HeroSlider from "../components/HeroSlider.jsx";
+import {toWebp} from "../utils.js";
 
 const Home = ({VITE__API}) => {
     // const [activeCategory, setActiveCategory] = useState(null)
@@ -41,8 +36,13 @@ const Home = ({VITE__API}) => {
 
                                     {category.name}
                                     <div className="item-categories__img-ibg">
-                                        <img src={`${VITE__API}/categories/${category.photo}`}
-                                             alt=""/>
+                                        <picture>
+                                            <source srcSet={toWebp(`${VITE__API}/categories/${category.photo.split('.')[0]}.webp`)}/>
+                                            <img src={`${VITE__API}/categories/${category.photo}`}
+                                                 alt=""/>
+                                        </picture>
+
+
                                     </div>
                                 </div>
                             ))
