@@ -37,7 +37,7 @@ const Home = ({VITE__API}) => {
                                     {category.name}
                                     <div className="item-categories__img-ibg">
                                         <picture>
-                                            <source srcSet={toWebp(`${VITE__API}/categories/${category.photo.split('.')[0]}.webp`)}/>
+                                            <source srcSet={toWebp(`${VITE__API}/categories/${category.photo}`)}/>
                                             <img src={`${VITE__API}/categories/${category.photo}`}
                                                  alt=""/>
                                         </picture>

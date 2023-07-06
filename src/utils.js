@@ -4,7 +4,8 @@ export const useAuth = ()=>{
     return useSelector((state) => state.user)
 }
 export const  toWebp = (src)=>{
-    let lastDotPosition = src.lastIndexOf(".");
-    let result = src.substring(0, lastDotPosition).replaceAll(' ','%20')
-    return `${result}.webp`
+    console.log(src)
+    let srcWithoutExt = src.replaceAll(' ','%20').split('.').slice(0,-1).join('.')
+    console.log(src.replaceAll(' ','%20').split('.').slice(0,-1))
+    return `${srcWithoutExt}.webp`
 }
