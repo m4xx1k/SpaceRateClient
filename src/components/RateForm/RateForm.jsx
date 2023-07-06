@@ -4,11 +4,10 @@ import close from '../../assets/img/close.svg'
 import icon from '../../assets/img/icon.svg'
 import {useSelector} from "react-redux";
 
-const VITE__API = 'https://api.goodjoy.uz'
-const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error}) => {
+
+const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error,firstPhoto}) => {
     const [symbols, setSymbols] = useState(1000 - text.length)
     const {ratingsNames} = useSelector(state => state.place)
-    const photo = VITE__API + '/places/' + data.photos[0].photo
     const location = data?.info?.location?.value ? data.info.location.value : ''
     const name = data.place.name
     const handleTextChange = e => {
@@ -24,7 +23,7 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                 <div className="comment__body">
                     <div className="comment__close" onClick={() => setIsShow(false)}><img src={close} alt=""/></div>
                     <div className="comment__restaurant">
-                        <div className="comment__image-ibg"><img src={photo} alt={photo}/></div>
+                        <div className="comment__image-ibg"><img src={firstPhoto} alt={firstPhoto}/></div>
                         <div className="comment__content">
                             <div className="comment__name">{name}</div>
                             <div className="comment__list-product list-product">

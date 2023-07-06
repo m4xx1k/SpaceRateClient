@@ -61,6 +61,11 @@ const Place = ({VITE__API}) => {
         id,
         telegramId: user?.id
     })
+    const [firstPhoto, setFirstPhoto] = useState('')
+    useEffect(() => {
+        if (isSuccess)
+            setFirstPhoto(VITE__API + '/places/' + data.photos[0].photo)
+    }, [isSuccess])
     const [toggleFavourite] = useToggleFavouritePlaceMutation()
     const {data: ratings} = useFetchAllRatingsQuery({
         placeId: id,
@@ -74,23 +79,23 @@ const Place = ({VITE__API}) => {
     const [isShow, setIsShow] = useState(false)
     // const [findUserRating] = useFindUserPlaceRatingMutation()
     const [ratePlace] = useRatePlaceMutation()
-    const ratingChanged = async (newRating=0) => {
+    const ratingChanged = async (newRating = 0) => {
         if (!user) {
             window.location.replace('https://t.me/goodjoyuz_bot')
             return
         }
-        const {data:isUserLogged} = await findUser({telegramId: user.id})
-        if(isUserLogged){
+        const {data: isUserLogged} = await findUser({telegramId: user.id})
+        if (isUserLogged) {
             setIsShow(true);
-            if(newRating) setRating(newRating);
-        }else{
+            if (newRating) setRating(newRating);
+        } else {
             navigate('/login')
         }
 
     };
     const handleRateSpace = async e => {
         e?.preventDefault()
-        const {data:isUserLogged} = await findUser({telegramId: user.id})
+        const {data: isUserLogged} = await findUser({telegramId: user.id})
 
         if (isUserLogged) {
             if (text && rating) {
@@ -147,7 +152,7 @@ const Place = ({VITE__API}) => {
 
             {
                 isShow ?
-                    <RateForm data={data} placeId={id} text={text} rating={rating} error={error} setError={setError}
+                    <RateForm firstPhoto={firstPhoto} data={data} placeId={id} text={text} rating={rating} error={error} setError={setError}
                               setIsShow={setIsShow} setText={setText} ratingChanged={ratingChanged}
                               handleRateSpace={handleRateSpace}/>
                     : <>
@@ -258,7 +263,7 @@ const Place = ({VITE__API}) => {
                                         </div>
                                     </div>
                                     <div className="restaurant__hide">
-                                        <button onClick={()=>ratingChanged(0)} className="rewievs__btn _icon-comment">
+                                        <button onClick={() => ratingChanged(0)} className="rewievs__btn _icon-comment">
                                             <span>ОСТАВИТЬ ОТЗЫВ</span></button>
                                         <div className="rating rating_lite rating_set">
                                             <ReactStars
