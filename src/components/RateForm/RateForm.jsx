@@ -8,7 +8,7 @@ const VITE__API = 'https://api.goodjoy.uz'
 const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error}) => {
     const [symbols, setSymbols] = useState(1000 - text.length)
     const {ratingsNames} = useSelector(state => state.place)
-    const photo = VITE__API + '/places/' + !!data?.photos?.length ? data.photos[0].photo : ''
+    const photo = VITE__API + '/places/' + data.photos[0].photo
     const location = data?.info?.location?.value ? data.info.location.value : ''
     const name = data.place.name
     const handleTextChange = e => {
