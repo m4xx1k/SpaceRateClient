@@ -24,7 +24,7 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                 <div className="comment__body">
                     <div className="comment__close" onClick={() => setIsShow(false)}><img src={close} alt=""/></div>
                     <div className="comment__restaurant">
-                        <div className="comment__image-ibg"><img src={photo} alt=""/></div>
+                        <div className="comment__image-ibg"><img src={photo} alt={photo}/></div>
                         <div className="comment__content">
                             <div className="comment__name">{name}</div>
                             <div className="comment__list-product list-product">
