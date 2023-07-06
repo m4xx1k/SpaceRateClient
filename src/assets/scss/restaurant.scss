@@ -216,6 +216,7 @@
 
   &__list {
     position: relative;
+    max-width: 90%;
     @media (max-width: $mobile) {
       border-top: 1px solid rgba(33, 33, 33, 0.5);
       border-bottom: 1px solid rgba(33, 33, 33, 0.5);

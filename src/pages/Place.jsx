@@ -74,7 +74,7 @@ const Place = ({VITE__API}) => {
     const [isShow, setIsShow] = useState(false)
     // const [findUserRating] = useFindUserPlaceRatingMutation()
     const [ratePlace] = useRatePlaceMutation()
-    const ratingChanged = async (newRating) => {
+    const ratingChanged = async (newRating=0) => {
         if (!user) {
             window.location.replace('https://t.me/goodjoyuz_bot')
             return
