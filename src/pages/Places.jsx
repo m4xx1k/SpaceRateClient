@@ -5,18 +5,13 @@ import {useFetchByCategoryQuery} from "../redux/place/place.api.js";
 import PlaceItem from "../components/PlaceItem.jsx";
 import MobilePlace from "../components/MobilePlace.jsx";
 import {useFindCategoryByIdQuery} from "../redux/category/category.api.js";
+import CategoryAdvertisement from "../components/CategoryAdvertisement/CategoryAdvertisement.jsx";
 
 const Places = () => {
     const {id} = useParams()
-    // const [activeCategory, setActiveCategory] = useState(null)
     const {data: category} = useFindCategoryByIdQuery(id)
     const {data: places, isError, isLoading} = useFetchByCategoryQuery(id)
-    // const [places, setPlaces] = useState([])
-    // const selectCategory = async category => {
-    //     const {data} = await fetchPlaces(category._id)
-    //     setPlaces(data)
-    //     // setActiveCategory(category._id)
-    // }
+
     if (isLoading) return <p className="center">загрузка</p>
     if (isError) return <p className="center">ошибка</p>
     if (places === null || places === undefined) {
@@ -27,6 +22,7 @@ const Places = () => {
         <>
 
             <HeroSlider/>
+            <CategoryAdvertisement id={id}/>
             {
                 places?.length ?
                     <section className="ratings">

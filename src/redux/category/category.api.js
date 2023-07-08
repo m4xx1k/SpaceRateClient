@@ -6,6 +6,10 @@ export const categoryApi = api.injectEndpoints({
             query:()=>'category',
             providesTags:['Category']
         }),
+        fetchAdvertisements:builder.query({
+            query:id=>`categoryAdvertisement/${id}`,
+            providesTags:['Advertisement']
+        }),
 
         create: builder.mutation({
             query: body =>({
@@ -36,4 +40,4 @@ export const categoryApi = api.injectEndpoints({
     })
 })
 
-export const { useFindCategoryByIdQuery, useFetchAllQuery,useUpdateMutation, useRemoveMutation} = categoryApi
+export const { useFindCategoryByIdQuery, useFetchAllQuery,useFetchAdvertisementsQuery, useRemoveMutation} = categoryApi
