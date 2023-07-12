@@ -20,7 +20,7 @@
     import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
     import {useSelector} from "react-redux";
     import {toWebp} from "../utils.js";
-    
+
     SwiperCore.use([Pagination, Navigation]);
     const infosElements = [
         {
@@ -72,7 +72,7 @@
                     }}
                     className="restaurant__slider slider-restaurant"
                 >
-    
+
                     {(isSuccessPhotos && !isLoadingPhotos) ? photos.map((e, index) => (
                             <SwiperSlide key={index}
                                          className="restaurant__slide slide-restaurant-ibg swiper-slide">
@@ -83,7 +83,7 @@
                                         alt={`${VITE__API}/places/${e.photo}`}/>
                                     {/*<img src="https://via.placeholder.com/374" alt=""/>*/}
                                 </picture>
-    
+
                             </SwiperSlide>
                         ))
                         :
@@ -92,7 +92,7 @@
                         </SwiperSlide>
                     }
                 </Swiper>
-    
+
                 <div className="slider-restaurant__pagination pagination"></div>
                 <div className="slider-restaurant__navigation navigation">
                     <button className="navigation__button button-prev"></button>
@@ -107,7 +107,7 @@
             telegramId: userId
         })
         return (
-    
+
             <section className="rewievs">
                 <div className="rewievs__container">
                     <div className="rewievs__body">
@@ -149,7 +149,7 @@
                                         )
                                     })
                                     :
-    
+
                                     <>
                                         <div
                                             className="rewievs__list_item-loading slider-rewievs__slide slide-rewievs swiper-slide"></div>
@@ -157,18 +157,18 @@
                                             className="rewievs__list_item-loading slider-rewievs__slide slide-rewievs swiper-slide"></div>
                                     </>
                             }
-    
+
                         </div>
                     </div>
                 </div>
             </section>
-    
-    
+
+
         )
     }
-    
+
     const VITE__API = import.meta.env.VITE__API
-    
+
     const Place = () => {
         const {id} = useParams()
         const {user, tg} = useTelegram()
@@ -180,11 +180,11 @@
             telegramId: user?.id
         })
         const {data: infos, isLoading: isLoadingInfos, isSuccess: isSuccessInfos} = useFindPlaceInfosQuery(id)
-    
+
         const [toggleFavourite] = useToggleFavouritePlaceMutation()
-    
+
         const [findUser] = useFindUserMutation()
-    
+
         const [rating, setRating] = useState(0)
         const [text, setText] = useState('')
         const [error, setError] = useState('')
@@ -202,12 +202,12 @@
             } else {
                 navigate('/login')
             }
-    
+
         };
         const handleRateSpace = async e => {
             e?.preventDefault()
             const {data: isUserLogged} = await findUser({telegramId: user.id})
-    
+
             if (isUserLogged) {
                 if (text && rating) {
                     await ratePlace({telegramId: `${user.id}`, value: rating, placeId: id, text})
@@ -216,7 +216,7 @@
                     setError('Заполните рейтинг и текст')
                 }
             } else navigate('/login')
-    
+
         }
         useEffect(() => {
             tg.ready()
@@ -225,14 +225,14 @@
                 if (isSuccess) setIsLiked(place?.isFavourite)
             }, [place, isSuccess]
         )
-    
+
         const handleToggleFavourite = async () => {
             if (!user) {
                 window.location.replace('https://t.me/goodjoyuz_bot')
                 return
             }
             const {data} = await findUser({telegramId: user.id})
-    
+
             if (data) {
                 try {
                     await toggleFavourite({placeId: id, telegramId: user?.id})
@@ -243,18 +243,19 @@
             } else {
                 navigate('/login')
             }
-    
+
         }
-    
+
         if (isError) return <p>error:/</p>
         if (!place || !isSuccessInfos || !isSuccess) return <p></p>
         return (<>
-    
+
                 {
                     isShow ?
                         <RateForm data={place} placeId={id} text={text} rating={rating}
                                   error={error}
                                   setError={setError}
+                                  info={infos}
                                   setIsShow={setIsShow} setText={setText} ratingChanged={ratingChanged}
                                   handleRateSpace={handleRateSpace}/>
                         : <>
@@ -264,10 +265,10 @@
                                         <div className="restaurant__top">
                                             <h1 className="restaurant__title">{place?.name}</h1>
                                             <div className="restaurant__grade grade-restaurant">
-    
+
                                                 <span>
                                                     {place.rating ?
-    
+
                                                         ratingsNames[Math.ceil(place.rating) - 1].toUpperCase()
                                                         : '-'
                                                     }
@@ -291,12 +292,12 @@
                                                     {/*<span className={'rating__star'}>★</span>*/}
                                                     <div className="rating__value">{place.rating.toFixed(1)}</div>
                                                 </div>
-    
+
                                             </div>
                                         </div>
-    
+
                                         <PhotosSlider id={id}/>
-    
+
                                         <div className="restaurant__bottom">
                                             <button onClick={handleToggleFavourite}
                                                     className={clsx("restaurant__like", isLiked && "restaurant__liked", "_icon-favorite")}>МНЕ
@@ -309,7 +310,7 @@
                                                             return <a target={'_blank'} rel={'noreferrer'} key={elem.name}
                                                                       href={infos[elem.name].value}
                                                                       className={`social__link _icon-${elem.icon}`}></a>
-    
+
                                                         }
                                                     })
                                                 }
@@ -328,9 +329,9 @@
                                                 />
                                                 <div className="rating__value"></div>
                                             </div>
-    
+
                                         </div>
-    
+
                                         <div className="restaurant__description description-restaurant">
                                             <div className="description-restaurant__title">ОПИСАНИЕ:</div>
                                             <div className="description-restaurant__body">
@@ -352,7 +353,7 @@
                                                                         }
                                                                     })
                                                                 }
-    
+
                                                                 {infos?.email?.value
                                                                     &&
                                                                     <a href={`mailto:${infos.email.value}`}
@@ -367,7 +368,7 @@
                                                                     &&
                                                                     <a href={`tel:${infos.telephone.value}`}
                                                                        className="list-product__item _icon-phone">{infos.telephone.value}</a>
-    
+
                                                                 }
                                                             </>
                                                             :
@@ -375,13 +376,13 @@
                                                                 <div className={'list-product__item-loading'}></div>
                                                                 <div className={`list-product__item-loading`}></div>
                                                                 <div className={`list-product__item-loading`}></div>
-    
+
                                                             </>
                                                     }
-    
-    
+
+
                                                     <div className="description-restaurant__social social">
-    
+
                                                         {
                                                             socials.map(elem => {
                                                                 if (infos[elem.name]?.value) {
@@ -391,24 +392,24 @@
                                                                 }
                                                             })
                                                         }
-    
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-    
-    
+
+
                                     </div>
                                 </div>
                             </section>
                             <Reviews placeId={id} userId={user?.id}/>
-    
+
                         </>
                 }
-    
-    
+
+
             </>
         );
     };
-    
+
     export default Place;

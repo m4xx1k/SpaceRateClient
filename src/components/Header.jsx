@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import logo from '../assets/img/new_logo.png'
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";

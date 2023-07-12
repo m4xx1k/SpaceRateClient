@@ -7,13 +7,13 @@ import {toWebp} from "../../utils.js";
 import {useFindPlaceImagesQuery} from "../../redux/place/place.api.js";
 
 
-const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error,firstPhoto}) => {
+const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error, info}) => {
     const {data: photos, isLoading: isLoadingPhotos, isSuccess: isSuccessPhotos} = useFindPlaceImagesQuery(data._id)
 
     const [symbols, setSymbols] = useState(1000 - text.length)
     const {ratingsNames} = useSelector(state => state.place)
-    const location = data?.info?.location?.value ? data.info.location.value : ''
-    const name = data.place.name
+    const location = info?.location?.value ? info.location.value : ''
+    const name = data.name
     const handleTextChange = e => {
         const text = e.target.value
         setSymbols(1000 - text.length)
