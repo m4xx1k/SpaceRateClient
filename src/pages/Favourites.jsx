@@ -5,6 +5,8 @@ import {useToggleFavouritePlaceMutation, useUserFavouritesQuery} from "../redux/
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
 import HeroSlider from "../components/HeroSlider.jsx";
+import {toWebp} from "../utils.js";
+
 const VITE__API = import.meta.env.VITE__API
 const Favourites = () => {
     const {user} = useTelegram()
@@ -19,7 +21,6 @@ const Favourites = () => {
             }
         }
     }
-    if (isLoading) return <p className={'center'}>loading</p>
     if (isError) return <p className={'center'}>error :/</p>
     return (
         <>
@@ -31,50 +32,57 @@ const Favourites = () => {
                         <div className="favorite__items">
                             {
 
-                                data.map(e => (
-                                    <div className="favorite__item item-favorite">
-                                        <div onClick={() => handleToggleFavourite(e?.place._id)}
-                                             className="item-favorite_unlike">✛
+                                !isLoading && Array.isArray(data) ? data.map(e => (
+                                        <div className="favorite__item item-favorite">
+                                            <div onClick={() => handleToggleFavourite(e?.place._id)}
+                                                 className="item-favorite_unlike">✛
+                                            </div>
+                                            <Link to={`/place/${e.place._id}`} className="item-favorite__body">
+                                                <div className="item-favorite__image-ibg">
+                                                    <picture>
+                                                        <source
+                                                            srcSet={toWebp(`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`)}/>
+                                                        <img
+                                                            src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}
+                                                            alt=""/>
+                                                    </picture>
+                                                    {/*<img src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}*/}
+                                                    {/*    alt=""/>*/}
+                                                    <div className="item-favorite__labels">
+                                                        <button className="item-favorite__label _icon-favorite"></button>
+                                                    </div>
+                                                </div>
+                                                <div className="item-favorite__content">
+
+                                                    <div className="item-favorite__mark">{e.category.name}</div>
+                                                    <div className="item-favorite__name">{e.place.name}</div>
+                                                    <div className="item-favorite__grade grade grade_small">
+                                                        <span>{e.place.rating.toFixed(1)}</span></div>
+                                                    <div className="list-product">
+                                                        {e?.info?.type?.value ?
+                                                            <div
+                                                                className="list-product__item _icon-kitchen">{e.info.type.value}
+                                                            </div> : <></>
+                                                        }
+                                                        {
+                                                            e?.info?.location?.value ? <div
+                                                                className="list-product__item _icon-location">{e.info.location.value}
+                                                            </div> : <></>
+                                                        }
+
+                                                    </div>
+
+                                                </div>
+                                            </Link>
+                                            <button className="item-favorite__button">Добавьте комментарий</button>
+                                            <span className="item-favorite__info">(видно только вам)</span>
                                         </div>
-                                        <Link to={`/place/${e.place._id}`} className="item-favorite__body">
-                                            <div className="item-favorite__image-ibg">
-                                                <picture>
-                                                    <source srcSet={toWebp(`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`)}/>
-                                                    <img src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`} alt=""/>
-                                                </picture>
-                                                {/*<img src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}*/}
-                                                {/*    alt=""/>*/}
-                                                <div className="item-favorite__labels">
-                                                    <button className="item-favorite__label _icon-favorite"></button>
-                                                </div>
-                                            </div>
-                                            <div className="item-favorite__content">
 
-                                                <div className="item-favorite__mark">{e.category.name}</div>
-                                                <div className="item-favorite__name">{e.place.name}</div>
-                                                <div className="item-favorite__grade grade grade_small">
-                                                    <span>{e.place.rating.toFixed(1)}</span></div>
-                                                <div className="list-product">
-                                                    {e?.info?.type?.value ?
-                                                        <div
-                                                            className="list-product__item _icon-kitchen">{e.info.type.value}
-                                                        </div> : <></>
-                                                    }
-                                                    {
-                                                        e?.info?.location?.value ? <div
-                                                            className="list-product__item _icon-location">{e.info.location.value}
-                                                        </div> : <></>
-                                                    }
-
-                                                </div>
-
-                                            </div>
-                                        </Link>
-                                        <button className="item-favorite__button">Добавьте комментарий</button>
-                                        <span className="item-favorite__info">(видно только вам)</span>
-                                    </div>
-
-                                ))
+                                    )) :
+                                    <>
+                                        <div style={{width:'90vw',height:202}} className="skeleton-loading"></div>
+                                        <div style={{width:'90vw',height:202}} className="skeleton-loading"></div>
+                                    </>
                             }
                         </div>
                     </div>
