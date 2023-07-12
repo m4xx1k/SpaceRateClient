@@ -167,7 +167,7 @@ const Reviews = ({placeId, userId}) => {
     )
 }
 
-const VITE__API = import.meta.env.VITE__APP
+const VITE__API = import.meta.env.VITE__API
 
 const Place = () => {
     const {id} = useParams()

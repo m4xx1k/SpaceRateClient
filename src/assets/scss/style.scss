@@ -15,13 +15,15 @@
   font-weight: 700;
   font-style: normal;
 }
+
 @font-face {
   font-family: Gravity;
   font-display: swap;
-  src: url("../fonts/Gravity-Book.otf") format("opentype"),url("../fonts/Gravity-Book.ttf") format("truetype");
+  src: url("../fonts/Gravity-Book.otf") format("opentype"), url("../fonts/Gravity-Book.ttf") format("truetype");
   font-weight: 350;
   font-style: normal;
 }
+
 @font-face {
   font-family: Gravity;
   font-display: swap;
@@ -29,6 +31,7 @@
   font-weight: 700;
   font-style: normal;
 }
+
 @font-face {
   font-family: Gravity;
   font-display: swap;
@@ -36,6 +39,7 @@
   font-weight: 400;
   font-style: normal;
 }
+
 @font-face {
   font-family: icons;
   font-display: swap;
@@ -103,14 +107,17 @@ body {
     touch-action: none;
     overscroll-behavior: none;
   }
+
   // Сайт завантажений
   .loaded & {
   }
 }
+
 //added display none
-.none{
+.none {
   display: none !important;
 }
+
 // Оболонка wrapper ============================================================================================================================================================================================================================================================================================================================================================================================================================================
 .wrapper {
   min-height: 100%;
@@ -124,11 +131,13 @@ body {
   > main {
     flex: 1 1 auto;
   }
+
   // Фікс для слайдерів
   > * {
     min-width: 0;
   }
 }
+
 // Обмежуючий контейнер ======================================================================================================================================================================================================================
 /*
 (i) Стилі будуть застосовуватись до
@@ -192,18 +201,21 @@ body {
 // Підключення стилів окремих сторінок
 @import "home";
 @import "restaurant";
-#root{
+#root {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-.page{
+
+.page {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
 }
+
 .favorite {
   padding: rem(20) 0 rem(30);
+
   &__container {
   }
 
@@ -224,25 +236,29 @@ body {
   &__item {
   }
 }
+
 .item-favorite {
   padding: rem(16) 0 rem(13);
   border-bottom: 1px solid #908d8d;
   position: relative;
+
   &__body {
     display: flex;
     @include adaptiveValue("column-gap", 20, 12);
 
     margin-bottom: rem(10);
   }
-  &_unlike{
+
+  &_unlike {
     position: absolute;
     transform: rotate(45deg);
     top: 10px;
     right: 20px;
     font-size: 24px;
-    cursor:pointer;
+    cursor: pointer;
     font-weight: 700;
   }
+
   &__image-ibg {
     overflow: hidden;
     border-radius: rem(20);
@@ -302,16 +318,20 @@ body {
     align-items: flex-start;
   }
 }
+
 .grade {
 }
+
 .description-restaurant {
   &__list {
   }
 }
+
 .list-product {
   &__item {
     max-width: 90%;
-    &-loading{
+
+    &-loading {
       position: relative;
       height: 20px;
       width: 90%;
@@ -320,7 +340,8 @@ body {
       background: #ededed;
       border-radius: 4px;
     }
-    &-loading::before{
+
+    &-loading::before {
       position: absolute;
       z-index: 0;
       border-radius: 4px;
@@ -329,7 +350,7 @@ body {
       height: 100%;
       width: 90%;
       animation: loading 1s infinite;
-      background: linear-gradient(to right, transparent,#D9D9D9,transparent);
+      background: linear-gradient(to right, transparent, #D9D9D9, transparent);
 
 
     }
@@ -348,6 +369,7 @@ body {
   @media (max-width: $mobile) {
     border-top: 3px solid #212121;
   }
+
   &__container {
   }
 
@@ -376,9 +398,11 @@ body {
   &__logo {
   }
 }
+
 .item-newtop {
   border-bottom: 1px solid #212121;
   padding: rem(10) 0 rem(6);
+
   &__body {
     display: flex;
     align-items: center;
@@ -424,9 +448,11 @@ body {
     text-decoration-line: underline;
   }
 }
+
 ._icon-favorite:before {
   content: "\e904";
 }
+
 .grade_small span::before {
   font-size: 1.375rem;
   content: "★";
@@ -435,8 +461,10 @@ body {
   -webkit-text-stroke: 0;
   margin-right: 0.25rem;
 }
+
 .comment {
   padding: rem(10) 0 rem(15);
+
   &__container {
   }
 
@@ -486,6 +514,7 @@ body {
     margin-top: rem(20);
   }
 }
+
 .comment-form {
   &__title {
     font-size: 26px;
@@ -525,9 +554,11 @@ body {
     display: block;
     width: max-content;
     padding: rem(9) 0;
+
     input {
       display: none;
     }
+
     label {
       display: flex;
       align-items: center;
@@ -565,6 +596,7 @@ body {
     display: flex;
     column-gap: rem(5);
   }
+
   .rating__value {
     display: none;
   }
@@ -574,6 +606,7 @@ body {
     text-transform: uppercase;
   }
 }
+
 // <RATING>
 // Сніппет (HTML): rating
 .rating {
@@ -586,9 +619,11 @@ body {
   text-stroke: 0.1px #000;
   -webkit-text-stroke: 0.1px #000;
 }
+
 .rating.rating_sending {
   opacity: 0.2;
 }
+
 .rating.rating_set .rating__active,
 .rating.rating_set .rating__item {
   cursor: pointer;
@@ -597,6 +632,7 @@ body {
 .rating__body {
   position: relative;
 }
+
 .rating__body::before {
   content: "★★★★★";
   //commented
@@ -604,6 +640,7 @@ body {
   display: none !important;
   color: #fff;
 }
+
 .rating__active {
   position: absolute;
   width: 0%;
@@ -612,6 +649,7 @@ body {
   left: 0;
   overflow: hidden;
 }
+
 .rating__active::before {
   content: "★★★★★";
   position: absolute;
@@ -630,16 +668,19 @@ body {
   top: 0;
   left: 0;
 }
+
 .rating__item {
   flex: 0 0 20%;
   height: 100%;
   opacity: 0;
 }
+
 .rating__value {
   font-size: 50%;
   line-height: 1;
   padding: 0px 0px 0px 10px;
 }
+
 .rating__text {
   color: #212121;
   font-size: 10px;
@@ -654,6 +695,7 @@ body {
 
   .rating__active::before {
   }
+
   .rating__body::before {
     text-stroke: 1px #000;
     -webkit-text-stroke: 1px #000;
@@ -663,12 +705,14 @@ body {
     display: none;
   }
 }
-.rating__star{
+
+.rating__star {
   color: #fcd400;
   font-size: 1.5625rem;
   text-stroke: .5px #000;
   -webkit-text-stroke: 0.5px #000;
 }
+
 .newtop {
   background-color: #fffafa;
   border-radius: 50px 50px 7px 7px;
@@ -678,6 +722,7 @@ body {
   @media (max-width: $mobile) {
     border-top: 3px solid #212121;
   }
+
   &__container {
   }
 
@@ -706,9 +751,11 @@ body {
   &__logo {
   }
 }
+
 .item-newtop {
   border-bottom: 1px solid #212121;
   padding: rem(10) 0 rem(6);
+
   &__body {
     display: flex;
     align-items: center;
@@ -735,14 +782,15 @@ body {
 
   &__logo {
     border-radius: 50%;
-    border: 0.688px solid #212121;
-    background: #fff;
+    background: #ddd;
 
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    &_img{
+    &_img {
       border-radius: 50%;
 
       width: 32px;
@@ -761,11 +809,34 @@ body {
     text-decoration-line: underline;
   }
 }
+
+.skeleton-loading {
+
+  position: relative;
+  overflow: hidden;
+  background: #ededed;
+border-radius: 4px;
+  margin: 4px 0;
+  &::before {
+    position: absolute;
+    z-index: 0;
+    border-radius: 4px;
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    animation: loading 1s infinite;
+    background: linear-gradient(to right, transparent, #D9D9D9, transparent);
+
+
+  }
+}
+
 @keyframes loading {
-  0%{
+  0% {
     transform: translateX(-100%);
   }
-  100%{
+  100% {
     transform: translateX(100%);
   }
 }

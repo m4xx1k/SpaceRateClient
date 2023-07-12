@@ -10,7 +10,6 @@ import Profile from "./pages/Profile/Profile.jsx";
 import Favourites from "./pages/Favourites.jsx";
 import Places from "./pages/Places.jsx";
 
-
 function App() {
     return (
         <Routes>

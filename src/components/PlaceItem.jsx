@@ -3,8 +3,7 @@ import {Link} from "react-router-dom";
 import {toWebp} from "../utils.js";
 import {useFindPlaceInfosQuery} from "../redux/place/place.api.js";
 
-const VITE__API = import.meta.env.VITE__APP
-
+const VITE__API = import.meta.env.VITE__API
 const infos = [
     {
         icon: 'ruble',

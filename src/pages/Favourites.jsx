@@ -5,7 +5,7 @@ import {useToggleFavouritePlaceMutation, useUserFavouritesQuery} from "../redux/
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
 import HeroSlider from "../components/HeroSlider.jsx";
-const VITE__API = import.meta.env.VITE__APP
+const VITE__API = import.meta.env.VITE__API
 const Favourites = () => {
     const {user} = useTelegram()
     const {data, isLoading, isError} = useUserFavouritesQuery(user?.id)

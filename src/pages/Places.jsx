@@ -29,7 +29,7 @@ const Places = () => {
 
                         <div className="ratings__items ratings__items_pc">
                             {
-                             !isLoading &&   places.map(e => {
+                                !isLoading && places.map(e => {
 
                                     return <PlaceItem e={e} id={e._id} key={e._id}/>
 
@@ -42,7 +42,20 @@ const Places = () => {
                         <div className="ratings__items ratings__items_mob">
 
                             {
-                              !isLoading &&  places?.map((e, i) => <MobilePlace key={i} e={e} i={i}/>)
+                                !isLoading ? places?.map((e, i) => <MobilePlace key={i} e={e} i={i}/>) :
+
+                                    <>
+                                        <div style={{height:64}} className="skeleton-loading"></div>
+                                        <div style={{height:64}} className="skeleton-loading"></div>
+                                        <div style={{height:64}} className="skeleton-loading"></div>
+                                        <div style={{height:64}} className="skeleton-loading"></div>
+                                        <div style={{height:64}} className="skeleton-loading"></div>
+                                        <div style={{height:64}} className="skeleton-loading"></div>
+                                        <div style={{height:64}} className="skeleton-loading"></div>
+                                        <div style={{height:64}} className="skeleton-loading"></div>
+                                        <div style={{height:64}} className="skeleton-loading"></div>
+                                    </>
+
                             }
 
 
@@ -53,7 +66,7 @@ const Places = () => {
             </section>
 
             {
-              !isLoading &&  places?.length === 0 ?
+                !isLoading && places?.length === 0 ?
                     <div className="ratings__container">
                         <div className="ratings__body">
                             <h2 className="ratings__title title title_1">пока нету мест в

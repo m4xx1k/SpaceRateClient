@@ -3,8 +3,7 @@ import {Link} from "react-router-dom";
 import {useFetchCountRatingsQuery, useFindPlaceImagesQuery} from "../redux/place/place.api.js";
 import {toWebp} from "../utils.js";
 
-const VITE__API = import.meta.env.VITE__APP
-
+const VITE__API = import.meta.env.VITE__API
 const MobilePlace = ({e, i}) => {
     const id = e._id
     const {data} = useFetchCountRatingsQuery(id)
