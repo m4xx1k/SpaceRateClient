@@ -1,8 +1,10 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {toWebp} from "../utils.js";
+import {useFindPlaceInfosQuery} from "../redux/place/place.api.js";
 
-const VITE__API = 'https://api.goodjoy.uz'
+const VITE__API = import.meta.env.VITE__APP
+
 const infos = [
     {
         icon: 'ruble',
@@ -17,30 +19,32 @@ const infos = [
         name: 'type'
     }
 ]
-const PlaceItem = ({id, info, e}) => {
+const PlaceItem = ({id, e}) => {
+    const {data:info,isLoading, isSuccess} = useFindPlaceInfosQuery(id)
+    const {data:photos, isSuccess:isSuccessPhotos} = useFindPlaceInfosQuery(id)
     return (
         <article key={id}
                  className="ratings__item item-ratings">
             <div className="item-ratings__content">
                 <div className="item-ratings__top">
                     <Link to={`/place/${id}`}
-                          className="item-ratings__name">{e.place.name}</Link>
+                          className="item-ratings__name">{e.name}</Link>
                     <div className="item-ratings__grade">
                         <div className="grade">
                             {/*ИДЕАЛЬНО */}
-                            <span>{e.place.rating?.toFixed(1)}</span></div>
+                            <span>{e.rating?.toFixed(1)}</span></div>
                         <Link to={`/place/${id}`}
                               className="link">читать все отзывы</Link>
                     </div>
                 </div>
                 <div className="item-ratings__text">{
-                    e.place.description
+                    e.description
                 }
                 </div>
                 <div className="item-ratings__bottom">
                     <div className="item-ratings__list list-product">
                         {
-                            infos.map(elem => {
+                           !isLoading && isSuccess && infos.map(elem => {
                                 if (info[elem.name]?.value) {
                                     return <div
                                         className={`list-product__item _icon-${elem.icon}`}
@@ -50,26 +54,7 @@ const PlaceItem = ({id, info, e}) => {
                                 }
                             })
                         }
-                        {/*{info?.price?.value*/}
-                        {/*    ?*/}
-                        {/*    <div*/}
-                        {/*        className="list-product__item _icon-ruble">{info.price.value}</div>*/}
-                        {/*    : <></>*/}
-                        {/*}*/}
 
-                        {/*{info?.location?.value*/}
-                        {/*    ?*/}
-                        {/*    <div*/}
-                        {/*        className="list-product__item _icon-location">{info.location.value}</div>*/}
-                        {/*    : <></>*/}
-                        {/*}*/}
-
-                        {/*{info?.type?.value*/}
-                        {/*    ?*/}
-                        {/*    <div className="list-product__item _icon-kitchen">{info.type.value}*/}
-                        {/*    </div>*/}
-                        {/*    : <></>*/}
-                        {/*}*/}
                     </div>
                     <Link to={`/place/${id}`}
                           className="item-ratings__goto _icon-link"></Link>
@@ -77,14 +62,14 @@ const PlaceItem = ({id, info, e}) => {
             </div>
             <div className="item-ratings__image-ibg">
                 <Link to={`/place/${id}`}>
-
-                    <picture>
-                        <source srcSet={toWebp(`${VITE__API}/places/${e.photos[0]?.photo}`)}/>
-                        <img src={`${VITE__API}/places/${e.photos[0]?.photo}`} alt=""/>
-                    </picture>
-                    {/*<img*/}
-                    {/*    src={`${VITE__API}/places/${e.photos[0]?.photo}`}*/}
-                    {/*    alt=""/>*/}
+                    {
+                        isSuccessPhotos && (
+                            <picture >
+                                <source  srcSet={toWebp(`${VITE__API}/places/${photos[0]?.photo}`)}/>
+                                <img src={`${VITE__API}/places/${photos[0]?.photo}`} alt=""/>
+                            </picture>
+                        )
+                    }
 
                 </Link>
                 <button className="item-ratings__favorite _icon-favorite"></button>

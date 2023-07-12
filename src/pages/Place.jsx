@@ -3,7 +3,11 @@ import {useParams} from "react-router";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {
     useFetchAllRatingsQuery,
-    useFetchByIdPlaceQuery, useFindUserPlaceRatingMutation, useRatePlaceMutation,
+    useFetchByIdPlaceQuery,
+    useFindPlaceImagesQuery,
+    useFindPlaceInfosQuery,
+    useFindPlaceMainByIdQuery,
+    useRatePlaceMutation,
     useToggleFavouritePlaceMutation
 } from "../redux/place/place.api.js";
 import SwiperCore, {Pagination, Navigation} from 'swiper/core';
@@ -12,13 +16,13 @@ import dayjs from "dayjs";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {clsx} from 'clsx';
 import ReactStars from "react-rating-stars-component";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
 import {useSelector} from "react-redux";
 import {toWebp} from "../utils.js";
 
 SwiperCore.use([Pagination, Navigation]);
-const infos = [
+const infosElements = [
     {
         icon: 'ruble',
         name: 'price'
@@ -35,8 +39,6 @@ const infos = [
         name: 'type'
     }
 ]
-
-
 const socials = [
     {
         name: 'tg',
@@ -51,34 +53,142 @@ const socials = [
         icon: 'instagram'
     },
 ]
-const Place = ({VITE__API}) => {
+const PhotosSlider = ({id}) => {
+    const {data: photos, isLoading: isLoadingPhotos, isSuccess: isSuccessPhotos} = useFindPlaceImagesQuery(id)
+    return (<div className="restaurant__slider slider-restaurant">
+            <Swiper
+                pagination={{clickable: true}}
+                navigation={true}
+                breakpoints={{
+                    320: {
+                        slidesPerView: 1, spaceBetween: 10,
+                    }, 768: {
+                        slidesPerView: 1.5, spaceBetween: 40,
+                    }, 992: {
+                        slidesPerView: 2, spaceBetween: 40,
+                    }, 1268: {
+                        slidesPerView: 2, spaceBetween: 60,
+                    },
+                }}
+                className="restaurant__slider slider-restaurant"
+            >
+
+                {(isSuccessPhotos && !isLoadingPhotos) ? photos.map((e, index) => (
+                        <SwiperSlide key={index}
+                                     className="restaurant__slide slide-restaurant-ibg swiper-slide">
+                            <picture>
+                                <source srcSet={toWebp(`${VITE__API}/places/${e.photo}`)}/>
+                                <img
+                                    src={`${VITE__API}/places/${e.photo}`}
+                                    alt={`${VITE__API}/places/${e.photo}`}/>
+                                {/*<img src="https://via.placeholder.com/374" alt=""/>*/}
+                            </picture>
+
+                        </SwiperSlide>
+                    ))
+                    :
+                    <SwiperSlide className="restaurant__slide slide-restaurant-ibg-loading swiper-slide">
+                        <></>
+                    </SwiperSlide>
+                }
+            </Swiper>
+
+            <div className="slider-restaurant__pagination pagination"></div>
+            <div className="slider-restaurant__navigation navigation">
+                <button className="navigation__button button-prev"></button>
+                <button className="navigation__button button-next"></button>
+            </div>
+        </div>
+    )
+}
+const Reviews = ({placeId, userId}) => {
+    const {data, isLoading, isSuccess} = useFetchAllRatingsQuery({
+        placeId,
+        telegramId: userId
+    })
+    return (
+
+        <section className="rewievs">
+            <div className="rewievs__container">
+                <div className="rewievs__body">
+                    <div className="rewievs__top">
+                        <h2 className="rewievs__title">ОТЗЫВЫ:</h2>
+                        <div className="rewievs__control">
+                            <button className="none rewievs__btn _icon-comment">
+                                <span>ОСТАВИТЬ ОТЗЫВ</span>
+                            </button>
+                            <div
+                                className="rewievs__navigation navigation navigation_small navigation_black">
+                            </div>
+                        </div>
+                    </div>
+                    <div className={'rewievs__list'}>
+                        {
+                            (!isLoading && isSuccess) ? data.ratings.map((e, index) => {
+                                    return (
+                                        <div
+                                            className="rewievs__list_item slider-rewievs__slide slide-rewievs swiper-slide"
+                                            key={index}>
+                                            <div className="slide-rewievs__top">
+                                                <div className="slide-rewievs__ico"><img
+                                                    src={e?.user?.picture ? e.user.picture : 'Username'}
+                                                    alt=""/>
+                                                </div>
+                                                <div className="slide-rewievs__info">
+                                                    <div
+                                                        className="slide-rewievs__name">{e?.user?.username ? e.user.username : 'Username'}</div>
+                                                    <div
+                                                        className="slide-rewievs__place">{e?.user?.name ? e.user.name : 'Name'}</div>
+                                                </div>
+                                            </div>
+                                            <div className="slide-rewievs__text">{e.text}
+                                            </div>
+                                            <div
+                                                className="slide-rewievs__date">{dayjs(e.date).format('DD.MM.YYYY HH:mm')}</div>
+                                        </div>
+                                    )
+                                })
+                                :
+
+                                <>
+                                    <div
+                                        className="rewievs__list_item-loading slider-rewievs__slide slide-rewievs swiper-slide"></div>
+                                    <div
+                                        className="rewievs__list_item-loading slider-rewievs__slide slide-rewievs swiper-slide"></div>
+                                </>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    )
+}
+
+const VITE__API = import.meta.env.VITE__APP
+
+const Place = () => {
     const {id} = useParams()
     const {user, tg} = useTelegram()
     const navigate = useNavigate()
     const {ratingsNames} = useSelector(state => state.place)
-    // const [ratings, setRatings] = useState(null)
     const [isLiked, setIsLiked] = useState(false)
-    const {data, isSuccess, isLoading, isError} = useFetchByIdPlaceQuery({
+    const {data: place, isSuccess, isLoading, isError, error: placeError} = useFindPlaceMainByIdQuery({
         id,
         telegramId: user?.id
     })
-    const [firstPhoto, setFirstPhoto] = useState('')
-    useEffect(() => {
-        if (isSuccess)
-            setFirstPhoto(VITE__API + '/places/' + data.photos[0].photo)
-    }, [isSuccess])
+    const {data: infos, isLoading: isLoadingInfos, isSuccess: isSuccessInfos} = useFindPlaceInfosQuery(id)
+
     const [toggleFavourite] = useToggleFavouritePlaceMutation()
-    const {data: ratings} = useFetchAllRatingsQuery({
-        placeId: id,
-        telegramId: user?.id
-    })
+
     const [findUser] = useFindUserMutation()
 
     const [rating, setRating] = useState(0)
     const [text, setText] = useState('')
     const [error, setError] = useState('')
     const [isShow, setIsShow] = useState(false)
-    // const [findUserRating] = useFindUserPlaceRatingMutation()
     const [ratePlace] = useRatePlaceMutation()
     const ratingChanged = async (newRating = 0) => {
         if (!user) {
@@ -112,17 +222,9 @@ const Place = ({VITE__API}) => {
         tg.ready()
     }, [])
     useEffect(() => {
-        if (isSuccess) {
-
-            setIsLiked(data?.isFavourite)
-        }
-        // const handleFetchAllRatings = async () => {
-        //     const {data} = await fetchRatings({placeId: id})
-        //     setRatings(data.ratings)
-        // }
-        // if (ratings === null) handleFetchAllRatings()
-        // console.log({data, isSuccess, isError, placeError})
-    }, [data, isSuccess, isError, error])
+            if (isSuccess) setIsLiked(place?.isFavourite)
+        }, [place, isSuccess]
+    )
 
     const handleToggleFavourite = async () => {
         if (!user) {
@@ -133,8 +235,7 @@ const Place = ({VITE__API}) => {
 
         if (data) {
             try {
-                const res = await toggleFavourite({placeId: id, telegramId: user?.id})
-                console.log(res)
+                await toggleFavourite({placeId: id, telegramId: user?.id})
                 setIsLiked(prev => !prev)
             } catch (e) {
                 console.log(e)
@@ -145,15 +246,15 @@ const Place = ({VITE__API}) => {
 
     }
 
-    const swiperRef = useRef();
-    if (isLoading) return <p></p>
     if (isError) return <p>error:/</p>
-    if (!data || !ratings?.ratings) return <p></p>
+    if (!place || !isSuccessInfos || !isSuccess) return <p></p>
     return (<>
 
             {
                 isShow ?
-                    <RateForm firstPhoto={firstPhoto} data={data} placeId={id} text={text} rating={rating} error={error} setError={setError}
+                    <RateForm data={place} placeId={id} text={text} rating={rating}
+                              error={error}
+                              setError={setError}
                               setIsShow={setIsShow} setText={setText} ratingChanged={ratingChanged}
                               handleRateSpace={handleRateSpace}/>
                     : <>
@@ -161,13 +262,13 @@ const Place = ({VITE__API}) => {
                             <div className="restaurant__container">
                                 <div className="restaurant__body">
                                     <div className="restaurant__top">
-                                        <h1 className="restaurant__title">{data?.place?.name}</h1>
+                                        <h1 className="restaurant__title">{place?.name}</h1>
                                         <div className="restaurant__grade grade-restaurant">
 
                                             <span>
-                                                {!!data.place.rating ?
+                                                {place.rating ?
 
-                                                    ratingsNames[Math.ceil(data.place.rating) - 1].toUpperCase()
+                                                    ratingsNames[Math.ceil(place.rating) - 1].toUpperCase()
                                                     : '-'
                                                 }
                                             </span>
@@ -188,47 +289,13 @@ const Place = ({VITE__API}) => {
                                                     </div>
                                                 </div>
                                                 {/*<span className={'rating__star'}>★</span>*/}
-                                                <div className="rating__value">{data.place.rating.toFixed(1)}</div>
+                                                <div className="rating__value">{place.rating.toFixed(1)}</div>
                                             </div>
 
                                         </div>
                                     </div>
 
-                                    <div className="restaurant__slider slider-restaurant">
-                                        <Swiper
-                                            pagination={{clickable: true}}
-                                            navigation={true}
-                                            breakpoints={{
-                                                320: {
-                                                    slidesPerView: 1, spaceBetween: 10,
-                                                }, 768: {
-                                                    slidesPerView: 1.5, spaceBetween: 40,
-                                                }, 992: {
-                                                    slidesPerView: 2, spaceBetween: 40,
-                                                }, 1268: {
-                                                    slidesPerView: 2, spaceBetween: 60,
-                                                },
-                                            }}
-                                            className="restaurant__slider slider-restaurant"
-                                        >
-
-                                            {data.photos.map((e, index) => (<SwiperSlide key={index}
-                                                                                         className="restaurant__slide slide-restaurant-ibg swiper-slide">
-                                                <picture>
-                                                    <source srcSet={toWebp(`${VITE__API}/places/${e.photo}`)}/>
-                                                    <img
-                                                         src={`${VITE__API}/places/${e.photo}`} alt={`${VITE__API}/places/${e.photo}`}/>
-                                                </picture>
-
-                                            </SwiperSlide>))}
-                                        </Swiper>
-
-                                        <div className="slider-restaurant__pagination pagination"></div>
-                                        <div className="slider-restaurant__navigation navigation">
-                                            <button className="navigation__button button-prev"></button>
-                                            <button className="navigation__button button-next"></button>
-                                        </div>
-                                    </div>
+                                    <PhotosSlider id={id}/>
 
                                     <div className="restaurant__bottom">
                                         <button onClick={handleToggleFavourite}
@@ -237,35 +304,15 @@ const Place = ({VITE__API}) => {
                                         </button>
                                         <div className="restaurant__social social">
                                             {
-                                                socials.map(elem => {
-                                                    if (data?.info[elem.name]?.value) {
+                                                isSuccessInfos && socials.map(elem => {
+                                                    if (infos[elem.name]?.value) {
                                                         return <a target={'_blank'} rel={'noreferrer'} key={elem.name}
-                                                                  href={data.info[elem.name].value}
+                                                                  href={infos[elem.name].value}
                                                                   className={`social__link _icon-${elem.icon}`}></a>
 
                                                     }
                                                 })
                                             }
-                                            {/*{data?.info?.tg?.value*/}
-                                            {/*    ?*/}
-                                            {/*    <a rel={'nofollow'} target={'_blank'} href={data.info.tg.value}*/}
-                                            {/*       className="social__link _icon-telegram"></a>*/}
-                                            {/*    : <></>*/}
-                                            {/*}*/}
-                                            {/*{data?.info?.fb?.value*/}
-                                            {/*    ?*/}
-                                            {/*    <a rel={'nofollow'} target={'_blank'} href={data.info.fb.value}*/}
-                                            {/*       className="social__link _icon-facebook"></a>*/}
-                                            {/*    : <></>*/}
-                                            {/*}*/}
-                                            {/*{data?.info?.inst?.value*/}
-                                            {/*    ?*/}
-                                            {/*    <a rel={'nofollow'} target={'_blank'} href={data.info.inst.value}*/}
-                                            {/*       className="social__link _icon-instagram"></a>*/}
-                                            {/*    : <></>*/}
-                                            {/*}*/}
-
-
                                         </div>
                                     </div>
                                     <div className="restaurant__hide">
@@ -288,37 +335,48 @@ const Place = ({VITE__API}) => {
                                         <div className="description-restaurant__title">ОПИСАНИЕ:</div>
                                         <div className="description-restaurant__body">
                                             <div className="description-restaurant__text">
-                                                {data.place.description}
+                                                {place.description}
                                             </div>
                                             <div className="description-restaurant__list list-product">
-
                                                 {
-                                                    infos.map(elem => {
-                                                        if (data?.info[elem.name]?.value) {
-                                                            return <div
-                                                                className={`list-product__item _icon-${elem.icon}`}
-                                                                key={elem.name}>
-                                                                {data.info[elem.name].value}
-                                                            </div>
-                                                        }
-                                                    })
-                                                }
+                                                    !isLoadingInfos ?
+                                                        <>
+                                                            {
+                                                                infosElements.map(elem => {
+                                                                    if (infos[elem.name]?.value) {
+                                                                        return <div
+                                                                            className={`list-product__item _icon-${elem.icon}`}
+                                                                            key={elem.name}>
+                                                                            {infos[elem.name].value}
+                                                                        </div>
+                                                                    }
+                                                                })
+                                                            }
 
-                                                {data?.info?.email?.value
-                                                    &&
-                                                    <a href={`mailto:${data.info.email.value}`}
-                                                       className="list-product__item _icon-mail">{data.info.email.value}</a>
-                                                }
-                                                {data?.info?.site?.value
-                                                    &&
-                                                    <a href={`${data.info.site.value}`}
-                                                       className="list-product__item _icon-mail">{data.info.site.value}</a>
-                                                }
-                                                {data?.info?.telephone?.value
-                                                    &&
-                                                    <a href={`tel:${data.info.telephone.value}`}
-                                                       className="list-product__item _icon-phone">{data.info.telephone.value}</a>
+                                                            {infos?.email?.value
+                                                                &&
+                                                                <a href={`mailto:${infos.email.value}`}
+                                                                   className="list-product__item _icon-mail">{infos.email.value}</a>
+                                                            }
+                                                            {infos?.site?.value
+                                                                &&
+                                                                <a href={`${infos.site.value}`}
+                                                                   className="list-product__item _icon-mail">{infos.site.value}</a>
+                                                            }
+                                                            {infos?.telephone?.value
+                                                                &&
+                                                                <a href={`tel:${infos.telephone.value}`}
+                                                                   className="list-product__item _icon-phone">{infos.telephone.value}</a>
 
+                                                            }
+                                                        </>
+                                                        :
+                                                        <>
+                                                            <div className={'list-product__item-loading'}></div>
+                                                            <div className={`list-product__item-loading`}></div>
+                                                            <div className={`list-product__item-loading`}></div>
+
+                                                        </>
                                                 }
 
 
@@ -326,8 +384,9 @@ const Place = ({VITE__API}) => {
 
                                                     {
                                                         socials.map(elem => {
-                                                            if (data?.info[elem.name]?.value) {
-                                                                return <a key={elem.name} href={data.info[elem.name].value}
+                                                            if (infos[elem.name]?.value) {
+                                                                return <a key={elem.name}
+                                                                          href={infos[elem.name].value}
                                                                           className={`social__link _icon-${elem.icon}`}></a>
                                                             }
                                                         })
@@ -342,89 +401,8 @@ const Place = ({VITE__API}) => {
                                 </div>
                             </div>
                         </section>
-                        {
-                            !!ratings?.ratings?.length && ratings.ratings.length > 0 ?
-                                <section className="rewievs">
-                                    <div className="rewievs__container">
-                                        <div className="rewievs__body">
-                                            <div className="rewievs__top">
-                                                <h2 className="rewievs__title">ОТЗЫВЫ:</h2>
-                                                <div className="rewievs__control">
-                                                    <button className="none rewievs__btn _icon-comment">
-                                                        <span>ОСТАВИТЬ ОТЗЫВ</span>
-                                                    </button>
-                                                    <div
-                                                        className="rewievs__navigation navigation navigation_small navigation_black">
-                                                        {/*<button onClick={() => swiperRef.current.slidePrev()}*/}
-                                                        {/*        className="navigation__button button-prev"></button>*/}
-                                                        {/*<button onClick={() => swiperRef.current.slideNext()}*/}
-                                                        {/*        className="navigation__button button-next"></button>*/}
-                                                    </div>
-                                                </div>
-                                            </div>
+                        <Reviews placeId={id} userId={user?.id}/>
 
-                                            <div className={'rewievs__list'}>
-                                                {ratings.ratings.map((e, index) => {
-                                                    // const {data} = await fetchRatings({placeId: id})
-                                                    // const e = data.ratings[index]
-                                                    return (
-                                                        // <div className="swiper-slide" key={index}>
-                                                        //     <ReviewSlide key={e._id} e={e} index={index}/>
-                                                        // </div>
-                                                        <div
-                                                            className="rewievs__list_item slider-rewievs__slide slide-rewievs swiper-slide"
-                                                            key={index}>
-                                                            <div className="slide-rewievs__top">
-                                                                <div className="slide-rewievs__ico"><img
-                                                                    src={e?.user?.picture ? e.user.picture : 'Username'}
-                                                                    alt=""/>
-                                                                </div>
-                                                                <div className="slide-rewievs__info">
-                                                                    <div
-                                                                        className="slide-rewievs__name">{e?.user?.username ? e.user.username : 'Username'}</div>
-                                                                    <div
-                                                                        className="slide-rewievs__place">{e?.user?.name ? e.user.name : 'Name'}</div>
-                                                                </div>
-                                                            </div>
-                                                            <div className="slide-rewievs__text">{e.text}
-                                                            </div>
-                                                            <div
-                                                                className="slide-rewievs__date">{dayjs(e.date).format('DD.MM.YYYY HH:mm')}</div>
-                                                        </div>
-
-                                                    )
-                                                })}
-
-                                            </div>
-                                            {/*<Swiper*/}
-                                            {/*    pagination={{clickable: true}}*/}
-                                            {/*    navigation={true}*/}
-                                            {/*    breakpoints={{*/}
-                                            {/*        320: {*/}
-                                            {/*            slidesPerView: 1, spaceBetween: 10,*/}
-                                            {/*        }, 768: {*/}
-                                            {/*            slidesPerView: 1.5, spaceBetween: 40,*/}
-                                            {/*        }, 992: {*/}
-                                            {/*            slidesPerView: 2, spaceBetween: 40,*/}
-                                            {/*        }, 1268: {*/}
-                                            {/*            slidesPerView: 2, spaceBetween: 60,*/}
-                                            {/*        },*/}
-                                            {/*    }}*/}
-                                            {/*    onSwiper={(swiper) => {*/}
-                                            {/*        swiperRef.current = swiper;*/}
-                                            {/*    }}*/}
-
-                                            {/*    className="rewievs__slider slider-rewievs swiper slider-rewievs__wrapper swiper-wrapper"*/}
-                                            {/*>*/}
-
-                                            {/*</Swiper>*/}
-
-
-                                        </div>
-                                    </div>
-                                </section>
-                                :
-                                null}
                     </>
             }
 

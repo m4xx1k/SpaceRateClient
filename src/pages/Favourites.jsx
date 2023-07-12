@@ -5,16 +5,15 @@ import {useToggleFavouritePlaceMutation, useUserFavouritesQuery} from "../redux/
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
 import HeroSlider from "../components/HeroSlider.jsx";
-
-const Favourites = ({VITE__API}) => {
+const VITE__API = import.meta.env.VITE__APP
+const Favourites = () => {
     const {user} = useTelegram()
     const {data, isLoading, isError} = useUserFavouritesQuery(user?.id)
     const [toggleFavourite] = useToggleFavouritePlaceMutation()
     const handleToggleFavourite = async (id) => {
         if (!!id) {
             try {
-                const res = await toggleFavourite({placeId: id, telegramId: user?.id})
-                console.log(res)
+                await toggleFavourite({placeId: id, telegramId: user?.id})
             } catch (e) {
                 console.log(e)
             }

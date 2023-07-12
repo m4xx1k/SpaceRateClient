@@ -5,16 +5,13 @@ import {NavigationContext} from "./NavigationProvider";
 export function BackButton({classname, children}) {
     const navigate = useNavigate();
     const navigationStack = useContext(NavigationContext);
-    console.log(navigationStack)
     // Не показуємо кнопку, якщо користувач ще не переходив за посиланнями в межах додатку
-    if (navigationStack.length <= 1 || navigationStack.every(elem=>elem==='/')) {
+    if (navigationStack.length <= 1 || navigationStack.every(elem => elem === '/')) {
         return null;
     }
     const handleGoBack = () => {
-        if (navigationStack.length > 1) {
-            navigate(-1)
-        }
-    }
+        if (navigationStack.length > 1) navigate(-1)
 
+    }
     return <button className={classname} onClick={handleGoBack}>{children}</button>;
 }

@@ -9,7 +9,7 @@ export const placeApi = api.injectEndpoints({
         fetchAllRatings: builder.query({
             query: body => ({
                 url: 'place/ratings',
-                params:{...body}
+                params: {...body}
             }),
             providesTags: ['Rating']
         }),
@@ -21,6 +21,7 @@ export const placeApi = api.injectEndpoints({
             providesTags: ['Place']
 
         }),
+
         fetchCountRatings: builder.query({
             query: id => ({
                 url: `place/countratings/${id}`,
@@ -41,6 +42,31 @@ export const placeApi = api.injectEndpoints({
         fetchByCategory: builder.query({
             query: id => `place/category/${id}`,
             providesTags: ['Category', 'Place']
+        }),
+        findPlaceMainById: builder.query({
+            query: ({id,telegramId}) => ({
+                url: `place/findPlaceMainById`,
+                params: {placeId:id,telegramId}
+            }), providesTags: ['Category', 'Place']
+        }),
+        findAllPlacesMainByCategoryId: builder.query({
+            query: id => ({
+                url: `place/findAllPlacesMainByCategoryId`,
+                params: {id}
+            }), providesTags: ['Category', 'Place']
+        }),
+        findPlaceInfos: builder.query({
+            query: id => ({
+                url: `place/findPlaceInfos`,
+                params: {id}
+            }),
+            providesTags: ['Category', 'Place']
+        }),
+        findPlaceImages: builder.query({
+            query: id => ({
+                url: `place/findPlaceImages`,
+                params: {id}
+            }), providesTags: ['Category', 'Place']
         }),
         createPlace: builder.mutation({
             query: body => ({
@@ -92,6 +118,10 @@ export const {
     useFetchAllRatingsQuery,
     useFindUserPlaceRatingMutation,
     useLazyFetchByCategoryQuery,
+    useFindPlaceImagesQuery,
+    useFindPlaceMainByIdQuery,
+    useFindPlaceInfosQuery,
+    useFindAllPlacesMainByCategoryIdQuery,
     useFetchByCategoryQuery,
     useRatePlaceMutation,
     useFetchByIdPlaceQuery,

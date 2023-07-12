@@ -2,22 +2,13 @@ import React from 'react';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import {useFetchAllQuery} from "../redux/category/category.api.js";
-import { useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import HeroSlider from "../components/HeroSlider.jsx";
 import {toWebp} from "../utils.js";
+const VITE__API = import.meta.env.VITE__APP
 
-const Home = ({VITE__API}) => {
-    // const [activeCategory, setActiveCategory] = useState(null)
+const Home = () => {
     const {data} = useFetchAllQuery()
-    const navigate = useNavigate()
-    // const [fetchPlaces] = useLazyFetchByCategoryQuery()
-    // const [places, setPlaces] = useState([])
-    const selectCategory = async category => {
-        navigate(`/places/${category._id}`)
-        // const {data} = await fetchPlaces(category._id)
-        // setPlaces(data)
-        // setActiveCategory(category._id)
-    }
 
     return (<>
 
@@ -29,9 +20,9 @@ const Home = ({VITE__API}) => {
                     <div className="categories__items">
                         {
                             data?.map(category => (
-                                <div onClick={() => selectCategory(category)} key={category._id}
+                                <Link to={`/places/${category._id}`} key={category._id}
                                     // className={`categories__item item-categories${category._id === activeCategory ? ' active' : ''}`}
-                                     className={`categories__item item-categories`}
+                                      className={`categories__item item-categories`}
                                 >
 
                                     {category.name}
@@ -44,7 +35,7 @@ const Home = ({VITE__API}) => {
 
 
                                     </div>
-                                </div>
+                                </Link>
                             ))
                         }
 

@@ -311,8 +311,30 @@ body {
 .list-product {
   &__item {
     max-width: 90%;
+    &-loading{
+      position: relative;
+      height: 20px;
+      width: 90%;
+      max-width: 90%;
+      overflow: hidden;
+      background: #ededed;
+      border-radius: 4px;
+    }
+    &-loading::before{
+      position: absolute;
+      z-index: 0;
+      border-radius: 4px;
+      content: "";
+      display: block;
+      height: 100%;
+      width: 90%;
+      animation: loading 1s infinite;
+      background: linear-gradient(to right, transparent,#D9D9D9,transparent);
 
+
+    }
   }
+
 }
 
 //========================================================================================================================================================
@@ -737,5 +759,13 @@ body {
     font-family: Gravity;
     font-weight: 700;
     text-decoration-line: underline;
+  }
+}
+@keyframes loading {
+  0%{
+    transform: translateX(-100%);
+  }
+  100%{
+    transform: translateX(100%);
   }
 }

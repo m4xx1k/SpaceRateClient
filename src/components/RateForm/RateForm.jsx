@@ -4,9 +4,12 @@ import close from '../../assets/img/close.svg'
 import icon from '../../assets/img/icon.svg'
 import {useSelector} from "react-redux";
 import {toWebp} from "../../utils.js";
+import {useFindPlaceImagesQuery} from "../../redux/place/place.api.js";
 
 
 const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error,firstPhoto}) => {
+    const {data: photos, isLoading: isLoadingPhotos, isSuccess: isSuccessPhotos} = useFindPlaceImagesQuery(data._id)
+
     const [symbols, setSymbols] = useState(1000 - text.length)
     const {ratingsNames} = useSelector(state => state.place)
     const location = data?.info?.location?.value ? data.info.location.value : ''
@@ -24,13 +27,18 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                 <div className="comment__body">
                     <div className="comment__close" onClick={() => setIsShow(false)}><img src={close} alt=""/></div>
                     <div className="comment__restaurant">
-                        <div className="comment__image-ibg">
-                            <picture>
-                                <source srcSet={toWebp(firstPhoto)}/>
-                                <img src={firstPhoto} alt=""/>
-                            </picture>
-                            {/*<img src={firstPhoto} alt={firstPhoto}/>*/}
-                        </div>
+                        {
+                            isSuccessPhotos && (
+                                <div className="comment__image-ibg">
+                                    <picture>
+                                        <source srcSet={toWebp(photos[0]?.photo)}/>
+                                        <img src={photos[0]?.photo} alt=""/>
+                                    </picture>
+                                    {/*<img src={firstPhoto} alt={firstPhoto}/>*/}
+                                </div>
+                            )
+                        }
+
                         <div className="comment__content">
                             <div className="comment__name">{name}</div>
                             <div className="comment__list-product list-product">
