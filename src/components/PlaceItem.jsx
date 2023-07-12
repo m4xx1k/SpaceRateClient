@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {toWebp} from "../utils.js";
-import {useFindPlaceInfosQuery} from "../redux/place/place.api.js";
+import {useFindPlaceImagesQuery, useFindPlaceInfosQuery} from "../redux/place/place.api.js";
 
 const VITE__API = import.meta.env.VITE__API
 const infos = [
@@ -20,7 +20,7 @@ const infos = [
 ]
 const PlaceItem = ({id, e}) => {
     const {data:info,isLoading, isSuccess} = useFindPlaceInfosQuery(id)
-    const {data:photos, isSuccess:isSuccessPhotos} = useFindPlaceInfosQuery(id)
+    const {data:photos, isSuccess:isSuccessPhotos} = useFindPlaceImagesQuery(id)
     return (
         <article key={id}
                  className="ratings__item item-ratings">

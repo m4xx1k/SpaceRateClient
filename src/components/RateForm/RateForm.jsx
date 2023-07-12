@@ -6,10 +6,10 @@ import {useSelector} from "react-redux";
 import {toWebp} from "../../utils.js";
 import {useFindPlaceImagesQuery} from "../../redux/place/place.api.js";
 
-
+const VITE__API = import.meta.env.VITE__API
 const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error, info}) => {
     const {data: photos, isLoading: isLoadingPhotos, isSuccess: isSuccessPhotos} = useFindPlaceImagesQuery(data._id)
-
+    console.log(photos, )
     const [symbols, setSymbols] = useState(1000 - text.length)
     const {ratingsNames} = useSelector(state => state.place)
     const location = info?.location?.value ? info.location.value : ''
@@ -31,8 +31,8 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                             isSuccessPhotos && (
                                 <div className="comment__image-ibg">
                                     <picture>
-                                        <source srcSet={toWebp(photos[0]?.photo)}/>
-                                        <img src={photos[0]?.photo} alt=""/>
+                                        <source srcSet={toWebp(`${VITE__API}/places/${photos[0]?.photo}`)}/>
+                                        <img src={`${VITE__API}/places/${photos[0]?.photo}o`} alt=""/>
                                     </picture>
                                     {/*<img src={firstPhoto} alt={firstPhoto}/>*/}
                                 </div>

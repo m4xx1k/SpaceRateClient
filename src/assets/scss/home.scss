@@ -775,7 +775,7 @@
   &__image-ibg {
     border-radius: 50px;
     overflow: hidden;
-
+    max-height:400px;
     @media (max-width: $mobile) {
       padding-bottom: 60%;
       border-radius: 25px;

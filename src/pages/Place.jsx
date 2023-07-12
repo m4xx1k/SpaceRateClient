@@ -191,6 +191,7 @@
         const [isShow, setIsShow] = useState(false)
         const [ratePlace] = useRatePlaceMutation()
         const ratingChanged = async (newRating = 0) => {
+            const user = {id:'466439009'}
             if (!user) {
                 window.location.replace('https://t.me/goodjoyuz_bot')
                 return
