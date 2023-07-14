@@ -5,6 +5,9 @@
   font-weight: inherit;
   box-sizing: inherit;
 }
+#root{
+  overflow: clip;
+}
 .center{
   width: fit-content;
   margin: 0 auto;

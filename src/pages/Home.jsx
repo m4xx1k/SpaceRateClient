@@ -14,9 +14,12 @@ const Home = () => {
     return (<>
 
         <HeroSlider/>
+        <Link style={{borderRadius:6,width:'fit-content', border:'1px solid #000', padding:'4px 8px', margin:'12px 36px'}} to={'events'}>Кино</Link>
+
         <section className="categories">
             <div className="categories__container">
                 <div className="categories__body">
+
                     <div className="categories__title title title_2">КАТЕГОРИИ РЕЙТИНГОВ</div>
                     <div className="categories__items">
                         {

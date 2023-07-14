@@ -201,10 +201,11 @@ body {
 // Підключення стилів окремих сторінок
 @import "home";
 @import "restaurant";
+@import "event";
+@import "poster";
 #root {
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 .page {

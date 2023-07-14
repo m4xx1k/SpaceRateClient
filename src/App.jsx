@@ -9,6 +9,8 @@ import Login from "./pages/Login/Login.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import Favourites from "./pages/Favourites.jsx";
 import Places from "./pages/Places.jsx";
+import Events from "./pages/Events.jsx";
+import Movie from "./pages/Movie.jsx";
 
 function App() {
     return (
@@ -21,7 +23,9 @@ function App() {
                     <Route path={'/favourites'} element={<Favourites/>}/>
                 </Route>
                 <Route path={'/login'} element={<Login/>}/>
+                <Route path={'/events'} element={<Events/>}/>
                 <Route path={'/place/:id'} element={<Place/>}/>
+                <Route path={'/movie/:id'} element={<Movie/>}/>
                 <Route path={'/places/:id'} element={<Places/>}/>
                 <Route path={'*'} element={<>404</>}/>
             </Route>
