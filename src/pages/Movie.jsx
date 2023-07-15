@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import  {useEffect, useState} from 'react';
 import {useParams} from "react-router";
 import {useGetMovieFullInfoByIdQuery} from "../redux/event/event.api.js";
-import {Swiper, SwiperSlide} from "swiper/react";
 import {clsx} from "clsx";
+import {monthNames, daysNames} from './../utils.js'
 
-const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
 function isPased(inputTime) {
     const currentDateTimeUzbekistan = new Date();
@@ -24,9 +23,18 @@ const Movie = () => {
     const {id} = useParams()
     const {data, isLoading, isSuccess} = useGetMovieFullInfoByIdQuery(id)
     const [selectedDay, setSelectedDay] = useState('')
+    const [selectedMonth, setSelectedMonth] = useState('')
+
     useEffect(() => {
+		console.log(data)
+
         if (isSuccess) {
-            setSelectedDay(Object.keys(data[0].data)[0])
+            console.log(data)
+			if(data.showtimes.length){
+     			setSelectedDay(Object.keys(data.showtimes[0].data)[0])
+            	setSelectedMonth(data.showtimes[0].month)
+			}
+       
         }
     }, [data, isSuccess])
     if (!isSuccess) return 'loading'
@@ -42,12 +50,12 @@ const Movie = () => {
                             </div>
                             <div className="event__age">16+</div>
                         </div>
-                        <div className="event__image-ibg"><img src={data[0].movie.photo.photo} alt=""/></div>
+                        <div className="event__image-ibg"><img src={data.movie.photo.photo} alt=""/></div>
                     </div>
                     <div className="event__content content-event">
                         <div className="content-event__top">
                             <div className="content-event__col">
-                                <div className="content-event__maintitle">{data[0].movie.name}</div>
+                                <div className="content-event__maintitle">{data.movie.name}</div>
                                 {/*<div className="content-event__subtitle">The Flash</div>*/}
                             </div>
                             <div className="content-event__col">
@@ -55,12 +63,15 @@ const Movie = () => {
                             </div>
                         </div>
                         <ul className="content-event__list">
-                            <li className="content-event__item">
-                                <div className="content-event__item-title">Когда:</div>
-                                <div className="content-event__item-text">Сегодня
-                                    в {data[0].data[selectedDay]?.length} кинотеатрах
-                                </div>
-                            </li>
+							{
+								data.showtimes.lenght &&
+									<li className="content-event__item">
+										<div className="content-event__item-title">Когда:</div>
+										<div className="content-event__item-text">Сегодня
+											в {data.showtimes.find(e=>e.month===selectedMonth)?.data[selectedDay]?.length} кинотеатрах
+										</div>
+									</li>
+							}
                             <li className="content-event__item">
                                 <div className="content-event__item-title">Длительность:</div>
                                 <div className="content-event__item-text">144 мин.</div>
@@ -81,51 +92,57 @@ const Movie = () => {
 
                         <div className="content-event__title">РАСПИСАНИЕ СЕАНСОВ</div>
 
-                        <div className="content-event__date-title">ИЮЛЬ</div>
-                        <div
-                            className={'poster__date-slider date-slider date-slider_white swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden'}>
-                            <div className="poster__date-slider date-slider">
-                                <Swiper className="poster__date-wrapper swiper-wrapper"
-                                        observer={true}
-                                        observeParents={true}
-                                        speed={800}
-                                        slidesPerView={5}
-                                        spaceBetween={0}
-                                >
-                                    {
-                                        Object.keys(data[0].data).map(day => {
-                                            let month = data[0].month; // Червень, бо місяці рахуються з 0
-                                            let year = new Date().getFullYear(); // Поточний рік
-                                            let date = new Date(year, month, Number(day));
-                                            let dayNameI = date.getDay();
-                                            let dayName = days[dayNameI]
-                                            //['Сб','Вс'].includes(dayName) && 'slide-date_holiday',
-                                            return <SwiperSlide onClick={() => setSelectedDay(day)}
-                                                                className={clsx("poster__date-slide", "slide-date", day === selectedDay && "slide-date_current", "swiper-slide")}>
-                                                <div className="slide-date__name">{dayName}</div>
-                                                <div className="slide-date__num">{day}</div>
-                                            </SwiperSlide>
-                                        })
-                                    }
+                                               <div className="calendar date-slider_white">
+							{data?.showtimes?.map(month=>{
+								
+								return (
+								<div className='calendar_month' key={month.month}>
+										<span className='calendar_month-name'>{monthNames[month.month].toUpperCase()}</span>
+										<div className='calendar_days'>
+											{
+												Object.keys(month.data).map(day=>{
+													let monthNum = month.month; // Червень, бо місяці рахуються з 0
+													let year = new Date().getFullYear(); // Поточний рік
+													let date = new Date(year, monthNum, Number(day));
+													let dayNameI = date.getDay();
+													let dayName = daysNames[dayNameI]
+													return (
 
-                                </Swiper>
-                            </div>
 
-                        </div>
+														<div onClick={()=>{
+															setSelectedDay(day)
+															setSelectedMonth(monthNum)
+														}} 
+														key={day} 
+														className={clsx(day===selectedDay && monthNum===selectedMonth ? "slide-date_current" : 'calendar_movie', "poster__date-slide",'calendar_day')} >
+															<div className="slide-date__name">{dayName}</div><div className="slide-date__num">{day}</div></div>
+														// <div className='calendar_day' key={date}>
+														// 	<span>{dayName}</span>
+														// 	<span>{day}</span>
+														// </div>
+													)
+												})
+											}
+										</div>
+								</div>
+								)
+				
+							})}
+						</div>
 
                         <div className="content-event__timetable timetable">
 
                             {
-                                data[0].data[selectedDay]?.map(e => (
+                                data?.showtimes.find(m=>m.month===selectedMonth)?.data[selectedDay]?.map(e => (
 
                                     <>
                                         <div className="timetable__title">{e.cinemas.name}</div>
 
                                         <ul className="timetable__items active">
                                             {e.times.split(' | ').map(e => {
-                                                const passed = isPased(e) && Object.keys(data[0].data)[0]===selectedDay
+                                                const passed = isPased(e) && Object.keys(data.showtimes[0].data)[0]===selectedDay
 
-                                                return <li style={passed ? {opacity: 0.5} : {}}
+                                                return <li key={e} style={passed ? {opacity: 0.5} : {}}
                                                            className="timetable__item">{e}</li>
                                             })}
                                         </ul>

@@ -1,18 +1,24 @@
-import {Swiper, SwiperSlide} from "swiper/react";
-import {useGetMoviesWithShowtimesQuery} from "../redux/event/event.api.js";
+import {useGetMoviesWithShowtimesQuery,useGetPremieresQuery} from "../redux/event/event.api.js";
 import {useEffect, useState} from "react";
 import {clsx} from "clsx";
 import {useNavigate} from "react-router-dom";
+import {monthNames, daysNames} from './../utils.js'
+import {Swiper, SwiperSlide} from "swiper/react";
 
-const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
 const Events = () => {
     const {data, isLoading, isSuccess} = useGetMoviesWithShowtimesQuery()
+	const{data:premieres, isSuccess:isSuccessPremieres} = useGetPremieresQuery()
     const [selectedDay, setSelectedDay] = useState('')
+    const [selectedMonth, setSelectedMonth] = useState('')
+
     useEffect(() => {
+		console.log(data)
+
         if (isSuccess) {
             console.log(data)
             setSelectedDay(Object.keys(data[0].data)[0])
+            setSelectedMonth(data[0].month)
         }
     }, [data, isSuccess])
     const navigate = useNavigate()
@@ -37,77 +43,76 @@ const Events = () => {
                                 <div className="poster__list-close"></div>
                             </ul>
                         </div>
-
-                        {/*<div className="poster__slider">*/}
-                        {/*    <Swiper className="poster__wrapper swiper-wrapper" observer={true}*/}
-                        {/*            observeParents={true}*/}
-                        {/*            speed={800}*/}
-                        {/*            slidesPerView={1}*/}
-                        {/*            spaceBetween={10}*/}
-                        {/*    >*/}
-                        {/*        <SwiperSlide href="#" className="poster__slide slide-poster swiper-slide">*/}
-                        {/*            <div className="slide-poster__img-ibg">*/}
-                        {/*                <img src="https://via.placeholder.com/599" alt=""/>*/}
-                        {/*            </div>*/}
-                        {/*            <div className="slide-poster__content">*/}
-                        {/*                <div className="slide-poster__label">ЭКСКУРСИЯ</div>*/}
-                        {/*                <div className="slide-poster__inner">*/}
-                        {/*                    <div className="slide-poster__title">Северная Венеция</div>*/}
-                        {/*                    <div className="slide-poster__date">*/}
-                        {/*                        <span>Ужедневно по расписанию</span>*/}
-                        {/*                        <span>Причал на Фонтанке 53</span>*/}
-                        {/*                    </div>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*        </SwiperSlide>*/}
-                        {/*        <SwiperSlide href="#" className="poster__slide slide-poster swiper-slide">*/}
-                        {/*            <div className="slide-poster__img-ibg"><img src="@img/poster/01.jpg" alt=""/>*/}
-                        {/*            </div>*/}
-                        {/*            <div className="slide-poster__content">*/}
-                        {/*                <div className="slide-poster__label">ЭКСКУРСИЯ</div>*/}
-                        {/*                <div className="slide-poster__inner">*/}
-                        {/*                    <div className="slide-poster__title">Северная Венеция</div>*/}
-                        {/*                    <div className="slide-poster__date">*/}
-                        {/*                        <span>Ужедневно по расписанию</span>*/}
-                        {/*                        <span>Причал на Фонтанке 53</span>*/}
-                        {/*                    </div>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*        </SwiperSlide>*/}
-                        {/*    </Swiper>*/}
-                        {/*    <div className="poster__pagination pagination"></div>*/}
-                        {/*</div>*/}
-
-                        <div className="poster__date-title">ИЮЛЬ</div>
-                        <div className="poster__date-slider date-slider">
-                            <Swiper className="poster__date-wrapper swiper-wrapper"
-                                    observer={true}
-                                    observeParents={true}
-                                    speed={800}
-                                    slidesPerView={5}
-                                    spaceBetween={0}
-                            >
-                                {
-                                    Object.keys(data[0].data).map(day => {
-                                        let month = data[0].month; // Червень, бо місяці рахуються з 0
-                                        let year = new Date().getFullYear(); // Поточний рік
-                                        let date = new Date(year, month, Number(day));
-                                        let dayNameI = date.getDay();
-                                        let dayName = days[dayNameI]
-                                        //['Сб','Вс'].includes(dayName) && 'slide-date_holiday',
-                                        return <SwiperSlide onClick={()=>setSelectedDay(day)}
-                                            className={clsx("poster__date-slide",  "slide-date", day === selectedDay && "slide-date_current", "swiper-slide")}>
-                                            <div className="slide-date__name">{dayName}</div>
-                                            <div className="slide-date__num">{day}</div>
-                                        </SwiperSlide>
-                                    })
-                                }
-
+						<div className="events-poster__slider" style={{marginTop:16}}>
+                            <Swiper className="events-poster__wrapper swiper-wrapper">
+								{
+									isSuccessPremieres && premieres.map((e,i)=>(
+										<SwiperSlide onClick={()=>navigate(`/movie/${e._id}`)} key={e.name} className="events-poster__slide slide-events-poster swiper-slide">
+											<div className="slide-events-poster__img-ibg"><img src={e.photo.photo} alt=""/></div>
+											<div className="slide-events-poster__content">
+												<div className="slide-events-poster__top">
+													<div className="slide-events-poster__number">№{i+1}</div>
+													<div className="slide-events-poster__grade grade"><span></span></div>
+												</div>
+												<div className="slide-events-poster__bottom">
+													<div className="slide-events-poster__title">{e.name}</div>
+													<div className="slide-events-poster__inner">
+														<div className="slide-events-poster__date">
+															
+														</div>
+														<div style={{textTransform:'uppercase'}} className="slide-events-poster__mark">премьера</div>
+													</div>
+												</div>
+											</div>
+										</SwiperSlide>
+									))
+								}
+                                <a href="#" >
+                                  
+                                </a>
+                              
                             </Swiper>
+                            <div className="events-poster__pagination pagination"></div>
                         </div>
+                        <div className="calendar">
+							{data?.map(month=>{
+								
+								return (
+								<div className='calendar_month' key={month.month}>
+										<span className='calendar_month-name'>{monthNames[month.month].toUpperCase()}</span>
+										<div className='calendar_days'>
+											{
+												Object.keys(month.data).map(day=>{
+													let monthNum = month.month; // Червень, бо місяці рахуються з 0
+													let year = new Date().getFullYear(); // Поточний рік
+													let date = new Date(year, monthNum, Number(day));
+													let dayNameI = date.getDay();
+													let dayName = daysNames[dayNameI]
+													return (
 
-                        <div className="poster__text">Мы сделали большой выбор мест для посещения, где вы видите те
-                            места, которые пользуются спросом людей больше всего.
+
+														<div onClick={()=>{
+															setSelectedDay(day)
+															setSelectedMonth(monthNum)
+														}} 
+														key={day} 
+														className={clsx(day===selectedDay && monthNum===selectedMonth && "slide-date_current", "poster__date-slide",'calendar_day')} >
+															<div className="slide-date__name">{dayName}</div><div className="slide-date__num">{day}</div></div>
+														// <div className='calendar_day' key={date}>
+														// 	<span>{dayName}</span>
+														// 	<span>{day}</span>
+														// </div>
+													)
+												})
+											}
+										</div>
+								</div>
+								)
+				
+							})}
+						</div>
+
+                        <div className="poster__text">Сеансы, кинотеатры, афиша, премьеры!
                         </div>
 
                     </div>
@@ -120,7 +125,7 @@ const Events = () => {
                         <h2 className="poster-top__title">ТОП Кино</h2>
                         <div className="poster-top__items">
                             {
-                                data[0].data[selectedDay]?.map((movie,i)=>{
+                                !!data && data?.find(el=>el.month===selectedMonth)?.data[selectedDay]?.map((movie,i)=>{
                                     return <div key={i} onClick={()=>navigate(`/movie/${movie.movie._id}`)} className="poster-top__item">
                                         <div className="poster-top__content">
                                             <h3 className="poster-top__item-title">
