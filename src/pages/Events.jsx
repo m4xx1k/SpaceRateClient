@@ -74,7 +74,7 @@ const Events = () => {
     const [selectedMonth, setSelectedMonth] = useState('')
     useEffect(() => {
 		console.log(data)
-		if(isSuccessPremieres)console.log(premieres)
+		if(isSuccessPremieres)console.log({premieres})
         if (isSuccess) {
             console.log(data)
             setSelectedDay(Object.keys(data[0].data)[0])
@@ -109,9 +109,9 @@ const Events = () => {
 									isSuccessPremieres && premieres.map((e,i)=>(
 										<SwiperSlide onClick={()=>navigate(`/movie/${e._id}`)} key={e.name} className="events-poster__slide slide-events-poster swiper-slide">
 											{
-												e.photos?.lenght &&
+												!e.photos.lenght &&
 												<div className="slide-events-poster__img-ibg"><img src={e.photos[0].photo} alt=""/>
-												</div>
+												</div> 
 											}
 											
 											<div className="slide-events-poster__content">
