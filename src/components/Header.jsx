@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import logo from '../assets/img/logo.svg'
+import logo from '../assets/img/logo2.svg'
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {useFavouriteCountQuery} from "../redux/place/place.api.js";
@@ -25,14 +25,14 @@ const Header = () => {
                         <Link to="/" className="header__logo">
                             <img src={logo} alt=""/>
                         </Link>
-                        <div className="header__breadcrumbs breadcrumbs">
+                        {/* <div className="header__breadcrumbs breadcrumbs">
                             <ul className="breadcrumbs__list">
                                 <li className="breadcrumbs__item"><a href="" className="breadcrumbs__link">главная</a>
                                 </li>
                                 <li className="breadcrumbs__item"><span className="breadcrumbs__current">рейтинги</span>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className="header__menu menu">
