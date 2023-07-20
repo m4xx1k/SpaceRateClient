@@ -5,24 +5,84 @@ import {useNavigate} from "react-router-dom";
 import {monthNames, daysNames} from './../utils.js'
 import {Swiper, SwiperSlide} from "swiper/react";
 
+const EventsLoader = ()=>{
+	return (
+		<>
+			<section className="poster">
+                <div className="poster__container">
+                    <div className="poster__body">
+                        <div className="poster__top">
+                            {/*<a href="#" className="poster__back">НАЗАД</a>*/}
+                            <button className="poster__button _icon-arrow-bottom">СОБЫТИЯ</button>
+                            <div className="poster__label">КИНО</div>
+                            <ul className="poster__list">
+                                <li className="poster__item active">КИНО</li>
+                                <li className="poster__item">КОНЦЕРТЫ</li>
+                                <li className="poster__item">ТЕАТР</li>
+                                <li className="poster__item">ВЫСТАВКИ</li>
+                                <li className="poster__item">ВСЕ</li>
+                                <li className="poster__item">ЭКСКУРСИИ</li>
+                                <div className="poster__list-close"></div>
+                            </ul>
+                        </div>
+						<div className="events-poster__slider" style={{marginTop:16}}>
+                            <Swiper className="events-poster__wrapper swiper-wrapper">
+								
+										<SwiperSlide style={{height: '90vw', width: '90vw',borderRadius:36}} className="events-poster__slide slide-events-poster swiper-slide skeleton-loading">
+										
+										</SwiperSlide>
+								
+                              
+                              
+                            </Swiper>
+                            <div className="events-poster__pagination pagination"></div>
+                        </div>
+                        <div className="calendar">
+						
+								<div className='calendar_month'>
+										<span style={{width:42,height:16}} className='calendar_month-name skeleton-loading'></span>
+										<div className='calendar_days'>
+											{
+												Array(7).fill('').map((_,i)=>
 
+														<div style={{width:70,height:74, marginLeft:4}} key={i} className={clsx("poster__date-slide",'calendar_day','skeleton-loading')} >
+															<div className="slide-date__name"></div>
+															<div className="slide-date__num"></div>
+														</div>
+													
+													
+												)
+											}
+										</div>
+								</div>
+								
+						</div>
+
+                        <div className="poster__text">Сеансы, кинотеатры, афиша, премьеры!
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+		</>
+	)
+}
 const Events = () => {
     const {data, isLoading, isSuccess} = useGetMoviesWithShowtimesQuery()
-	const{data:premieres, isSuccess:isSuccessPremieres} = useGetPremieresQuery()
+	const {data:premieres, isSuccess:isSuccessPremieres} = useGetPremieresQuery()
     const [selectedDay, setSelectedDay] = useState('')
     const [selectedMonth, setSelectedMonth] = useState('')
-
     useEffect(() => {
 		console.log(data)
-
+		if(isSuccessPremieres)console.log(premieres)
         if (isSuccess) {
             console.log(data)
             setSelectedDay(Object.keys(data[0].data)[0])
             setSelectedMonth(data[0].month)
         }
-    }, [data, isSuccess])
+    }, [data, isSuccess, isSuccessPremieres, premieres])
     const navigate = useNavigate()
-    if(!isSuccess || isLoading) return 'loading'
+    if(!isSuccess || isLoading) return <EventsLoader/>
     return (
         <>
 
@@ -48,7 +108,12 @@ const Events = () => {
 								{
 									isSuccessPremieres && premieres.map((e,i)=>(
 										<SwiperSlide onClick={()=>navigate(`/movie/${e._id}`)} key={e.name} className="events-poster__slide slide-events-poster swiper-slide">
-											<div className="slide-events-poster__img-ibg"><img src={e.photo.photo} alt=""/></div>
+											{
+												e.photos?.lenght &&
+												<div className="slide-events-poster__img-ibg"><img src={e.photos[0].photo} alt=""/>
+												</div>
+											}
+											
 											<div className="slide-events-poster__content">
 												<div className="slide-events-poster__top">
 													<div className="slide-events-poster__number">№{i+1}</div>
@@ -136,9 +201,12 @@ const Events = () => {
                                                 <a href="#" className="poster-top__link _icon-link"></a>
                                             </div>
                                         </div>
+										{
+											movie.movie.photos?.lenght && 
                                         <a href="#" className="poster-top__img-ibg">
-                                            <img src={movie.movie.photo.photo} alt=""/>
+                                            <img src={movie.movie.photos[0].photo} alt=""/>
                                         </a>
+										}
                                     </div>
 
                                 })

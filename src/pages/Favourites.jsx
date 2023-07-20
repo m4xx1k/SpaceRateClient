@@ -1,6 +1,3 @@
-import React, {useEffect} from 'react';
-import {Swiper, SwiperSlide} from "swiper/react";
-import {Autoplay, EffectFade} from "swiper";
 import {useToggleFavouritePlaceMutation, useUserFavouritesQuery} from "../redux/place/place.api.js";
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
@@ -13,7 +10,7 @@ const Favourites = () => {
     const {data, isLoading, isError} = useUserFavouritesQuery(user?.id)
     const [toggleFavourite] = useToggleFavouritePlaceMutation()
     const handleToggleFavourite = async (id) => {
-        if (!!id) {
+        if (id) {
             try {
                 await toggleFavourite({placeId: id, telegramId: user?.id})
             } catch (e) {
@@ -33,7 +30,7 @@ const Favourites = () => {
                             {
 
                                 !isLoading && Array.isArray(data) ? data.map(e => (
-                                        <div className="favorite__item item-favorite">
+                                        <div key={e?.place._id} className="favorite__item item-favorite">
                                             <div onClick={() => handleToggleFavourite(e?.place._id)}
                                                  className="item-favorite_unlike">✛
                                             </div>

@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useTelegram} from "../../hooks/useTelegram.js";
 import {useNavigate} from "react-router-dom";
 import {useFindUserMutation, useRegistrationMutation} from "../../redux/auth/authApiSlice.js";
 import s from './Login.module.scss'
 
 const Login = () => {
-    const [isLoaded, setIsLoaded] = useState(false)
     const {tg, user: tgUser} = useTelegram()
-    const [username, setUsername] = useState(!!tgUser?.username ? tgUser.username : '')
-    const [name, setName] = useState(!!tgUser?.username ? tgUser.first_name : '')
+    const [username, setUsername] = useState(tgUser?.username ? tgUser.username : '')
+    const [name, setName] = useState(tgUser?.username ? tgUser.first_name : '')
     const [error, setError] = useState('')
     const navigate = useNavigate()
     const [findUser] = useFindUserMutation()

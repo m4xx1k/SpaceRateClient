@@ -6,19 +6,55 @@ import {monthNames, daysNames} from './../utils.js'
 
 
 function isPased(inputTime) {
-    const currentDateTimeUzbekistan = new Date();
-    currentDateTimeUzbekistan.setHours(currentDateTimeUzbekistan.getHours() + 5); // UTC + 5 годин (Часовий пояс Узбекистану)
+    const currentDateTimeUtc = new Date();
+    const currentDateTimeUzbekistan = new Date(currentDateTimeUtc.getTime() + 5*60*60*1000); // UTC + 5 годин (Часовий пояс Узбекистану)
 
     const inputTimeParts = inputTime.split(':');
-    const inputDateTime = new Date();
-    inputDateTime.setHours(parseInt(inputTimeParts[0]));
-    inputDateTime.setMinutes(parseInt(inputTimeParts[1]));
+    const inputDateTime = new Date(currentDateTimeUzbekistan.getTime());
+    inputDateTime.setUTCHours(parseInt(Number(inputTimeParts[0])));
+    inputDateTime.setUTCMinutes(parseInt(Number(inputTimeParts[1])));
 
-    const targetDateTime = new Date(inputDateTime.getTime() + 100 * 60 * 1000);
-
-    return targetDateTime <= currentDateTimeUzbekistan;
+    return inputDateTime.getTime() <= currentDateTimeUzbekistan.getTime()
 }
 
+const MovieLoading=()=>{
+	return(
+		<section className="event">
+            <div className="event__container">
+                <div className="event__body">
+                    <div className="event__poster">
+                        <div className="event__top">
+                            <div className="event__control">
+                                {/*<a href="#" className="event__back">НАЗАД</a>*/}
+                                <div className="event__label">КИНО</div>
+                            </div>
+                            <div className="event__age">16+</div>
+                        </div>
+                        <div style={{height:'90vw', background:'#404040'}} className="event__image-ibg skeleton-loading" ></div>
+                    </div>
+                    <div className="event__content content-event">
+                        <div className="content-event__top">
+                            <div className="content-event__col">
+                                <div className="content-event__maintitle skeleton-loading" style={{width:200,height:36, background:'#404040'}}></div>
+                                {/*<div className="content-event__subtitle">The Flash</div>*/}
+                            </div>
+                            <div className="content-event__col">
+                                <a className="content-event__repost _icon-repost">ПОДЕЛИТЬСЯ</a>
+                            </div>
+                        </div>
+                      
+
+                        <div  data-showmore style={{width:'95%',height:'90vw', background:'#404040'}} className="content-event__showmore event-showmore skeleton-loading">
+                            <div data-showmore-content="168" className="event-showmore__content">
+                            </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+        </section>
+	)
+}
 const Movie = () => {
     const {id} = useParams()
     const {data, isLoading, isSuccess} = useGetMovieFullInfoByIdQuery(id)
@@ -37,7 +73,7 @@ const Movie = () => {
        
         }
     }, [data, isSuccess])
-    if (!isSuccess) return 'loading'
+    if (!isSuccess) return <MovieLoading/>
     return (
         <section className="event">
             <div className="event__container">
@@ -50,7 +86,12 @@ const Movie = () => {
                             </div>
                             <div className="event__age">16+</div>
                         </div>
-                        <div className="event__image-ibg"><img src={data.movie.photo.photo} alt=""/></div>
+						{
+							data.movie.photos?.length && 
+                        <div className="event__image-ibg"><img src={data.movie.photos[0].photo} alt=""/></div>
+
+
+						}
                     </div>
                     <div className="event__content content-event">
                         <div className="content-event__top">
@@ -104,6 +145,7 @@ const Movie = () => {
 													let monthNum = month.month; // Червень, бо місяці рахуються з 0
 													let year = new Date().getFullYear(); // Поточний рік
 													let date = new Date(year, monthNum, Number(day));
+													console.log(year, monthNum, Number(day))
 													let dayNameI = date.getDay();
 													let dayName = daysNames[dayNameI]
 													return (
@@ -140,7 +182,7 @@ const Movie = () => {
 
                                         <ul className="timetable__items active">
                                             {e.times.split(' | ').map(e => {
-                                                const passed = isPased(e) && Object.keys(data.showtimes[0].data)[0]===selectedDay
+                                                const passed = isPased(e.split(' ')[0]) && Object.keys(data.showtimes[0].data)[0]===selectedDay
 
                                                 return <li key={e} style={passed ? {opacity: 0.5} : {}}
                                                            className="timetable__item">{e}</li>
