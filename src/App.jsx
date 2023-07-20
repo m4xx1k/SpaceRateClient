@@ -11,7 +11,7 @@ import Favourites from "./pages/Favourites.jsx";
 // import Movie from "./pages/Movie.jsx";
 // import Login from "./pages/Login/Login.jsx";
 // import Place from "./pages/Place.jsx";
-import { lazy } from 'react';
+import { Suspense, lazy } from 'react';
 const routes = [
 	{
 		path:'/',
@@ -51,7 +51,10 @@ function App() {
 					routes.map(el=>{
 						const Element = el.element
 						const path = el.path
-						return <Route key={path} path={path} element={<Element/>}/>
+						return <Route key={path} path={path} element={
+							<Suspense fallback={<></>}><Element/></Suspense>
+						
+					}/>
 					})
 				}
 				{/*                
