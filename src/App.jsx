@@ -1,32 +1,65 @@
 import './App.css'
 import Home from "./pages/Home.jsx";
-import Place from "./pages/Place.jsx";
 import './assets/scss/style.scss'
 import {Route, Routes} from "react-router";
 import Layout from "./components/Layout.jsx";
 import TelegramRequire from "./components/TelegramRequire.jsx";
-import Login from "./pages/Login/Login.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import Favourites from "./pages/Favourites.jsx";
-import Places from "./pages/Places.jsx";
-import Events from "./pages/Events.jsx";
-import Movie from "./pages/Movie.jsx";
-
+// import Places from "./pages/Places.jsx";
+// import Events from "./pages/Events.jsx";
+// import Movie from "./pages/Movie.jsx";
+// import Login from "./pages/Login/Login.jsx";
+// import Place from "./pages/Place.jsx";
+import { lazy } from 'react';
+const routes = [
+	{
+		path:'/',
+		element:lazy(()=>import('./pages/Home.jsx'))
+	},
+	{
+		path:'/place/:id',
+		element:lazy(()=>import('./pages/Place.jsx'))
+	},
+	{
+		path:'/login',
+		element:lazy(()=>import('./pages/Login/Login.jsx'))
+	},
+	{
+		path:'/places/:id',
+		element:lazy(()=>import('./pages/Places.jsx'))
+	},
+	{
+		path:'/events',
+		element:lazy(()=>import('./pages/Events.jsx'))
+	},
+	{
+		path:'/movie/:id',
+		element:lazy(()=>import('./pages/Movie.jsx'))
+	}
+]
 function App() {
     return (
         <Routes>
             <Route element={<Layout/>}>
-                <Route path={'/'} element={<Home/>}/>
-
                 <Route element={<TelegramRequire/>}>
                     <Route path={'/profile'} element={<Profile/>}/>
                     <Route path={'/favourites'} element={<Favourites/>}/>
                 </Route>
+				<Route path={'/'} element={<Home/>}/>
+				{
+					routes.map(el=>{
+						const Element = el.element
+						const path = el.path
+						return <Route key={path} path={path} element={<Element/>}/>
+					})
+				}
+				{/*                
                 <Route path={'/login'} element={<Login/>}/>
                 <Route path={'/events'} element={<Events/>}/>
                 <Route path={'/place/:id'} element={<Place/>}/>
                 <Route path={'/movie/:id'} element={<Movie/>}/>
-                <Route path={'/places/:id'} element={<Places/>}/>
+                <Route path={'/places/:id'} element={<Places/>}/> */}
                 <Route path={'*'} element={<>404</>}/>
             </Route>
         </Routes>
