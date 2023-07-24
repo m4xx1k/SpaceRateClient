@@ -25,14 +25,7 @@ const Header = () => {
                         <Link to="/" className="header__logo">
                             <img src={logo} alt=""/>
                         </Link>
-                        {/* <div className="header__breadcrumbs breadcrumbs">
-                            <ul className="breadcrumbs__list">
-                                <li className="breadcrumbs__item"><a href="" className="breadcrumbs__link">главная</a>
-                                </li>
-                                <li className="breadcrumbs__item"><span className="breadcrumbs__current">рейтинги</span>
-                                </li>
-                            </ul>
-                        </div> */}
+                       
                     </div>
 
                     <div className="header__menu menu">

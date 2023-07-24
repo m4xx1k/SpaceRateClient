@@ -53,7 +53,7 @@ const Login = () => {
             <input className={s.input} placeholder={'Имя...'} value={name} onChange={e => setName(e.target.value)}
                    type="text"/>
             <span className={s.error}>{error}</span>
-            <button className={s.btn} onClick={handleLogin}>Ввойти</button>
+            <button className={s.btn} onClick={handleLogin}>Войти</button>
         </div>
     );
 };

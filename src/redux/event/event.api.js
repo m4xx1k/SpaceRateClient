@@ -22,8 +22,20 @@ export const eventApi = api.injectEndpoints({
             query: id => `event/getMovieFullInfoById/${id}`,
             providesTags: ['Event']
         }),
+        findAllEventTypes: builder.query({
+            query:()=>'event/findAllEventTypes',
+            providesTags:['EventType']
+        }),
+        getEventsWithShowtimesByTypeId:builder.query({
+            query:id=>`event/getEventsWithShowtimesByTypeId/${id}`,
+            providesTags:['Event']
+        }),
+        getEventFullInfoById:builder.query({
+            query:id=>`event/getEventFullInfoById/${id}`,
+            providesTags:['Event']
+        }),
 
     })
 })
 
-export const {useGetMovieFullInfoByIdQuery,useGetPremieresQuery,useGetCinemaFullInfoByIdQuery,useGetMoviesWithShowtimesQuery,useFindAllCinemasQuery,} = eventApi
+export const {useGetEventFullInfoByIdQuery,useGetEventsWithShowtimesByTypeIdQuery,useFindAllEventTypesQuery,useGetMovieFullInfoByIdQuery,useGetPremieresQuery,useGetCinemaFullInfoByIdQuery,useGetMoviesWithShowtimesQuery,useFindAllCinemasQuery,} = eventApi

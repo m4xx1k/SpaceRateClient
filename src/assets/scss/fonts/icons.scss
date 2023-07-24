@@ -58,11 +58,7 @@
   content: "\e90d";
 }
 ._icon-ruble:before {
-  width: 14px;
-  height: 14px;
-  padding-left: 3px;
-  margin-top: -3px;
-  content: "$";
+  content: "\e91e";
 }
 ._icon-search:before {
   content: "\e90f";
@@ -78,4 +74,13 @@
 }
 ._icon-vk:before {
   content: "\e913";
+}
+._icon-repost:before {
+  content: "\e914";
+}
+._icon-event:before {
+  content: "\e915";
+}
+._icon-movie:before {
+  content: "\e916";
 }

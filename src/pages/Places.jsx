@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import HeroSlider from "../components/HeroSlider.jsx";
 import {useParams} from "react-router";
-import {useFetchByCategoryQuery, useFindAllPlacesMainByCategoryIdQuery} from "../redux/place/place.api.js";
+import {useFindAllPlacesMainByCategoryIdQuery} from "../redux/place/place.api.js";
 import PlaceItem from "../components/PlaceItem.jsx";
 import MobilePlace from "../components/MobilePlace.jsx";
 import {useFindCategoryByIdQuery} from "../redux/category/category.api.js";
@@ -18,7 +18,6 @@ const Places = () => {
 
     return (
         <>
-
             <HeroSlider/>
             <CategoryAdvertisement id={id}/>
 
@@ -29,11 +28,8 @@ const Places = () => {
 
                         <div className="ratings__items ratings__items_pc">
                             {
-                                !isLoading && places.map(e => {
-
-                                    return <PlaceItem e={e} id={e._id} key={e._id}/>
-
-                                })
+                                !isLoading && places.map(e => <PlaceItem e={e} id={e._id} key={e._id}/>
+                                )
                             }
 
 

@@ -848,7 +848,7 @@ border-radius: 4px;
 	}
 
 	&_month:not(:last-child){
-		margin-right: 32px;	
+		margin-right: 32px;
 	}
 
 	&_month-name{
@@ -872,14 +872,50 @@ border-radius: 4px;
 		align-items: center;
 		flex-direction: column;
 		width: 74px;
-		
+
 	}
 		&_movie {
 			color: #fffafa;
 		}
 
-}	
+}
+.home-buttons {
+  padding: rem(20) 0;
 
+  &__container {
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: rem(12);
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: rem(10);
+
+    color: var(--black, #212121);
+
+    font-family: Gravity;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 119.2%; /* 31/26 */
+
+    border-radius: 13px;
+    border: 1px solid var(--black, #212121);
+
+    padding: rem(16) rem(20);
+
+    min-height: rem(63);
+
+    &::before {
+      font-size: rem(21);
+    }
+  }
+}
 @keyframes loading {
   0% {
     transform: translateX(-100%);
