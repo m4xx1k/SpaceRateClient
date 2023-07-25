@@ -109,15 +109,7 @@ const Event = () => {
                             </div>
                         </div>
                         <ul className="content-event__list">
-                            {
-                                data.dates?.lenght &&
-                                <li className="content-event__item">
-                                    <div className="content-event__item-title">Когда:</div>
-                                    <div className="content-event__item-text">Сегодня
-                                        в {data.dates?.find(e=>e.month===selectedMonth)?.data[selectedDay]?.length} кинотеатрах
-                                    </div>
-                                </li>
-                            }
+
                             {
                                 data.event.info.map(info=>
                                     <li key={info.name} className="content-event__item">

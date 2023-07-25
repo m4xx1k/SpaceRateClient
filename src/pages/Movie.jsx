@@ -123,19 +123,19 @@ const Movie = () => {
 										</div>
 									</li>
 							}
-                            <li className="content-event__item">
-                                <div className="content-event__item-title">Длительность:</div>
-                                <div className="content-event__item-text">144 мин.</div>
-                            </li>
+                            {
+                                data.movie.info.map(info=>
+                                    <li key={info.name} className="content-event__item">
+                                        <div className="content-event__item-title">{info.name}:</div>
+                                        <div className="content-event__item-text">{info.value}</div>
+                                    </li>
+                                )
+                            }
                         </ul>
 
                         <div data-showmore className="content-event__showmore event-showmore">
-                            <div data-showmore-content="168" className="event-showmore__content">Физик-ядерщик Барри
-                                Аллен после несчастного случая оказывается облучённым ядохимикатами. Чудом оставшись в
-                                живых, приняв смертельную долю химических веществ и метаморфоз, произошедших... Lorem
-                                ipsum dolor sit amet consectetur, adipisicing elit. Ad similique natus atque
-                                exercitationem. Quod, libero, dolor officia pariatur expedita rem molestiae cumque qui
-                                eos fuga quisquam consequatur culpa impedit illum!
+                            <div data-showmore-content="168" className="event-showmore__content">
+                                {data?.movie?.description}
                             </div>
                             <button hidden data-showmore-button type="button" className="event-showmore__more"><span>Читать полностью</span><span>Скыть</span>
                             </button>
