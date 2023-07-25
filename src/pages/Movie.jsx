@@ -1,9 +1,10 @@
-import  {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router";
 import {useGetMovieFullInfoByIdQuery} from "../redux/event/event.api.js";
 import {clsx} from "clsx";
-import {monthNames, daysNames} from './../utils.js'
+import {monthNames, daysNames, toWebp} from './../utils.js'
 
+const VITE__API = import.meta.env.VITE__API
 
 function isPased(inputTime) {
     const currentDateTimeUtc = new Date();
@@ -42,7 +43,7 @@ const MovieLoading=()=>{
                                 <a className="content-event__repost _icon-repost">ПОДЕЛИТЬСЯ</a>
                             </div>
                         </div>
-                      
+
 
                         <div  data-showmore style={{width:'95%',height:'90vw', background:'#404040'}} className="content-event__showmore event-showmore skeleton-loading">
                             <div data-showmore-content="168" className="event-showmore__content">
@@ -70,7 +71,7 @@ const Movie = () => {
      			setSelectedDay(Object.keys(data.showtimes[0].data)[0])
             	setSelectedMonth(data.showtimes[0].month)
 			}
-       
+
         }
     }, [data, isSuccess])
     if (!isSuccess) return <MovieLoading/>
@@ -87,8 +88,17 @@ const Movie = () => {
                             <div className="event__age">16+</div>
                         </div>
 						{
-							data.movie.photos?.length && 
-                        <div className="event__image-ibg"><img src={data.movie.photos[0].photo} alt=""/></div>
+							data.movie.photos?.length &&
+                        <div className="event__image-ibg">
+                            <picture>
+                                <source srcSet={toWebp(`${VITE__API}/events/${data.movie.photos[0].photo}`)}/>
+                                <img
+                                    src={`${VITE__API}/events/${data.movie.photos[0].photo}`}
+                                    alt={`${VITE__API}/events/${data.movie.photos[0].photo}`}/>
+                                {/*<img src="https://via.placeholder.com/374" alt=""/>*/}
+                            </picture>
+
+                        </div>
 
 
 						}
@@ -135,7 +145,7 @@ const Movie = () => {
 
                                                <div className="calendar date-slider_white">
 							{data?.showtimes?.map(month=>{
-								
+
 								return (
 								<div className='calendar_month' key={month.month}>
 										<span className='calendar_month-name'>{monthNames[month.month].toUpperCase()}</span>
@@ -154,8 +164,8 @@ const Movie = () => {
 														<div onClick={()=>{
 															setSelectedDay(day)
 															setSelectedMonth(monthNum)
-														}} 
-														key={day} 
+														}}
+														key={day}
 														className={clsx(day===selectedDay && monthNum===selectedMonth ? "slide-date_current" : 'calendar_movie', "poster__date-slide",'calendar_day')} >
 															<div className="slide-date__name">{dayName}</div><div className="slide-date__num">{day}</div></div>
 														// <div className='calendar_day' key={date}>
@@ -168,7 +178,7 @@ const Movie = () => {
 										</div>
 								</div>
 								)
-				
+
 							})}
 						</div>
 

@@ -49,7 +49,7 @@ const EventTypes = () => {
                            const {name} = type
                            if(name!=='movie'){
                                return <li key={name} className="events-poster__item">
-                                   <Link to={`/events/${type._id}`} className="events-poster__link _icon-link">{name}</Link>
+                                   <Link to={`/events/${type._id}/${type.name}`} className="events-poster__link _icon-link">{name}</Link>
                                </li>
                            }
                         })

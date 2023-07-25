@@ -2,8 +2,10 @@ import {useGetMoviesWithShowtimesQuery,useGetPremieresQuery} from "../redux/even
 import {useEffect, useState} from "react";
 import {clsx} from "clsx";
 import {useNavigate} from "react-router-dom";
-import {monthNames, daysNames} from './../utils.js'
+import {monthNames, daysNames, toWebp} from './../utils.js'
 import {Swiper, SwiperSlide} from "swiper/react";
+import PosterTop from "../components/PosterTop.jsx";
+const VITE__API = import.meta.env.VITE__API
 
 const MoviesLoader = ()=>{
 	return (
@@ -86,20 +88,7 @@ const Movies = () => {
             <section className="poster">
                 <div className="poster__container">
                     <div className="poster__body">
-                        <div className="poster__top">
-                            {/*<a href="#" className="poster__back">НАЗАД</a>*/}
-                            <button className="poster__button _icon-arrow-bottom">СОБЫТИЯ</button>
-                            <div className="poster__label">КИНО</div>
-                            <ul className="poster__list">
-                                <li className="poster__item active">КИНО</li>
-                                <li className="poster__item">КОНЦЕРТЫ</li>
-                                <li className="poster__item">ТЕАТР</li>
-                                <li className="poster__item">ВЫСТАВКИ</li>
-                                <li className="poster__item">ВСЕ</li>
-                                <li className="poster__item">ЭКСКУРСИИ</li>
-                                <div className="poster__list-close"></div>
-                            </ul>
-                        </div>
+                        <PosterTop/>
 						<div className="events-poster__slider" style={{marginTop:16}}>
                             <Swiper className="events-poster__wrapper swiper-wrapper">
 								{
@@ -107,7 +96,15 @@ const Movies = () => {
 										<SwiperSlide onClick={()=>navigate(`/movie/${e._id}`)} key={e.name} className="events-poster__slide slide-events-poster swiper-slide">
 											{
 												!e.photos.lenght &&
-												<div className="slide-events-poster__img-ibg"><img src={e.photos[0].photo} alt=""/>
+												<div className="slide-events-poster__img-ibg">
+                                                    <picture>
+                                                        <source srcSet={toWebp(`${VITE__API}/events/${e.photos[0].photo}`)}/>
+                                                        <img
+                                                            src={`${VITE__API}/events/${e.photos[0].photo}`}
+                                                            alt={`${VITE__API}/events/${e.photos[0].photo}`}/>
+                                                        {/*<img src="https://via.placeholder.com/374" alt=""/>*/}
+                                                    </picture>
+                                                    {/*<img src={e.photos[0].photo} alt=""/>*/}
 												</div>
 											}
 
@@ -200,9 +197,15 @@ const Movies = () => {
                                         </div>
 										{
 											movie.movie.photos?.lenght &&
-                                        <a href="#" className="poster-top__img-ibg">
-                                            <img src={movie.movie.photos[0].photo} alt=""/>
-                                        </a>
+                                                <a href="#" className="poster-top__img-ibg">
+                                                    <picture>
+                                                        <source srcSet={toWebp(`${VITE__API}/events/${movie.movie.photos[0].photo}`)}/>
+                                                        <img
+                                                            src={`${VITE__API}/events/${movie.movie.photos[0].photo}`}
+                                                            alt={`${VITE__API}/events/${movie.movie.photos[0].photo}`}/>
+                                                        {/*<img src="https://via.placeholder.com/374" alt=""/>*/}
+                                                    </picture>
+                                                </a>
 										}
                                     </div>
 

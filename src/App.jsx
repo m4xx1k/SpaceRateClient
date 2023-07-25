@@ -38,7 +38,7 @@ const routes = [
 		element:lazy(()=>import('./pages/Movies.jsx'))
 	},
 	{
-		path:'/events/:type',
+		path:'/events/:type/:name',
 		element:lazy(()=>import('./pages/Events.jsx'))
 	},
 	{

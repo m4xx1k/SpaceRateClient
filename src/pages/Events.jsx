@@ -1,13 +1,15 @@
 import {
+    useFindAllEventTypesQuery,
     useGetEventsWithShowtimesByTypeIdQuery,
 
 } from "../redux/event/event.api.js";
 import {useEffect, useState} from "react";
 import {clsx} from "clsx";
-import {useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {monthNames, daysNames, toWebp} from './../utils.js'
 import {Swiper, SwiperSlide} from "swiper/react";
 import {useParams} from "react-router";
+import PosterTop from "../components/PosterTop.jsx";
 const VITE__API = import.meta.env.VITE__API
 
 const EventsLoader = ()=>{
@@ -73,15 +75,16 @@ const EventsLoader = ()=>{
     )
 }
 const Events = () => {
-    const {type} = useParams()
+    const {type,name} = useParams()
     const {data, isLoading, isSuccess} = useGetEventsWithShowtimesByTypeIdQuery(type)
     const [selectedDay, setSelectedDay] = useState('')
     const [selectedMonth, setSelectedMonth] = useState('')
     useEffect(() => {
-        if (isSuccess) {
+        if (isSuccess && data?.length) {
             setSelectedDay(Object.keys(data[0].data)[0])
             setSelectedMonth(data[0].month)
         }
+        console.log(data)
     }, [data, isSuccess])
     const navigate = useNavigate()
     if(!isSuccess || isLoading) return <EventsLoader/>
@@ -91,20 +94,7 @@ const Events = () => {
             <section className="poster">
                 <div className="poster__container">
                     <div className="poster__body">
-                        <div className="poster__top">
-                            {/*<a href="#" className="poster__back">НАЗАД</a>*/}
-                            <button className="poster__button _icon-arrow-bottom">СОБЫТИЯ</button>
-                            <div className="poster__label">КИНО</div>
-                            <ul className="poster__list">
-                                <li className="poster__item active">КИНО</li>
-                                <li className="poster__item">КОНЦЕРТЫ</li>
-                                <li className="poster__item">ТЕАТР</li>
-                                <li className="poster__item">ВЫСТАВКИ</li>
-                                <li className="poster__item">ВСЕ</li>
-                                <li className="poster__item">ЭКСКУРСИИ</li>
-                                <div className="poster__list-close"></div>
-                            </ul>
-                        </div>
+                        <PosterTop/>
                         {/*<div className="events-poster__slider" style={{marginTop:16}}>*/}
                         {/*    <Swiper className="events-poster__wrapper swiper-wrapper">*/}
                         {/*        {*/}
@@ -179,8 +169,7 @@ const Events = () => {
                             })}
                         </div>
 
-                        <div className="poster__text">Сеансы, кинотеатры, афиша, премьеры!
-                        </div>
+
 
                     </div>
                 </div>
@@ -189,7 +178,7 @@ const Events = () => {
             <section className="poster-top">
                 <div className="poster-top__container">
                     <div className="poster-top__body">
-                        <h2 className="poster-top__title">ТОП Кино</h2>
+                        <h2 className="poster-top__title">ТОП {name}</h2>
                         <div className="poster-top__items">
                             {
                                 !!data && data?.find(el=>el.month===selectedMonth)?.data[selectedDay]?.map((event,i)=>{
@@ -199,7 +188,7 @@ const Events = () => {
                                                 <a href="#">{i+1}. {event.event.name}</a>
                                             </h3>
                                             <div className="poster-top__inner">
-                                                <div className="poster-top__label">КИНО</div>
+                                                <div className="poster-top__label">{name}</div>
                                                 <a href="#" className="poster-top__link _icon-link"></a>
                                             </div>
                                         </div>
