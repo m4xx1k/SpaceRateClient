@@ -10,6 +10,7 @@ import {monthNames, daysNames, toWebp} from './../utils.js'
 import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
 import {useNavigate} from "react-router-dom";
 import RateForm from "../components/RateForm/RateForm.jsx";
+import {useTelegram} from "../hooks/useTelegram.js";
 const EventReviews = lazy(()=>import('../components/EventReviews'))
 
 const VITE__API = import.meta.env.VITE__API
