@@ -1,15 +1,30 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactStars from "react-rating-stars-component/dist/react-stars.js";
 import close from '../../assets/img/close.svg'
 import icon from '../../assets/img/icon.svg'
 import {useSelector} from "react-redux";
 import {toWebp} from "../../utils.js";
-import {useFindPlaceImagesQuery} from "../../redux/place/place.api.js";
+import { useLazyFindPlaceImagesQuery} from "../../redux/place/place.api.js";
+import {useLazyFindEventImagesQuery} from "../../redux/event/event.api.js";
 
 const VITE__API = import.meta.env.VITE__API
-const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error, info}) => {
-    const {data: photos, isLoading: isLoadingPhotos, isSuccess: isSuccessPhotos} = useFindPlaceImagesQuery(data._id)
-    console.log(photos, )
+const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error, info, isEvent}) => {
+    const [findPlacePhotos] = useLazyFindPlaceImagesQuery()
+    const [findEventPhotos] = useLazyFindEventImagesQuery()
+    const [photos, setPhotos] = useState([])
+    useEffect(()=>{
+        const init = async ()=>{
+            let photos = []
+            if(isEvent){
+                photos = await findEventPhotos(data?._id)
+            }else{
+                photos = await findPlacePhotos(data?._id)
+            }
+            console.log({photos})
+            setPhotos(photos?.data)
+        }
+        init()
+    },[data._id])
     const [symbols, setSymbols] = useState(1000 - text.length)
     const {ratingsNames} = useSelector(state => state.place)
     const location = info?.location?.value ? info.location.value : ''
@@ -28,11 +43,11 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                     <div className="comment__close" onClick={() => setIsShow(false)}><img src={close} alt=""/></div>
                     <div className="comment__restaurant">
                         {
-                            isSuccessPhotos && (
+                            photos?.length && (
                                 <div className="comment__image-ibg">
                                     <picture>
-                                        <source srcSet={toWebp(`${VITE__API}/places/${photos[0]?.photo}`)}/>
-                                        <img src={`${VITE__API}/places/${photos[0]?.photo}o`} alt=""/>
+                                        <source srcSet={toWebp(`${VITE__API}/${isEvent ? 'events':'places'}/${photos[0]?.photo}`)}/>
+                                        <img src={`${VITE__API}/${isEvent ? 'events':'places'}/${photos[0]?.photo}`} alt=""/>
                                     </picture>
                                     {/*<img src={firstPhoto} alt={firstPhoto}/>*/}
                                 </div>
@@ -58,7 +73,7 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                         </div>
 
 
-                        <div className="comment-form__rating rating rating_set">
+                        {!isEvent &&<div className="comment-form__rating rating rating_set">
                             <div className="rating__body">
                                 <div className="rating__active"></div>
                                 <ReactStars
@@ -71,11 +86,11 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                             </div>
                             <div className="rating__value">{rating}</div>
                             {
-                                rating ?  <div className="rating__text">{ratingsNames[rating - 1]}</div> : <></>
+                                rating ? <div className="rating__text">{ratingsNames[rating - 1]}</div> : <></>
                             }
 
 
-                        </div>
+                        </div>}
                         <div className="comment-form__title">Напишите отзыв</div>
                         <div className="comment-form__block">
 

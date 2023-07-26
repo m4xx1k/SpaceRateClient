@@ -1,8 +1,8 @@
 // ReviewSlide.jsx
 
 import {SwiperSlide} from "swiper/react";
-import dayjs from "dayjs";
 import {forwardRef} from "react";
+import {formatDate} from "../utils.js";
 
 const ReviewSlide = forwardRef(function ReviewSlide({e, index}, ref) {
             return (
@@ -15,7 +15,7 @@ const ReviewSlide = forwardRef(function ReviewSlide({e, index}, ref) {
                         </div>
                     </div>
                     <div className="slide-rewievs__text">{e.text}</div>
-                    <div className="slide-rewievs__date">{dayjs(e.date).format('DD.MM.YYYY HH:mm')}</div>
+                    <div className="slide-rewievs__date">{formatDate(e.date)}</div>
                 </SwiperSlide>
             );
         }

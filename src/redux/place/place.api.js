@@ -6,37 +6,12 @@ export const placeApi = api.injectEndpoints({
             query: () => 'place',
             providesTags: ['Place']
         }),
-        fetchAllRatings: builder.query({
-            query: body => ({
-                url: 'place/ratings',
-                params: {...body}
-            }),
-            providesTags: ['Rating']
-        }),
         fetchByIdPlace: builder.query({
             query: ({id, telegramId}) => ({
                 url: `place/findById/${id}`,
                 params: {telegramId}
             }),
             providesTags: ['Place']
-
-        }),
-
-        fetchCountRatings: builder.query({
-            query: id => ({
-                url: `place/countratings/${id}`,
-            }),
-            providesTags: ['Rating']
-
-        }),
-        favouriteCount: builder.query({
-            query: id => `place/favourite_count/${id}`,
-            providesTags: ['Favourite']
-
-        }),
-        userFavourites: builder.query({
-            query: id => `place/favourites/${id}`,
-            providesTags: ['Favourite']
 
         }),
         fetchByCategory: builder.query({
@@ -75,6 +50,30 @@ export const placeApi = api.injectEndpoints({
                 body
             }),
             invalidatesTags: ['Place']
+        }),
+        userFavourites: builder.query({
+            query: id => `place/favourites/${id}`,
+            providesTags: ['Favourite']
+
+        }),
+        fetchCountRatings: builder.query({
+            query: id => ({
+                url: `place/countratings/${id}`,
+            }),
+            providesTags: ['Rating']
+
+        }),
+        favouriteCount: builder.query({
+            query: id => `place/favourite_count/${id}`,
+            providesTags: ['Favourite']
+
+        }),
+        fetchAllRatings: builder.query({
+            query: body => ({
+                url: 'place/ratings',
+                params: {...body}
+            }),
+            providesTags: ['Rating']
         }),
         ratePlace: builder.mutation({
             query: body => ({
@@ -119,6 +118,7 @@ export const {
     useFindUserPlaceRatingMutation,
     useLazyFetchByCategoryQuery,
     useFindPlaceImagesQuery,
+    useLazyFindPlaceImagesQuery,
     useFindPlaceMainByIdQuery,
     useFindPlaceInfosQuery,
     useFindAllPlacesMainByCategoryIdQuery,

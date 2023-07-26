@@ -1,6 +1,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 console.log(import.meta.env.VITE__API)
 const baseQuery = fetchBaseQuery({
+    // baseUrl: "http://localhost:5001",
     baseUrl: import.meta.env.VITE__API,
     prepareHeaders: (headers) => {
         const token = localStorage.getItem('token')

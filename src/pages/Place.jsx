@@ -11,14 +11,13 @@ import {
 } from "../redux/place/place.api.js";
 import SwiperCore, {Pagination, Navigation} from 'swiper/core';
 import RateForm from "../components/RateForm/RateForm.jsx";
-import dayjs from "dayjs";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {clsx} from 'clsx';
 import ReactStars from "react-rating-stars-component";
 import {useNavigate} from "react-router-dom";
 import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
 import {useSelector} from "react-redux";
-import {toWebp} from "../utils.js";
+import {formatDate, toWebp} from "../utils.js";
 
 SwiperCore.use([Pagination, Navigation]);
 const VITE__API = import.meta.env.VITE__API
@@ -150,7 +149,7 @@ const Reviews = ({placeId, userId}) => {
                                             <div className="slide-rewievs__text">{e.text}
                                             </div>
                                             <div
-                                                className="slide-rewievs__date">{dayjs(e.date).format('DD.MM.YYYY HH:mm')}</div>
+                                                className="slide-rewievs__date">{formatDate(e.date)}</div>
                                         </div>
                                     )
                                 })
@@ -220,7 +219,6 @@ const Place = () => {
     const {id} = useParams()
     const {user, tg} = useTelegram()
     const navigate = useNavigate()
-    const {ratingsNames} = useSelector(state => state.place)
     const [isLiked, setIsLiked] = useState(false)
     const {data: place, isSuccess, isLoading, isError, error: placeError} = useFindPlaceMainByIdQuery({
         id,
@@ -232,6 +230,7 @@ const Place = () => {
 
     const [findUser] = useFindUserMutation()
 
+    const {ratingsNames} = useSelector(state => state.place)
     const [rating, setRating] = useState(0)
     const [text, setText] = useState('')
     const [error, setError] = useState('')
@@ -265,6 +264,7 @@ const Place = () => {
         } else navigate('/login')
 
     }
+
     useEffect(() => {
         tg.ready()
     }, [])
@@ -322,21 +322,7 @@ const Place = () => {
                                                 }
                                             </span>
                                             <div className="grade-restaurant__rating rating">
-                                                <div className="rating__body">
-                                                    <div className="rating__active"></div>
-                                                    <div className="rating__items">
-                                                        <input type="radio" className="rating__item" value="1"
-                                                               name="rating"/>
-                                                        <input type="radio" className="rating__item" value="2"
-                                                               name="rating"/>
-                                                        <input type="radio" className="rating__item" value="3"
-                                                               name="rating"/>
-                                                        <input type="radio" className="rating__item" value="4"
-                                                               name="rating"/>
-                                                        <input type="radio" className="rating__item" value="5"
-                                                               name="rating"/>
-                                                    </div>
-                                                </div>
+
                                                 {/*<span className={'rating__star'}>★</span>*/}
                                                 <div className="rating__value">{place.rating.toFixed(1)}</div>
                                             </div>

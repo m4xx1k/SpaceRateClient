@@ -612,11 +612,10 @@ body {
 // Сніппет (HTML): rating
 .rating {
   display: flex;
-  align-items: flex-end;
   font-size: 30px;
   line-height: 0.75;
   transition: opacity 0.3s ease 0s;
-
+  align-items: center;
   text-stroke: 0.1px #000;
   -webkit-text-stroke: 0.1px #000;
 }

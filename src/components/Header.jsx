@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import logo from '../assets/img/logo2.svg'
+import logo from '../assets/img/logo.svg'
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {useFavouriteCountQuery} from "../redux/place/place.api.js";
@@ -8,6 +8,7 @@ import {BackButton} from "./BackButton";
 const Header = () => {
     const [isSideMenu, setIsSideMenu] = useState(false)
     const {user} = useTelegram()
+    //     const user = {id: '466439009'}
     const {data} = useFavouriteCountQuery(user?.id)
     const handleToggleSideMenu = () => {
         if (isSideMenu) document.documentElement.classList.remove("menu-open");
@@ -25,7 +26,7 @@ const Header = () => {
                         <Link to="/" className="header__logo">
                             <img src={logo} alt=""/>
                         </Link>
-                       
+
                     </div>
 
                     <div className="header__menu menu">

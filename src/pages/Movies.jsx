@@ -71,6 +71,7 @@ const MoviesLoader = ()=>{
 }
 const Movies = () => {
     const {data, isLoading, isSuccess} = useGetMoviesWithShowtimesQuery()
+    console.log({data})
 	const {data:premieres, isSuccess:isSuccessPremieres} = useGetPremieresQuery()
     const [selectedDay, setSelectedDay] = useState('')
     const [selectedMonth, setSelectedMonth] = useState('')
