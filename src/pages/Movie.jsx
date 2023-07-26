@@ -70,8 +70,8 @@ const MovieLoading = () => {
 }
 const Movie = () => {
     const {id} = useParams()
-    // const {user} = useTelegram()
-    const user = {id: '466439009'}
+    const {user} = useTelegram()
+    // const user = {id: '466439009'}
     const {data, isLoading, isSuccess} = useGetMovieFullInfoByIdQuery({id, telegramId: user?.id})
     const [selectedDay, setSelectedDay] = useState('')
     const [selectedMonth, setSelectedMonth] = useState('')

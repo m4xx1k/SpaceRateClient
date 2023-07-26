@@ -7,8 +7,8 @@ import {useToggleFavouriteEventMutation, useUserEventFavouritesQuery} from "../r
 
 const VITE__API = import.meta.env.VITE__API
 const Favourites = () => {
-    // const {user} = useTelegram()
-    const user = {id: '466439009'}
+    const {user} = useTelegram()
+    // const user = {id: '466439009'}
     const {data:places, isLoading, isError} = useUserFavouritesQuery(user?.id)
     const {data:events, isLoading:isLoadingEvents, isError:isErrorEvents} = useUserEventFavouritesQuery(user?.id)
     console.log({events})

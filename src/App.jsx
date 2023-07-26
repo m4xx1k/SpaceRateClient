@@ -55,10 +55,10 @@ function App() {
         <Routes>
             <Route element={<Layout/>}>
                 <Route element={<TelegramRequire/>}>
+					<Route path={'/favourites'} element={<Favourites/>}/>
                     <Route path={'/profile'} element={<Profile/>}/>
                 </Route>
 				<Route path={'/'} element={<Home/>}/>
-				<Route path={'/favourites'} element={<Favourites/>}/>
 				{
 					routes.map(el=>{
 						const Element = el.element

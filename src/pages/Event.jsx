@@ -10,6 +10,7 @@ import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import RateForm from "../components/RateForm/RateForm.jsx";
 import ReactStars from "react-rating-stars-component";
+import {useTelegram} from "../hooks/useTelegram.js";
 const EventReviews = lazy(()=>import('../components/EventReviews'))
 
 function isPased(inputTime) {
@@ -68,8 +69,8 @@ const EventLoading = () => {
 const Event = () => {
 
     const {id} = useParams()
-    // const {user} = useTelegram()
-    const user = {id: '466439009'}
+    const {user} = useTelegram()
+    // const user = {id: '466439009'}
 
     const {data, isLoading, isSuccess} = useGetEventFullInfoByIdQuery({id, telegramId: user?.id})
     const [selectedDay, setSelectedDay] = useState('')
