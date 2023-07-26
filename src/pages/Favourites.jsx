@@ -100,7 +100,7 @@ const Favourites = () => {
                                             <div onClick={() => handleToggleEventFavourite(e?._id)}
                                                  className="item-favorite_unlike">✛
                                             </div>
-                                            <Link to={`/event/${e._id}`} className="item-favorite__body">
+                                            <Link to={`/${e.type.name==='movie'? 'movie':'event'}/${e._id}`} className="item-favorite__body">
                                                 <div className="item-favorite__image-ibg">
                                                     <picture>
                                                         <source

@@ -14,8 +14,22 @@ import {useTelegram} from "../hooks/useTelegram.js";
 const EventReviews = lazy(()=>import('../components/EventReviews'))
 
 const VITE__API = import.meta.env.VITE__API
+//
+// function isPased(inputTime,day) {
+//     const currentDateTimeUtc = new Date();
+//     const currentDateTimeUzbekistan = new Date(currentDateTimeUtc.getTime() + 5 * 60 * 60 * 1000); // UTC + 5 годин (Часовий пояс Узбекистану)
+//
+//     const inputTimeParts = inputTime.split(':');
+//     const inputDateTime = new Date(currentDateTimeUzbekistan.getTime());
+//     inputDateTime.setUTCHours(parseInt(Number(inputTimeParts[0])));
+//     inputDateTime.setUTCMinutes(parseInt(Number(inputTimeParts[1])));
+//     inputDateTime.setDate(day)
+//
+//     return inputDateTime.getTime() <= currentDateTimeUzbekistan.getTime()
+// }
 
-function isPased(inputTime,day) {
+
+function isPased(inputTime) {
     const currentDateTimeUtc = new Date();
     const currentDateTimeUzbekistan = new Date(currentDateTimeUtc.getTime() + 5 * 60 * 60 * 1000); // UTC + 5 годин (Часовий пояс Узбекистану)
 
@@ -23,10 +37,10 @@ function isPased(inputTime,day) {
     const inputDateTime = new Date(currentDateTimeUzbekistan.getTime());
     inputDateTime.setUTCHours(parseInt(Number(inputTimeParts[0])));
     inputDateTime.setUTCMinutes(parseInt(Number(inputTimeParts[1])));
-    inputDateTime.setDate(day)
 
     return inputDateTime.getTime() <= currentDateTimeUzbekistan.getTime()
 }
+
 
 const MovieLoading = () => {
     return (
