@@ -24,7 +24,7 @@ const Header = () => {
                         <BackButton classname={'links__back-btn'}>{'⇦'}</BackButton>
 
                         <Link to="/" className="header__logo">
-                            <img src={logo} alt=""/>
+                            <img loading="lazy"  src={logo} alt=""/>
                         </Link>
 
                     </div>

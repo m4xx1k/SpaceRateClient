@@ -95,10 +95,23 @@ export const eventApi = api.injectEndpoints({
                 params: {id}
             }), providesTags: ['Category', 'Event']
         }),
+        getMoviesWithShowtimesByDate: builder.query({
+            query: date => ({
+                url: `event/getMoviesWithShowtimesByDate`,
+                params: {date}
+            }), providesTags: ['Category', 'Event']
+        }),
+        getAvailableShowtimeDates: builder.query({
+            query: date => ({
+                url: `event/getAvailableShowtimeDates`,
+                params: {date}
+            }), providesTags: ['Category', 'Event']
+        }),
     })
 })
 
 export const {
+    useGetAvailableShowtimeDatesQuery,
     useLazyFindEventImagesQuery,
     useToggleFavouriteEventMutation,
     useFindUserEventRatingMutation,
@@ -106,7 +119,7 @@ export const {
     useFetchAllEventRatingsQuery,
     useFavouriteCountQuery,
     useUserEventFavouritesQuery,
-
+    useLazyGetMoviesWithShowtimesByDateQuery,
     useGetEventFullInfoByIdQuery,
     useGetEventsWithShowtimesByTypeIdQuery,
     useFindAllEventTypesQuery,

@@ -102,7 +102,7 @@ const Events = () => {
                         {/*                <SwiperSlide onClick={()=>navigate(`/event/${e._id}`)} key={e.name} className="events-poster__slide slide-events-poster swiper-slide">*/}
                         {/*                    {*/}
                         {/*                        !e.photos.lenght &&*/}
-                        {/*                        <div className="slide-events-poster__img-ibg"><img src={e.photos[0].photo} alt=""/>*/}
+                        {/*                        <div className="slide-events-poster__img-ibg"><img loading="lazy"  src={e.photos[0].photo} alt=""/>*/}
                         {/*                        </div>*/}
                         {/*                    }*/}
 
@@ -195,10 +195,10 @@ const Events = () => {
                                         {
                                             event.event.photos?.lenght &&
                                             <a href="#" className="poster-top__img-ibg">
-                                                <img src={event.event.photos[0].photo} alt=""/>
+                                                <img loading="lazy"  src={event.event.photos[0].photo} alt=""/>
                                                 <picture >
-                                                    <source  srcSet={toWebp(`${VITE__API}/events/${photos[0]?.photo}`)}/>
-                                                    <img src={`${VITE__API}/events/${photos[0]?.photo}`} alt=""/>
+                                                    <source   srcSet={toWebp(`${VITE__API}/events/${photos[0]?.photo}`)}/>
+                                                    <img loading="lazy"  src={`${VITE__API}/events/${photos[0]?.photo}`} alt=""/>
                                                 </picture>
                                             </a>
                                         }

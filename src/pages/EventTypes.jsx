@@ -14,7 +14,7 @@ const EventTypes = () => {
                     {/*<div className="events-poster__slider">*/}
                     {/*    <div className="events-poster__wrapper swiper-wrapper">*/}
                     {/*        <a href="#" className="events-poster__slide slide-events-poster swiper-slide">*/}
-                    {/*            <div className="slide-events-poster__img-ibg"><img src="@img/events-poster/01.jpg"*/}
+                    {/*            <div className="slide-events-poster__img-ibg"><img loading="lazy"  src="@img/events-poster/01.jpg"*/}
                     {/*                                                               alt=""/></div>*/}
                     {/*            <div className="slide-events-poster__content">*/}
                     {/*                <div className="slide-events-poster__top">*/}

@@ -170,11 +170,11 @@ const Movie = () => {
                             data.movie.photos?.length &&
                             <div className="event__image-ibg">
                                 <picture>
-                                    <source srcSet={toWebp(`${VITE__API}/events/${data.movie.photos[0].photo}`)}/>
+                                    <source  srcSet={toWebp(`${VITE__API}/events/${data.movie.photos[0].photo}`)}/>
                                     <img
                                         src={`${VITE__API}/events/${data.movie.photos[0].photo}`}
                                         alt={`${VITE__API}/events/${data.movie.photos[0].photo}`}/>
-                                    {/*<img src="https://via.placeholder.com/374" alt=""/>*/}
+                                    {/*<img loading="lazy"  src="https://via.placeholder.com/374" alt=""/>*/}
                                 </picture>
 
                             </div>
@@ -220,7 +220,7 @@ const Movie = () => {
                             </button>
                         </div>
                         <div className="restaurant__hide">
-                            <button onClick={() => setIsShow(true)} className="rewievs__btn _icon-comment">
+                            <button  style={{color: '#fffafa'}} onClick={() => setIsShow(true)} className="rewievs__btn _icon-comment">
                                 <span style={{color: '#fffafa'}}>ОСТАВИТЬ ОТЗЫВ</span></button>
                             {/*<div className="rating rating_lite rating_set">*/}
                             {/*    <ReactStars*/}

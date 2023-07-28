@@ -64,8 +64,8 @@ const PlaceItem = ({id, e}) => {
                     {
                         isSuccessPhotos && (
                             <picture >
-                                <source  srcSet={toWebp(`${VITE__API}/places/${photos[0]?.photo}`)}/>
-                                <img src={`${VITE__API}/places/${photos[0]?.photo}`} alt=""/>
+                                <source   srcSet={toWebp(`${VITE__API}/places/${photos[0]?.photo}`)}/>
+                                <img loading="lazy"  src={`${VITE__API}/places/${photos[0]?.photo}`} alt=""/>
                             </picture>
                         )
                     }

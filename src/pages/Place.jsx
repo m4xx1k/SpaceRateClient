@@ -76,11 +76,11 @@ const PhotosSlider = ({id}) => {
                         <SwiperSlide key={index}
                                      className="restaurant__slide slide-restaurant-ibg swiper-slide">
                             <picture>
-                                <source srcSet={toWebp(`${VITE__API}/places/${e.photo}`)}/>
+                                <source  srcSet={toWebp(`${VITE__API}/places/${e.photo}`)}/>
                                 <img
                                     src={`${VITE__API}/places/${e.photo}`}
                                     alt={`${VITE__API}/places/${e.photo}`}/>
-                                {/*<img src="https://via.placeholder.com/374" alt=""/>*/}
+                                {/*<img loading="lazy"  src="https://via.placeholder.com/374" alt=""/>*/}
                             </picture>
 
                         </SwiperSlide>

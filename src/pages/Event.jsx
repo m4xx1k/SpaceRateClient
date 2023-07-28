@@ -154,9 +154,9 @@ const Event = () => {
                             </div>
                             {data.event.photos?.length && <div className="event__image-ibg">
                                 <picture>
-                                    <source
+                                    <source 
                                         srcSet={toWebp(`${VITE__API}/events/${data.event.photos[0]?.photo}`)}/>
-                                    <img src={`${VITE__API}/events/${data.event.photos[0]?.photo}`} alt=""/>
+                                    <img loading="lazy"  src={`${VITE__API}/events/${data.event.photos[0]?.photo}`} alt=""/>
                                 </picture>
                             </div>
 
@@ -208,7 +208,7 @@ const Event = () => {
                                 </button>
                             </div>
                             <div className="restaurant__hide">
-                                <button onClick={() => setIsShow(true)} className="rewievs__btn _icon-comment">
+                                <button  style={{color: '#fffafa'}} onClick={() => setIsShow(true)} className="rewievs__btn _icon-comment">
                                     <span style={{color: '#fffafa'}}>ОСТАВИТЬ ОТЗЫВ</span></button>
                                 {/*<div className="rating rating_lite rating_set">*/}
                                 {/*    <ReactStars*/}

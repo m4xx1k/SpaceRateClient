@@ -40,16 +40,16 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
         <section className="comment">
             <div className="comment__container">
                 <div className="comment__body">
-                    <div className="comment__close" onClick={() => setIsShow(false)}><img src={close} alt=""/></div>
+                    <div className="comment__close" onClick={() => setIsShow(false)}><img loading="lazy"  src={close} alt=""/></div>
                     <div className="comment__restaurant">
                         {
                             photos?.length && (
                                 <div className="comment__image-ibg">
                                     <picture>
-                                        <source srcSet={toWebp(`${VITE__API}/${isEvent ? 'events':'places'}/${photos[0]?.photo}`)}/>
-                                        <img src={`${VITE__API}/${isEvent ? 'events':'places'}/${photos[0]?.photo}`} alt=""/>
+                                        <source  srcSet={toWebp(`${VITE__API}/${isEvent ? 'events':'places'}/${photos[0]?.photo}`)}/>
+                                        <img loading="lazy"  src={`${VITE__API}/${isEvent ? 'events':'places'}/${photos[0]?.photo}`} alt=""/>
                                     </picture>
-                                    {/*<img src={firstPhoto} alt={firstPhoto}/>*/}
+                                    {/*<img loading="lazy"  src={firstPhoto} alt={firstPhoto}/>*/}
                                 </div>
                             )
                         }
@@ -101,7 +101,7 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                         </div>
                         <div className="comment-form__label">
                             <label htmlFor="inp1">
-                                <div className="comment-form__icon"><img src={icon} alt=""/></div>
+                                <div className="comment-form__icon"><img loading="lazy"  src={icon} alt=""/></div>
                                 Прикрепите фото с Вашего визита
                             </label>
                             <input type="file" name="" id="inp1"/>

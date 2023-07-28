@@ -25,9 +25,9 @@ export const placeApi = api.injectEndpoints({
             }), providesTags: ['Category', 'Place']
         }),
         findAllPlacesMainByCategoryId: builder.query({
-            query: id => ({
+            query: params => ({
                 url: `place/findAllPlacesMainByCategoryId`,
-                params: {id}
+                params
             }), providesTags: ['Category', 'Place']
         }),
         findPlaceInfos: builder.query({

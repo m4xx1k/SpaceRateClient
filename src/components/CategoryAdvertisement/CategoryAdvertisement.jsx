@@ -11,7 +11,7 @@ const CategoryAdvertisement = ({id}) => {
                 data.map(adv=>(
                     <li key={adv._id} className={s.advertisement}>
                         <Link target={'_blank'} to={adv.link}>
-                            <img className={s.img} src={`${VITE__API}/categories/${adv.photo}`} alt=""/>
+                            <img loading="lazy"  className={s.img} src={`${VITE__API}/categories/${adv.photo}`} alt=""/>
                         </Link>
                     </li>
                 ))

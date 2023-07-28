@@ -21,10 +21,10 @@ const Home = () => {
             <div className="home-buttons__container">
                 <div className="home-buttons__body">
                     <div className="row">
-                        <Link to="eventstypes" className="home-buttons__btn">СОБЫТИЯ<img src={event} alt=""/></Link>
+                        <Link to="eventstypes" className="home-buttons__btn">СОБЫТИЯ<img loading="lazy"  src={event} alt=""/></Link>
                     </div>
                     <div className="row">
-                        <Link to="movies" className="home-buttons__btn">КИНО<img src={movie} alt=""/></Link>
+                        <Link to="movies" className="home-buttons__btn">КИНО<img loading="lazy"  src={movie} alt=""/></Link>
 
                     </div>
                 </div>
@@ -46,8 +46,8 @@ const Home = () => {
                                         {category.name}
                                         <div className="item-categories__img-ibg">
                                             <picture>
-                                                <source srcSet={toWebp(`${VITE__API}/categories/${category.photo}`)}/>
-                                                <img src={`${VITE__API}/categories/${category.photo}`}
+                                                <source  srcSet={toWebp(`${VITE__API}/categories/${category.photo}`)}/>
+                                                <img loading="lazy"  src={`${VITE__API}/categories/${category.photo}`}
                                                      alt=""/>
                                             </picture>
 

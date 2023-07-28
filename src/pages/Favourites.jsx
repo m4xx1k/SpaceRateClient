@@ -50,13 +50,13 @@ const Favourites = () => {
                                             <Link to={`/place/${e.place._id}`} className="item-favorite__body">
                                                 <div className="item-favorite__image-ibg">
                                                     <picture>
-                                                        <source
+                                                        <source 
                                                             srcSet={toWebp(`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`)}/>
                                                         <img
                                                             src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}
                                                             alt=""/>
                                                     </picture>
-                                                    {/*<img src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}*/}
+                                                    {/*<img loading="lazy"  src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}*/}
                                                     {/*    alt=""/>*/}
                                                     <div className="item-favorite__labels">
                                                         <button className="item-favorite__label _icon-favorite"></button>
@@ -103,13 +103,13 @@ const Favourites = () => {
                                             <Link to={`/${e.type.name==='movie'? 'movie':'event'}/${e._id}`} className="item-favorite__body">
                                                 <div className="item-favorite__image-ibg">
                                                     <picture>
-                                                        <source
+                                                        <source 
                                                             srcSet={toWebp(`${VITE__API}/events/${e?.photos?.length ? e.photos[0]?.photo : ''}`)}/>
                                                         <img
                                                             src={`${VITE__API}/events/${e?.photos?.length ? e.photos[0]?.photo : ''}`}
                                                             alt=""/>
                                                     </picture>
-                                                    {/*<img src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}*/}
+                                                    {/*<img loading="lazy"  src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}*/}
                                                     {/*    alt=""/>*/}
                                                     <div className="item-favorite__labels">
                                                         <button className="item-favorite__label _icon-favorite"></button>
