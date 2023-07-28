@@ -6,11 +6,12 @@ import PlaceItem from "../components/PlaceItem.jsx";
 import MobilePlace from "../components/MobilePlace.jsx";
 import {useFindCategoryByIdQuery} from "../redux/category/category.api.js";
 import CategoryAdvertisement from "../components/CategoryAdvertisement/CategoryAdvertisement.jsx";
+import {useTelegram} from "../hooks/useTelegram.js";
 
 const Places = () => {
     const {id} = useParams()
-    const user = {id: '466439009'}
-
+    // const user = {id: '466439009'}
+    const {user}  = useTelegram()
     const [page, setPage] = useState(1);
     const [loadedPlaces, setLoadedPlaces] = useState([]);
 

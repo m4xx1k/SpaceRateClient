@@ -9,12 +9,13 @@ import {toWebp} from "../utils.js";
 import like from '../assets/icons/like.svg'
 import liked from '../assets/icons/liked.svg'
 import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
+import {useTelegram} from "../hooks/useTelegram.js";
 
 const VITE__API = import.meta.env.VITE__API
 const MobilePlace = ({e, i}) => {
     const id = e._id
-    const user = {id: '466439009'}
-
+    // const user = {id: '466439009'}
+    const {user} = useTelegram()
     const {data: photos, isLoading: isLoadingPhotos, isSuccess: isSuccessPhotos} = useFindPlaceImagesQuery(id)
     const {data: info, isLoading: isLoadingInfos, isSuccess: isSuccessInfos} = useFindPlaceInfosQuery(id)
     const [isLiked, setIsLiked] = useState(!!e?.isFavourite)
