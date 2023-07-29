@@ -1,30 +1,59 @@
-import React from 'react';
+import React, {lazy, Suspense, useEffect} from 'react';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import {useFetchAllQuery} from "../redux/category/category.api.js";
-import {Link} from "react-router-dom";
-import HeroSlider from "../components/HeroSlider.jsx";
+import {Link, useNavigate} from "react-router-dom";
 import {toWebp} from "../utils.js";
 import event from '../assets/icons/event.svg'
 import movie from '../assets/icons/movie.svg'
+import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
+import {useTelegram} from "../hooks/useTelegram.js";
+
+const HeroSlider = lazy(() => import("../components/HeroSlider.jsx"))
 
 const VITE__API = import.meta.env.VITE__API
 
 const Home = () => {
     const {data, isLoading} = useFetchAllQuery()
+    const {user} = useTelegram()
+    // const user = {id: '1635059635'}
+    const [findUser] = useFindUserMutation()
+    const navigate = useNavigate()
+    useEffect(() => {
 
+        const handleUserAuth = async () => {
+            const {data: isUser} = await findUser({telegramId: user.id})
+            if (!isUser) {
+                console.log('user isnt registered, redirect')
+                navigate('/login')
+            }else{
+                console.log({isUser})
+            }
+
+        }
+        if (user) {
+            console.log('is telegram')
+            handleUserAuth()
+        }
+
+    }, [])
     return (<>
 
-        <HeroSlider/>
-        {/*<Link style={{borderRadius:6,width:'90%', border:'1px solid #000', padding:'12px 8px',fontSize:24,fontWeight:600,display:'flex',justifyContent:'center', margin:'12px auto'}} to={'events'}>Кино</Link>*/}
+        <Suspense fallback={
+            <div style={{width: '90vw', height: 140, borderRadius: 50}} className={'skeleton-loading'}></div>
+        }>
+            <HeroSlider/>
+        </Suspense>
         <div className="home-buttons">
             <div className="home-buttons__container">
                 <div className="home-buttons__body">
                     <div className="row">
-                        <Link to="eventstypes" className="home-buttons__btn">СОБЫТИЯ<img loading="lazy"  src={event} alt=""/></Link>
+                        <Link to="eventstypes" className="home-buttons__btn">СОБЫТИЯ<img loading="lazy" src={event}
+                                                                                         alt=""/></Link>
                     </div>
                     <div className="row">
-                        <Link to="movies" className="home-buttons__btn">КИНО<img loading="lazy"  src={movie} alt=""/></Link>
+                        <Link to="movies" className="home-buttons__btn">КИНО<img loading="lazy" src={movie}
+                                                                                 alt=""/></Link>
 
                     </div>
                 </div>
@@ -46,8 +75,8 @@ const Home = () => {
                                         {category.name}
                                         <div className="item-categories__img-ibg">
                                             <picture>
-                                                <source  srcSet={toWebp(`${VITE__API}/categories/${category.photo}`)}/>
-                                                <img loading="lazy"  src={`${VITE__API}/categories/${category.photo}`}
+                                                <source srcSet={toWebp(`${VITE__API}/categories/${category.photo}`)}/>
+                                                <img loading="lazy" src={`${VITE__API}/categories/${category.photo}`}
                                                      alt=""/>
                                             </picture>
 

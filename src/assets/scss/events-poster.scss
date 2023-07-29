@@ -7,9 +7,11 @@
   }
 
   &__top {
-    padding: rem(20);
+    padding: 0 rem(20);
     margin: 0 rem(-20);
-    border-top: 1px solid rgba(35, 35, 35, 0.4);
+    margin-bottom: 8px;
+    margin-top: -8px;
+    //border-top: 1px solid rgba(35, 35, 35, 0.4);
   }
 
   &__back {

@@ -21,7 +21,7 @@ const Header = () => {
             <div className="header__container">
                 <div className="header__body">
                     <div className="header__info">
-                        <BackButton classname={'links__back-btn'}>{'⇦'}</BackButton>
+                        {/*<BackButton classname={'links__back-btn'}>{'⇦'}</BackButton>*/}
 
                         <Link to="/" className="header__logo">
                             <img loading="lazy"  src={logo} alt=""/>
@@ -59,7 +59,13 @@ const Header = () => {
                     </div>
 
                 </div>
+                <div className="events-poster__top">
+                    <BackButton>
+                        <span className="events-poster__back">НАЗАД</span   >
+                    </BackButton>
+                </div>
             </div>
+
         </header>
     );
 };

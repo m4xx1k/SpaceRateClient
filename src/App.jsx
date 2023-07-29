@@ -69,12 +69,6 @@ function App() {
 					}/>
 					})
 				}
-				{/*
-                <Route path={'/login'} element={<Login/>}/>
-                <Route path={'/events'} element={<Events/>}/>
-                <Route path={'/place/:id'} element={<Place/>}/>
-                <Route path={'/movie/:id'} element={<Movie/>}/>
-                <Route path={'/places/:id'} element={<Places/>}/> */}
                 <Route path={'*'} element={<>404</>}/>
             </Route>
         </Routes>

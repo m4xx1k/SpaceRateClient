@@ -37,9 +37,8 @@ const EventReviews = ({eventId, userId}) => {
                                                 </div>
                                                 <div className="slide-rewievs__info">
                                                     <div
-                                                        className="slide-rewievs__name">{e?.user?.username ? e.user.username : 'Username'}</div>
-                                                    <div
-                                                        className="slide-rewievs__place">{e?.user?.name ? e.user.name : 'Name'}</div>
+                                                        className="slide-rewievs__name">{e?.user?.name ? e.user.name : 'Пользователь'}</div>
+
                                                 </div>
                                             </div>
                                             <div className="slide-rewievs__text">{e.text}
