@@ -12,6 +12,7 @@ import Favourites from "./pages/Favourites.jsx";
 // import Login from "./pages/Login/Login.jsx";
 // import Place from "./pages/Place.jsx";
 import {Suspense, lazy, useEffect} from 'react';
+import {useTelegram} from "./hooks/useTelegram.js";
 const routes = [
 	{
 		path:'/',
@@ -51,7 +52,9 @@ const routes = [
 	}
 ]
 function App({hideLoader}) {
+	const {tg} = useTelegram()
 	useEffect(() => {
+		tg.ready()
 		hideLoader();
 		console.log('none')
 	});
