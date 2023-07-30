@@ -11,7 +11,7 @@ import Favourites from "./pages/Favourites.jsx";
 // import Movie from "./pages/Movie.jsx";
 // import Login from "./pages/Login/Login.jsx";
 // import Place from "./pages/Place.jsx";
-import { Suspense, lazy } from 'react';
+import {Suspense, lazy, useEffect} from 'react';
 const routes = [
 	{
 		path:'/',
@@ -50,7 +50,10 @@ const routes = [
 		element:lazy(()=>import('./pages/Movie.jsx'))
 	}
 ]
-function App() {
+function App({hideLoader}) {
+	useEffect(() => {
+		hideLoader();
+	});
     return (
         <Routes>
             <Route element={<Layout/>}>

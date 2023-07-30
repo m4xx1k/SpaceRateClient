@@ -119,17 +119,14 @@ const Event = () => {
         } else {
             navigate('/login')
         }
-
     }
     useEffect(() => {
-
         if (isSuccess) {
             setIsLiked(data.event?.isFavourite)
             if (data.dates?.length) {
                 setSelectedDay(Object.keys(data.dates[0].data)[0])
                 setSelectedMonth(data.dates[0].month)
             }
-
         }
     }, [data, isSuccess])
     if (!isSuccess) return <EventLoading/>
@@ -154,7 +151,7 @@ const Event = () => {
                             </div>
                             {data.event.photos?.length && <div className="event__image-ibg">
                                 <picture>
-                                    <source 
+                                    <source
                                         srcSet={toWebp(`${VITE__API}/events/${data.event.photos[0]?.photo}`)}/>
                                     <img loading="lazy"  src={`${VITE__API}/events/${data.event.photos[0]?.photo}`} alt=""/>
                                 </picture>
