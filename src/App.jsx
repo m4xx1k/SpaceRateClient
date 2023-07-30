@@ -53,6 +53,7 @@ const routes = [
 function App({hideLoader}) {
 	useEffect(() => {
 		hideLoader();
+		console.log('none')
 	});
     return (
         <Routes>

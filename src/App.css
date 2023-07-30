@@ -5,7 +5,7 @@
   font-weight: inherit;
   box-sizing: inherit;
 }
-#root{
+#root.visible{
   overflow: clip;
   min-height: 100%;
 }
