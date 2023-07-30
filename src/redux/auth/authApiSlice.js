@@ -15,10 +15,17 @@ export const authApiSlice = api.injectEndpoints({
                 method:'POST',
                 body
             })
+        }),
+        userEntrance:builder.mutation({
+            query:body=>({
+                url:'user/userEntrance',
+                method:'POST',
+                body
+            })
         })
 
 
     })
 })
 
-export const { useFindUserMutation,useRegistrationMutation} = authApiSlice
+export const { useFindUserMutation,useUserEntranceMutation,useRegistrationMutation} = authApiSlice

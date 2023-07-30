@@ -6,7 +6,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {toWebp} from "../utils.js";
 import event from '../assets/icons/event.svg'
 import movie from '../assets/icons/movie.svg'
-import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
+import {useFindUserMutation, useUserEntranceMutation} from "../redux/auth/authApiSlice.js";
 import {useTelegram} from "../hooks/useTelegram.js";
 
 const HeroSlider = lazy(() => import("../components/HeroSlider.jsx"))
@@ -18,16 +18,17 @@ const Home = () => {
     const {user} = useTelegram()
     // const user = {id: '1635059635'}
     const [findUser] = useFindUserMutation()
+    const [userEntrance] = useUserEntranceMutation()
     const navigate = useNavigate()
     useEffect(() => {
 
         const handleUserAuth = async () => {
-            const {data: isUser} = await findUser({telegramId: user.id})
-            if (!isUser) {
+            const {data: fetchedUser} = await findUser({telegramId: user.id})
+            if (!fetchedUser) {
                 console.log('user isnt registered, redirect')
                 navigate('/login')
             }else{
-                console.log({isUser})
+                await userEntrance({id:fetchedUser._id})
             }
 
         }
