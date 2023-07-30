@@ -54,10 +54,11 @@ const routes = [
 function App({hideLoader}) {
 	const {tg} = useTelegram()
 	useEffect(() => {
-		tg.ready()
+		if(tg) tg.ready()
+
 		hideLoader();
 		console.log('none')
-	});
+	}, []);
     return (
         <Routes>
             <Route element={<Layout/>}>
