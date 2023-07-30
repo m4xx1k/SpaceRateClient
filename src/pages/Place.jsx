@@ -18,6 +18,8 @@ import {useNavigate} from "react-router-dom";
 import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
 import {useSelector} from "react-redux";
 import {formatDate, toWebp} from "../utils.js";
+import google from '../assets/img/google100.webp'
+import yandex from '../assets/img/yandex100.webp'
 
 SwiperCore.use([Pagination, Navigation]);
 const VITE__API = import.meta.env.VITE__API
@@ -76,7 +78,7 @@ const PhotosSlider = ({id}) => {
                         <SwiperSlide key={index}
                                      className="restaurant__slide slide-restaurant-ibg swiper-slide">
                             <picture>
-                                <source  srcSet={toWebp(`${VITE__API}/places/${e.photo}`)}/>
+                                <source srcSet={toWebp(`${VITE__API}/places/${e.photo}`)}/>
                                 <img
                                     src={`${VITE__API}/places/${e.photo}`}
                                     alt={`${VITE__API}/places/${e.photo}`}/>
@@ -142,7 +144,7 @@ const Reviews = ({placeId, userId}) => {
                                                 <div className="slide-rewievs__info">
                                                     <div
                                                         className="slide-rewievs__name">{e?.user?.name ? e.user.name : 'Пользователь'}</div>
-                                                    
+
                                                 </div>
                                             </div>
                                             <div className="slide-rewievs__text">{e.text}
@@ -291,7 +293,9 @@ const Place = () => {
         }
 
     }
-
+    const handleCallClick = phoneNumber => {
+        window.open(`tel:${phoneNumber}`, '_self');
+    };
     if (isError) return <p>error:/</p>
     if (isLoading) return <PlaceLoading id={id}/>
     if (!place || !isSuccessInfos || !isSuccess) return <p></p>
@@ -332,10 +336,21 @@ const Place = () => {
                                     <PhotosSlider id={id}/>
 
                                     <div className="restaurant__bottom">
-                                        <button onClick={handleToggleFavourite}
-                                                className={clsx("restaurant__like", isLiked && "restaurant__liked", "_icon-favorite")}>МНЕ
-                                            НРАВИТСЯ
-                                        </button>
+                                        <div className="row-between">
+                                            <button onClick={handleToggleFavourite}
+                                                    className={clsx("restaurant__like", isLiked && "restaurant__liked", "_icon-favorite")}>МНЕ
+                                                НРАВИТСЯ
+                                            </button>
+                                            {infos?.telephone?.value
+                                                &&
+                                                <div>
+                                                    <button onClick={()=>handleCallClick(infos.telephone.value)} className={'restaurant__like '}>
+                                                        Забронировать
+                                                    </button>
+                                                </div>
+                                            }
+                                        </div>
+
                                         <div className="restaurant__social social">
                                             {
                                                 isSuccessInfos && socials.map(elem => {
@@ -399,10 +414,47 @@ const Place = () => {
                                                             }
                                                             {infos?.telephone?.value
                                                                 &&
-                                                                <a href={`tel:${infos.telephone.value}`}
-                                                                   className="list-product__item _icon-phone">{infos.telephone.value}</a>
+                                                                    <a href={`tel:${infos.telephone.value}`}
+                                                                       className="list-product__item _icon-phone">{infos.telephone.value}</a>
+
+
 
                                                             }
+
+                                                            {
+                                                                infos?.google_maps?.value || infos?.yandex_maps?.value ?
+
+                                                                    <div className={'list-product_maps'}>
+                                                                        <span className="list-product_maps-title">Как добраться?</span>
+                                                                        <div className={'list-product_maps-list'}>
+                                                                            {
+                                                                                infos?.yandex_maps?.value ?
+                                                                                    <a className={'list-product_maps-link'} href={infos?.yandex_maps?.value}>
+                                                                                        <img alt={'yandex'}
+                                                                                             className={'list-product_maps-img yandex'}
+                                                                                             src={yandex}/>
+                                                                                    </a> : <></>
+                                                                            }  {
+                                                                                infos?.google_maps?.value ?
+                                                                                    <a className={'list-product_maps-link'} href={infos?.google_maps?.value}>
+                                                                                        <img alt={'google'}
+                                                                                             className={'list-product_maps-img'}
+                                                                                             src={google}/>
+                                                                                    </a> : <></>
+                                                                            }
+
+                                                                        </div>
+                                                                    </div> : <></>
+                                                            }
+                                                            {/*{infos?.telephone?.value*/}
+                                                            {/*    &&*/}
+                                                            {/*    <div>*/}
+                                                            {/*        <button onClick={()=>handleCallClick(infos.telephone.value)} className={'restaurant__like '}>*/}
+                                                            {/*            Забронировать*/}
+                                                            {/*        </button>*/}
+                                                            {/*    </div>*/}
+                                                            {/*}*/}
+
                                                         </>
                                                         :
                                                         <>

@@ -329,6 +329,41 @@ body {
 }
 
 .list-product {
+  &_call{
+    background: #212121;
+    color: #fffafa;
+    padding: 8px 24px;
+    border-radius: 2px;
+    font-size: 14px;
+    font-weight: 300;
+  }
+  &_maps{
+    display: flex;
+    align-items: center;
+    &-list{
+      display: flex;
+    }
+    &-link{
+      display: flex;
+      align-items: center;
+
+    }
+    &-title{
+      border-bottom: 1px solid #000;
+      padding-bottom: 2px;
+      font-size: 18px;
+      font-weight: 300;
+    }
+    &-img{
+      width: 36px;
+      height: 36px;
+    }
+    &-img.yandex{
+      width: 32px;
+      height: 32px;
+    }
+
+  }
   &__item {
     max-width: 90%;
 

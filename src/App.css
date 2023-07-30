@@ -13,3 +13,9 @@
   width: fit-content;
   margin: 0 auto;
 }
+.row-between{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
