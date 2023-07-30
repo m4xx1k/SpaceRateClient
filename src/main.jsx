@@ -12,6 +12,7 @@ const root = document.querySelector("#root")
 
 const hideLoader = () => {
     document.body.classList.add("loader-hidden");
+    document.body.classList.remove('loader')
     document.getElementById("root").classList.add("visible");
 };
 
