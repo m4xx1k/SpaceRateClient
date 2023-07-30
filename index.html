@@ -1,59 +1,64 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/logo.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Goodjoy</title>
     <style>
-      *{
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body.loader {
-        font-family: 'Montserrat', sans-serif !important;
-        background: #fffafa !important;
-        overflow: hidden !important;
-        position: relative !important;
-        color:#212121 !important;
-        min-height: 100vh !important;
-      }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-      body.loader::before {
-        content: '' !important;
-        position: absolute !important;
-        width: 50px !important;
-        height: 50px !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) ;
-        border-radius: 50% !important;
-        border:8px solid rgba(0, 0, 0, 0.1) !important;
-        border-left-color: #212121 !important;
-        animation: spin 900ms linear infinite;
-      }
+        body.loader {
+            font-family: 'Montserrat', sans-serif !important;
+            background: #fffafa !important;
+            overflow: hidden !important;
+            position: relative !important;
+            color: #212121 !important;
+            min-height: 100vh !important;
+        }
 
-      body.loader-hidden::before {
-        display: none !important;
-      }
+        body.loader::before {
+            content: '' !important;
+            position: absolute !important;
+            width: 50px !important;
+            height: 50px !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%);
+            border-radius: 50% !important;
+            border: 8px solid rgba(0, 0, 0, 0.1) !important;
+            border-left-color: #212121 !important;
+            animation: spin 900ms linear infinite;
+        }
 
-      @keyframes spin {
-        0% { transform: translate(-50%, -50%) rotate(0deg); }
-        100% { transform: translate(-50%, -50%) rotate(360deg); }
-      }
+        body.loader-hidden::before {
+            display: none !important;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
     </style>
-  </head>
-  <body class="loader">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+</head>
+<body class="loader">
+<div id="root"></div>
 
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-      if (window.Telegram && window?.Telegram?.WebApp) {
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+    if (window.Telegram && window?.Telegram?.WebApp) {
         window.Telegram.WebApp.ready();
-      }
-    </script>
-  </body>
+    }
+</script>
+<script type="module" src="/src/main.jsx"></script>
+</body>
 </html>
