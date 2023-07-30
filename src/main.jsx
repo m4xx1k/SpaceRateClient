@@ -11,9 +11,9 @@ const loader = document.querySelector(".preloader__wrapper");
 const root = document.querySelector("#root")
 
 const hideLoader = () => {
-    loader.classList.add("preloader__wrapper-none");
-    root.classList.add("visible")
-}
+    document.body.classList.add("loader-hidden");
+    document.getElementById("root").classList.add("visible");
+};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
