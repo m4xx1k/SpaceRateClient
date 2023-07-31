@@ -34,7 +34,7 @@ const Header = () => {
                             <ul className="menu__list">
                                 <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link active">Рейтинги</a></li>
                                 <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link">Сообщество</a></li>
-                                <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link">Обзоры</a></li>
+                                <li className="menu__item"><a href="https://t.me/goodjoy_uz" className="menu__link">Обзоры</a></li>
                                 <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link">ОТДЕЛ ЗАБОТЫ</a></li>
                             </ul>
                         </nav>
