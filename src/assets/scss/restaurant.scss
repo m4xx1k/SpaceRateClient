@@ -1,4 +1,13 @@
 .restaurant {
+  &__copied{
+    display: flex;
+    font-size: 18px;
+    font-weight: 300;
+    margin: 8px auto;
+    width: fit-content;
+    align-self: center;
+    transition: all .4s ease-in-out;
+  }
   &__container {
   }
 

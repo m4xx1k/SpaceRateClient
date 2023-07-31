@@ -340,6 +340,7 @@ body {
   &_maps{
     display: flex;
     align-items: center;
+    gap: 8px;
     &-list{
       display: flex;
     }
@@ -355,12 +356,12 @@ body {
       font-weight: 300;
     }
     &-img{
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
     }
     &-img.yandex{
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
     }
 
   }

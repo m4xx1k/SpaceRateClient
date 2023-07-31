@@ -293,8 +293,19 @@ const Place = () => {
         }
 
     }
-    const handleCallClick = phoneNumber => {
-        window.open(`tel:${phoneNumber}`, '_self');
+    const [isCopied, setIsCopied] = useState(false);
+
+    const handleCopyClick = textToCopy => {
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            setIsCopied(true);
+
+            // Встановлюємо isCopied назад в false після 3 секунд
+            setTimeout(() => {
+                setIsCopied(false);
+            }, 3000);
+        }).catch(err => {
+            console.error('Не вдалося скопіювати текст:', err);
+        });
     };
     if (isError) return <p>error:/</p>
     if (isLoading) return <PlaceLoading id={id}/>
@@ -344,12 +355,14 @@ const Place = () => {
                                             {infos?.telephone?.value
                                                 &&
                                                 <div>
-                                                    <button onClick={()=>handleCallClick(infos.telephone.value)} className={'restaurant__like '}>
+                                                    <button onClick={() => handleCopyClick(infos.telephone.value)}
+                                                            className={'restaurant__like '}>
                                                         Забронировать
                                                     </button>
                                                 </div>
                                             }
                                         </div>
+
 
                                         <div className="restaurant__social social">
                                             {
@@ -364,6 +377,12 @@ const Place = () => {
                                             }
                                         </div>
                                     </div>
+                                    <span className={'restaurant__copied'}>
+                                            {
+                                                isCopied ?
+                                                    'Номер телефона скопирован':'⠀'
+                                            }
+                                        </span>
                                     <div className="restaurant__hide">
                                         <button onClick={() => ratingChanged(0)} className="rewievs__btn _icon-comment">
                                             <span>ОСТАВИТЬ ОТЗЫВ</span></button>
@@ -414,9 +433,8 @@ const Place = () => {
                                                             }
                                                             {infos?.telephone?.value
                                                                 &&
-                                                                    <a href={`tel:${infos.telephone.value}`}
-                                                                       className="list-product__item _icon-phone">{infos.telephone.value}</a>
-
+                                                                <a href={`tel:${infos.telephone.value}`}
+                                                                   className="list-product__item _icon-phone">{infos.telephone.value}</a>
 
 
                                                             }
@@ -429,19 +447,21 @@ const Place = () => {
                                                                         <div className={'list-product_maps-list'}>
                                                                             {
                                                                                 infos?.yandex_maps?.value ?
-                                                                                    <a className={'list-product_maps-link'} href={infos?.yandex_maps?.value}>
+                                                                                    <a className={'list-product_maps-link'}
+                                                                                       href={infos?.yandex_maps?.value}>
                                                                                         <img alt={'yandex'}
                                                                                              className={'list-product_maps-img yandex'}
                                                                                              src={yandex}/>
                                                                                     </a> : <></>
-                                                                            }  {
-                                                                                infos?.google_maps?.value ?
-                                                                                    <a className={'list-product_maps-link'} href={infos?.google_maps?.value}>
-                                                                                        <img alt={'google'}
-                                                                                             className={'list-product_maps-img'}
-                                                                                             src={google}/>
-                                                                                    </a> : <></>
-                                                                            }
+                                                                            } {
+                                                                            infos?.google_maps?.value ?
+                                                                                <a className={'list-product_maps-link'}
+                                                                                   href={infos?.google_maps?.value}>
+                                                                                    <img alt={'google'}
+                                                                                         className={'list-product_maps-img'}
+                                                                                         src={google}/>
+                                                                                </a> : <></>
+                                                                        }
 
                                                                         </div>
                                                                     </div> : <></>
