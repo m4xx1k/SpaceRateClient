@@ -20,6 +20,7 @@ import {useSelector} from "react-redux";
 import {formatDate, toWebp} from "../utils.js";
 import google from '../assets/img/google100.webp'
 import yandex from '../assets/img/yandex100.webp'
+import Reserve from "../components/Reserve/Reserve.jsx";
 
 SwiperCore.use([Pagination, Navigation]);
 const VITE__API = import.meta.env.VITE__API
@@ -352,15 +353,7 @@ const Place = () => {
                                                     className={clsx("restaurant__like", isLiked && "restaurant__liked", "_icon-favorite")}>МНЕ
                                                 НРАВИТСЯ
                                             </button>
-                                            {/*{infos?.telephone?.value*/}
-                                            {/*    &&*/}
-                                            {/*    <div>*/}
-                                            {/*        <button onClick={() => handleCopyClick(infos.telephone.value)}*/}
-                                            {/*                className={'restaurant__like '}>*/}
-                                            {/*            Забронировать*/}
-                                            {/*        </button>*/}
-                                            {/*    </div>*/}
-                                            {/*}*/}
+                                            <Reserve modalContent={'+380XXXXXXXXX'}/>
                                         </div>
 
 

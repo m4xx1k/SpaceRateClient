@@ -134,36 +134,38 @@
   }
 
   &__list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    margin: rem(30) 0 rem(20);
-    gap: rem(5);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 0;
   }
 
   &__item {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-end;
     column-gap: rem(5);
     row-gap: rem(2);
+    &-title{
+      color: #fffafa;
+      font-family: Gravity;
+      font-size: 15px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+    &-text{
+      color: #fffafa;
+      font-family: Gravity;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 350;
+      line-height: normal;
+    }
   }
 
-  &__item-title {
-    color: #fffafa;
-    font-family: Gravity;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-  }
 
-  &__item-text {
-    color: #fffafa;
-    font-family: Gravity;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 350;
-    line-height: normal;
-  }
 
   &__showmore {
   }

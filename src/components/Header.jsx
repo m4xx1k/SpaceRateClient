@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import logo from '../assets/img/logo.svg'
+import logo from '../assets/goodjoy41.png'
 import {Link} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {useFavouriteCountQuery} from "../redux/place/place.api.js";
