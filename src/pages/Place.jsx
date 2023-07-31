@@ -352,15 +352,15 @@ const Place = () => {
                                                     className={clsx("restaurant__like", isLiked && "restaurant__liked", "_icon-favorite")}>МНЕ
                                                 НРАВИТСЯ
                                             </button>
-                                            {infos?.telephone?.value
-                                                &&
-                                                <div>
-                                                    <button onClick={() => handleCopyClick(infos.telephone.value)}
-                                                            className={'restaurant__like '}>
-                                                        Забронировать
-                                                    </button>
-                                                </div>
-                                            }
+                                            {/*{infos?.telephone?.value*/}
+                                            {/*    &&*/}
+                                            {/*    <div>*/}
+                                            {/*        <button onClick={() => handleCopyClick(infos.telephone.value)}*/}
+                                            {/*                className={'restaurant__like '}>*/}
+                                            {/*            Забронировать*/}
+                                            {/*        </button>*/}
+                                            {/*    </div>*/}
+                                            {/*}*/}
                                         </div>
 
 
