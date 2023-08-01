@@ -353,7 +353,13 @@ const Place = () => {
                                                     className={clsx("restaurant__like", isLiked && "restaurant__liked", "_icon-favorite")}>МНЕ
                                                 НРАВИТСЯ
                                             </button>
-                                            <Reserve modalContent={'+380XXXXXXXXX'}/>
+                                            {infos?.telephone?.value
+                                                &&
+                                                <Reserve modalContent={infos?.telephone?.value}/>
+
+
+                                            }
+
                                         </div>
 
 
