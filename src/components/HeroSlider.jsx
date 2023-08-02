@@ -1,104 +1,61 @@
-import React from 'react';
-import {Swiper, SwiperSlide} from "swiper/react";
-import {Autoplay, EffectFade} from "swiper";
+import React, {useEffect} from 'react';
+import {Carousel} from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import {useFetchMainAdvertisementsQuery} from "../redux/place/place.api.js";
+import {toWebp} from "../utils.js";
+
+const VITE__API = import.meta.env.VITE__API
 
 const HeroSlider = () => {
-    return (
+        const {data} = useFetchMainAdvertisementsQuery()
+        const handleAdvertisementClick = (i) => {
+            console.log(true)
+            window.open(data[i].link, '_blank');
+
+        }
+        useEffect(() => console.log(data), [data])
+        if (!data) return null; // Додано умову для переконання, що дані існують
+
+        return (
             <section className="hero">
-                <div className="hero__container">
-                    <div className="hero__body">
+                <div className="hero__body">
 
-                        <div className="hero__slider swiper">
+                    <div className={'main_slider'}>
 
-                            <Swiper
-                                loop
-                                noSwiping
-
-                                effect="fade"
-                                slidesPerView={1}
-                                className="hero__wrapper swiper-wrapper"
-                                modules={[EffectFade, Autoplay]}
-                                observer={true}
-                                observeParents={true}
-                                speed={800}
-                                fadeEffect={{
-                                    crossFade: true
-                                }}
-                                autoplay={{
-                                    delay: 5000, disableOnInteraction: false
-                                }}
-                            >
-                                <SwiperSlide className="hero__slide slide-hero swiper-slide">
-                                    <div className="slide-hero__title">Не нужно думать куда пойти, ориентируйтесь по
-                                        нашим рейтингам.
-                                    </div>
-                                    <div className="slide-hero__decors">
-                                        <div className="slide-hero__decor slide-hero__decor_1"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_2"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_3"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_4"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_5"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_6"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_7"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_8"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_9"></div>
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide className="hero__slide slide-hero swiper-slide">
-                                    <div className="slide-hero__title">
-                                        {/*{!!user?.username ? user.username : 'is not tg'}*/}
-                                        Думать нужно думать куда пойти
-                                    </div>
-                                    <div className="slide-hero__decors">
-                                        <div className="slide-hero__decor slide-hero__decor_10"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_11"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_12"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_13"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_14"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_15"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_16"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_17"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_18"></div>
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide className="hero__slide slide-hero swiper-slide">
-                                    <div className="slide-hero__title">Ориентируйтесь нужно думать куда пойти, по
-                                        нашим.
-                                    </div>
-                                    <div className="slide-hero__decors">
-                                        <div className="slide-hero__decor slide-hero__decor_1"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_2"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_3"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_4"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_5"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_6"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_7"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_8"></div>
-                                        <div className="slide-hero__decor slide-hero__decor_9"></div>
-                                    </div>
-
-                                </SwiperSlide>
-                            </Swiper>
-
-                            <div className="hero__pagination pagination"></div>
-                        </div>
+                        <Carousel
+                            autoPlay
+                            interval={5000}
+                            showArrows={false}
+                            infiniteLoop
+                            showThumbs={false}
+                            showStatus={false}
+                            swipeable
+                            transitionTime={800}
+                            emulateTouch
+                            onClickItem={handleAdvertisementClick}
+                        >
+                            {data?.map((adv) => (
+                                <a href={adv.link} key={adv._id}>
+                                    {adv?.photo && (
+                                        <picture>
+                                            <source className={'main_slide'}
+                                                    srcSet={toWebp(`${VITE__API}/categories/${adv?.photo}`)}/>
+                                            <img className={'main_slide'} loading="lazy"
+                                                 src={`${VITE__API}/categories/${adv?.photo}`} alt=""/>
+                                        </picture>
+                                    )}
+                                </a>
+                            ))}
+                        </Carousel>
 
                     </div>
-                    <div className="hero__decors">
-                        <div className="hero__decor hero__decor_1"></div>
-                        <div className="hero__decor hero__decor_2"></div>
-                        <div className="hero__decor hero__decor_3"></div>
-                        <div className="hero__decor hero__decor_4"></div>
-                        <div className="hero__decor hero__decor_5"></div>
-                        <div className="hero__decor hero__decor_6"></div>
-                        <div className="hero__decor hero__decor_7"></div>
-                        <div className="hero__decor hero__decor_8"></div>
-                        <div className="hero__decor hero__decor_9"></div>
-                    </div>
+
                 </div>
+
             </section>
 
-    );
-};
+        );
+    }
+;
 
 export default HeroSlider;

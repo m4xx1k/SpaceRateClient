@@ -11,7 +11,7 @@ import {useTelegram} from "../hooks/useTelegram.js";
 const Places = () => {
     const {id} = useParams()
     // const user = {id: '466439009'}
-    const {user}  = useTelegram()
+    const {user} = useTelegram()
     const [page, setPage] = useState(1);
     const [loadedPlaces, setLoadedPlaces] = useState([]);
 
@@ -30,7 +30,8 @@ const Places = () => {
     // Merge new places into loaded places when places change
     useEffect(() => {
         if (places) {
-            setLoadedPlaces(prevPlaces => [...prevPlaces, ...places.filter(place => !prevPlaces.map(prev => prev._id).includes(place._id))])
+
+            setLoadedPlaces(prevPlaces => [...prevPlaces, ...places])
         }
     }, [places]);
 
@@ -47,22 +48,23 @@ const Places = () => {
                         <h2 className="ratings__title title title_1">ТОП {category?.name}</h2>
 
                         <div className="ratings__items ratings__items_pc">
-                            {!isLoading && loadedPlaces?.map(e => <PlaceItem e={e} id={e._id} key={e._id}/>)}
+                            {!isLoading && [...new Set(loadedPlaces)]?.map(e => <PlaceItem e={e} id={e._id}
+                                                                                           key={e._id}/>)}
                         </div>
 
                         <div className="ratings__items ratings__items_mob">
-                            {!isLoading ? loadedPlaces?.map((e, i) => <MobilePlace key={i} e={e} i={i}/>)
-                                :  <>
-                                    <div style={{height:'96px',width:'88vw'}} className={'skeleton-loading'}></div>
-                                    <div style={{height:'96px',width:'88vw'}} className={'skeleton-loading'}></div>
-                                    <div style={{height:'96px',width:'88vw'}} className={'skeleton-loading'}></div>
-                                    <div style={{height:'96px',width:'88vw'}} className={'skeleton-loading'}></div>
+                            {!isLoading ? [...new Set(loadedPlaces)]?.map((e, i) => <MobilePlace key={i} e={e} i={i}/>)
+                                : <>
+                                    <div style={{height: '96px', width: '88vw'}} className={'skeleton-loading'}></div>
+                                    <div style={{height: '96px', width: '88vw'}} className={'skeleton-loading'}></div>
+                                    <div style={{height: '96px', width: '88vw'}} className={'skeleton-loading'}></div>
+                                    <div style={{height: '96px', width: '88vw'}} className={'skeleton-loading'}></div>
                                 </>
                             }
                         </div>
 
 
-                        {!isLoading && loadedPlaces && loadedPlaces.length > 0 && (
+                        {!isLoading && loadedPlaces && loadedPlaces.length > 0 && places.length === 10 && (
                             <button onClick={loadMore}>Загрузить больше</button>
                         )}
                     </div>

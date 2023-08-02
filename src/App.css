@@ -19,3 +19,13 @@
   width: 100%;
   justify-content: space-between;
 }
+.carousel .slider-wrapper {
+
+  width: 90vw !important    ;
+}
+.main_slide{
+  width: 90vw;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 40px;
+}

@@ -6,6 +6,10 @@ export const placeApi = api.injectEndpoints({
             query: () => 'place',
             providesTags: ['Place']
         }),
+        fetchMainAdvertisements: builder.query({
+            query: () => 'advertisement',
+            providesTags: ['Place']
+        }),
         fetchByIdPlace: builder.query({
             query: ({id, telegramId}) => ({
                 url: `place/findById/${id}`,
@@ -19,9 +23,9 @@ export const placeApi = api.injectEndpoints({
             providesTags: ['Category', 'Place']
         }),
         findPlaceMainById: builder.query({
-            query: ({id,telegramId}) => ({
+            query: ({id, telegramId}) => ({
                 url: `place/findPlaceMainById`,
-                params: {placeId:id,telegramId}
+                params: {placeId: id, telegramId}
             }), providesTags: ['Category', 'Place']
         }),
         findAllPlacesMainByCategoryId: builder.query({
@@ -117,6 +121,7 @@ export const {
     useFetchAllRatingsQuery,
     useFindUserPlaceRatingMutation,
     useLazyFetchByCategoryQuery,
+    useFetchMainAdvertisementsQuery,
     useFindPlaceImagesQuery,
     useLazyFindPlaceImagesQuery,
     useFindPlaceMainByIdQuery,
