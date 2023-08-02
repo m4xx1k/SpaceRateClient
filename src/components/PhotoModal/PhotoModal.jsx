@@ -5,7 +5,7 @@ import {toWebp} from "../../utils.js";
 
 const VITE__API = import.meta.env.VITE__API
 
-const PhotoModal = ({photos, initialIndex, onClose, type='place'}) => {
+const PhotoModal = ({photos, initialIndex, onClose, type='places'}) => {
     const [slide, setSlide] = useState(initialIndex)
     const modalRef = useRef(null);
 
