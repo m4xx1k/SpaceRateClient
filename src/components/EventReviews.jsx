@@ -1,12 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useFetchAllEventRatingsQuery} from "../redux/event/event.api";
-import {formatDate} from "../utils.js";
+import {formatDate, toWebp} from "../utils.js";
+import PhotoModal from "./PhotoModal/PhotoModal.jsx";
+const VITE__API = import.meta.env.VITE__API
 
 const EventReviews = ({eventId, userId}) => {
     const {data, isLoading, isSuccess} = useFetchAllEventRatingsQuery({
         eventId,
         telegramId: userId
     })
+    const [isVisibleCarousel, setIsVisibleCarousel] = useState(false)
+    const [photoIndex,setPhotoIndex] = useState(0)
+    const [photos,setPhotos] = useState([])
+    const handleShowCarousel = (e,i)=>{
+        setPhotos(e?.photos)
+        setIsVisibleCarousel(true)
+        setPhotoIndex(i)
+    }
+    const handleCloseCarousel = ()=>setIsVisibleCarousel(false)
     return (
 
         <section className="rewievs" style={{color:'#fffafa',background:'#212121'}}>
@@ -41,6 +52,21 @@ const EventReviews = ({eventId, userId}) => {
 
                                                 </div>
                                             </div>
+                                            <div className={'rewievs__photos'}>
+                                                {e?.photos?.map((photo,i)=>(
+                                                    <picture onClick={()=>handleShowCarousel(e,i)} key={photo._id}>
+                                                        <source className={'rewievs__photo'} srcSet={toWebp(`${VITE__API}/events/${photo.photo}`)}/>
+                                                        <img className={'rewievs__photo'}
+                                                             src={`${VITE__API}/events/${photo.photo}`}
+                                                             alt={`${VITE__API}/events/${photo.photo}`}/>
+                                                        {/*<img loading="lazy"  src="https://via.placeholder.com/374" alt=""/>*/}
+                                                    </picture>
+                                                ))}
+                                            </div>
+                                            {
+                                                isVisibleCarousel && photos?.length &&
+                                                <PhotoModal type={'events'} photos={photos.map(e=>e.photo)} onClose={handleCloseCarousel} initialIndex={photoIndex}/>
+                                            }
                                             <div className="slide-rewievs__text">{e.text}
                                             </div>
                                             <div

@@ -14,13 +14,14 @@ import RateForm from "../components/RateForm/RateForm.jsx";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {clsx} from 'clsx';
 import ReactStars from "react-rating-stars-component";
-import {useNavigate} from "react-router-dom";
+import {Form, useNavigate} from "react-router-dom";
 import {useFindUserMutation} from "../redux/auth/authApiSlice.js";
 import {useSelector} from "react-redux";
 import {formatDate, toWebp} from "../utils.js";
 import google from '../assets/img/google100.webp'
 import yandex from '../assets/img/yandex100.webp'
 import Reserve from "../components/Reserve/Reserve.jsx";
+import PhotoModal from "../components/PhotoModal/PhotoModal.jsx";
 
 SwiperCore.use([Pagination, Navigation]);
 const VITE__API = import.meta.env.VITE__API
@@ -114,6 +115,15 @@ const Reviews = ({placeId, userId}) => {
         placeId,
         telegramId: userId
     })
+    const [isVisibleCarousel, setIsVisibleCarousel] = useState(false)
+    const [photoIndex,setPhotoIndex] = useState(0)
+    const [photos,setPhotos] = useState([])
+    const handleShowCarousel = (e,i)=>{
+        setPhotos(e?.photos)
+        setIsVisibleCarousel(true)
+        setPhotoIndex(i)
+    }
+    const handleCloseCarousel = ()=>setIsVisibleCarousel(false)
     return (
 
         <section className="rewievs">
@@ -148,6 +158,22 @@ const Reviews = ({placeId, userId}) => {
 
                                                 </div>
                                             </div>
+
+                                            <div className={'rewievs__photos'}>
+                                                {e?.photos?.map((photo,i)=>(
+                                                    <picture onClick={()=>handleShowCarousel(e,i)} key={photo._id}>
+                                                        <source className={'rewievs__photo'} srcSet={toWebp(`${VITE__API}/places/${photo.photo}`)}/>
+                                                        <img className={'rewievs__photo'}
+                                                            src={`${VITE__API}/places/${photo.photo}`}
+                                                            alt={`${VITE__API}/places/${photo.photo}`}/>
+                                                        {/*<img loading="lazy"  src="https://via.placeholder.com/374" alt=""/>*/}
+                                                    </picture>
+                                                ))}
+                                            </div>
+                                            {
+                                                isVisibleCarousel && photos?.length &&
+                                                <PhotoModal photos={photos.map(e=>e.photo)} onClose={handleCloseCarousel} initialIndex={photoIndex}/>
+                                            }
                                             <div className="slide-rewievs__text">{e.text}
                                             </div>
                                             <div
@@ -221,6 +247,8 @@ const Place = () => {
     const {id} = useParams()
     const {user, tg} = useTelegram()
     const navigate = useNavigate()
+    // const user = {id: '466439009'}
+
     const [isLiked, setIsLiked] = useState(false)
     const {data: place, isSuccess, isLoading, isError, error: placeError} = useFindPlaceMainByIdQuery({
         id,
@@ -252,13 +280,21 @@ const Place = () => {
         }
 
     };
-    const handleRateSpace = async e => {
-        e?.preventDefault()
+    const handleRateSpace = async images => {
+
         const {data: isUserLogged} = await findUser({telegramId: user.id})
 
         if (isUserLogged) {
             if (text && rating) {
-                await ratePlace({telegramId: `${user.id}`, value: rating, placeId: id, text})
+                const formdata = new FormData()
+                formdata.append('telegramId', `${user.id}`)
+                formdata.append('value', rating)
+                formdata.append('placeId', id)
+                formdata.append('text', text)
+                images.forEach((image) => {
+                    formdata.append(`photos`, image);
+                });
+                await ratePlace(formdata)
                 setIsShow(false)
             } else {
                 setError('Заполните рейтинг и текст')
@@ -379,7 +415,7 @@ const Place = () => {
                                     <span className={'restaurant__copied'}>
                                             {
                                                 isCopied ?
-                                                    'Номер телефона скопирован':'⠀'
+                                                    'Номер телефона скопирован' : '⠀'
                                             }
                                         </span>
                                     <div className="restaurant__hide">

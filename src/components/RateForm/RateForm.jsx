@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import ReactStars from "react-rating-stars-component/dist/react-stars.js";
 import close from '../../assets/img/close.svg'
 import icon from '../../assets/img/icon.svg'
@@ -6,12 +6,29 @@ import {useSelector} from "react-redux";
 import {toWebp} from "../../utils.js";
 import { useLazyFindPlaceImagesQuery} from "../../redux/place/place.api.js";
 import {useLazyFindEventImagesQuery} from "../../redux/event/event.api.js";
+import s from './RateForm.module.scss'
 
 const VITE__API = import.meta.env.VITE__API
 const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, text, rating, error, info, isEvent}) => {
     const [findPlacePhotos] = useLazyFindPlaceImagesQuery()
     const [findEventPhotos] = useLazyFindEventImagesQuery()
     const [photos, setPhotos] = useState([])
+    const [images, setImages] = useState([])
+    const imageInput = useRef(null);
+
+
+    const handleImageRemove = index => {
+        setImages(images.filter((image, i) => i !== index));
+    };
+    const handleImageUpload = event => {
+        let imagesArray = [...images];
+        for (let i = 0; i < event.target.files.length; i++) {
+            if (imagesArray.length >= 8) break; // Restrict to 8 images
+            imagesArray.push(event.target.files[i]); // Save the File objects
+        }
+        setImages(imagesArray);
+    };
+
     useEffect(()=>{
         const init = async ()=>{
             let photos = []
@@ -67,7 +84,7 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                     </div>
 
 
-                    <form action="#" className="comment-form">
+                    <div className="comment-form">
                         <div className="comment__title">Оцените свое
                             пребывание здесь
                         </div>
@@ -101,14 +118,33 @@ const RateForm = ({data, setIsShow, ratingChanged, handleRateSpace, setText, tex
                         </div>
                         <div className="comment-form__label">
                             <label htmlFor="inp1">
-                                <div className="comment-form__icon"><img loading="lazy"  src={icon} alt=""/></div>
+                                <div onClick={() => imageInput.current.click()}  className="comment-form__icon"><img loading="lazy"  src={icon} alt=""/></div>
                                 Прикрепите фото с Вашего визита
                             </label>
-                            <input type="file" name="" id="inp1"/>
                         </div>
+                        <div className={s.photos}>
+                            <input
+                                type='file'
+                                ref={imageInput}
+                                accept='image/*'
+                                multiple
+                                onChange={handleImageUpload}
+                                className={s.imageInput}
+                            />
+
+                            <div className={s.imagesContainer}>
+                                {images.map((image, index) => (
+                                    <div className={s.imageWrapper} key={index}>
+                                        <img src={URL.createObjectURL(image)} alt=''/>
+                                        <button className={s.removeButton} onClick={() => handleImageRemove(index)}>удалить</button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
                         <span className={'error'}>{error}</span>
-                        <button onClick={handleRateSpace} className="comment-form__button button">Отправить</button>
-                    </form>
+                        <button onClick={()=>handleRateSpace(images)} className="comment-form__button button">Отправить</button>
+                    </div>
                 </div>
             </div>
         </section>

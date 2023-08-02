@@ -28,3 +28,63 @@
   font-size: 14px;
   color:red;
 }
+.imagesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+
+.imageWrapper img {
+  width: auto;
+  height: 96px;
+  max-height: 96px;
+  object-fit: cover;
+}
+
+
+/* Previous CSS... */
+
+.imageInput {
+  display: none;
+}
+.uploadButton{
+  width: 32px;
+  height: 32px;
+  background: transparent;
+}
+
+.imagesContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.imageWrapper {
+  position: relative;
+  margin: 5px;
+}
+.imageWrapper:hover .removeButton{
+  display: flex;
+}
+.removeButton {
+  background: #f44336;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  border-radius: 2px;
+  max-width: 100%;
+  width: 100%;
+  font-size: 11px;
+  color: white;
+  font-weight: 300;
+  height: 16px;/* Material Design error color */
+}
+
+.removeButton:hover {
+  background: #d32f2f; /* Material Design error dark color */
+}
+.photos{
+  padding: 4px;
+
+}

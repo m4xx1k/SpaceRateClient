@@ -296,7 +296,15 @@
   //}
   &__container {
   }
-
+  &__photos{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  &__photo{
+    max-width: 64px;
+    max-height: 64px;
+  }
   &__body {
     padding-top: rem(50);
     padding-bottom: rem(40);

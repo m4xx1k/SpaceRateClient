@@ -87,13 +87,19 @@ const Event = () => {
     const [isShow, setIsShow] = useState(false)
     const [rateEvent] = useRateEventMutation()
 
-    const handleRateSpace = async e => {
-        e?.preventDefault()
+    const handleRateSpace = async images => {
         const {data: isUserLogged} = await findUser({telegramId: user.id})
 
         if (isUserLogged) {
             if (text) {
-                await rateEvent({telegramId: `${user.id}`, value: 0, eventId: id, text})
+                const formdata = new FormData()
+                formdata.append('telegramId', `${user.id}`)
+                formdata.append('eventId', id)
+                formdata.append('text', text)
+                images.forEach((image) => {
+                    formdata.append(`photos`, image);
+                });
+                await rateEvent(formdata)
                 setIsShow(false)
             } else {
                 setError('Заполните текст')
