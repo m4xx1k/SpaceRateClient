@@ -69,8 +69,8 @@ const EventLoading = () => {
 const Event = () => {
 
     const {id} = useParams()
-    const {user} = useTelegram()
-    // const user = {id: '466439009'}
+    // const {user} = useTelegram()
+    const user = {id: '466439009'}
 
     const {data, isLoading, isSuccess} = useGetEventFullInfoByIdQuery({id, telegramId: user?.id})
     const [selectedDay, setSelectedDay] = useState('')
@@ -88,18 +88,20 @@ const Event = () => {
     const [rateEvent] = useRateEventMutation()
 
     const handleRateSpace = async images => {
-        const {data: isUserLogged} = await findUser({telegramId: user.id})
-
+        // const {data: isUserLogged} = await findUser({telegramId: user.id})
+        const isUserLogged = true
         if (isUserLogged) {
             if (text) {
                 const formdata = new FormData()
                 formdata.append('telegramId', `${user.id}`)
                 formdata.append('eventId', id)
                 formdata.append('text', text)
+                formdata.append('value', 0)
                 images.forEach((image) => {
                     formdata.append(`photos`, image);
                 });
-                await rateEvent(formdata)
+                const res = await rateEvent(formdata)
+                console.log({res})
                 setIsShow(false)
             } else {
                 setError('Заполните текст')
@@ -271,10 +273,10 @@ const Event = () => {
                                 {data?.dates?.find(m => m.month === selectedMonth)?.data[selectedDay]?.map(e => {
 
 
-                                    return <ul className="timetable__items active">
+                                    return <ul key={e} className="timetable__items active">
 
 
-                                        {!!e && <li key={e}
+                                        {!!e && <li
                                                     style={isPased(e.split(' ')[0]) && Object.keys(data.dates[0].data)[0] === selectedDay ? {opacity: 0.5} : {}}
                                                     className="timetable__item">{e}</li>}
                                     </ul>

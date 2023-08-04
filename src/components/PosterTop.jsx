@@ -19,7 +19,7 @@ const PosterTop = () => {
 
                 {
                     types?.map(type=>(
-                        type.name!=='movie'&& <Link to={`/events/${type._id}/${type.name.replaceAll(' ','_')}`} className={clsx("poster__item",type.name.toLowerCase() ===name?.replaceAll('_',' ').toLowerCase() &&"active")}>{type.name}</Link>
+                        type.name!=='movie'&& <Link key={type._id} to={`/events/${type._id}/${type.name.replaceAll(' ','_')}`} className={clsx("poster__item",type.name.toLowerCase() ===name?.replaceAll('_',' ').toLowerCase() &&"active")}>{type.name}</Link>
 
                     ))
                 }
