@@ -181,7 +181,7 @@ const Reviews = ({placeId, userId}) => {
                                                 className="slide-rewievs__date">{formatDate(e.date)}</div>
 
                                             {
-                                                e?.answers?.lenght ?
+                                                e?.answers?.length ?
                                                     <div className={'rewievs__answers'}>
                                                         <h2 className={'rewievs__answers_title'}>{e.answers.length===1 ? 'Ответ':'Ответы'}</h2>
                                                         <div className="rewievs__answers_list">
