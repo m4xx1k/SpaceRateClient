@@ -71,6 +71,23 @@ const EventReviews = ({eventId, userId}) => {
                                             </div>
                                             <div
                                                 className="slide-rewievs__date">{formatDate(e.date)}</div>
+                                            {
+                                                e?.answers?.length ?
+                                                    <div className={'rewievs__answers'}>
+                                                        <h2 className={'rewievs__answers_title'}>{e.answers.length===1 ? 'Ответ':'Ответы'}</h2>
+                                                        <div className="rewievs__answers_list">
+                                                            {e.answers.map(answer=>(
+                                                                <div key={answer._id} className={'rewievs__answers_item'}>
+                                                                    <p className={'rewievs__answers_text'}>{answer.text}</p>
+                                                                    <div className={'slide-rewievs__date'} >{formatDate(e.date)}</div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+
+
+                                                    </div>
+                                                    :<></>
+                                            }
                                         </div>
                                     )
                                 })
