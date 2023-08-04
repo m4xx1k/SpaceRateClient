@@ -69,8 +69,8 @@ const EventLoading = () => {
 const Event = () => {
 
     const {id} = useParams()
-    // const {user} = useTelegram()
-    const user = {id: '466439009'}
+    const {user} = useTelegram()
+    // const user = {id: '466439009'}
 
     const {data, isLoading, isSuccess} = useGetEventFullInfoByIdQuery({id, telegramId: user?.id})
     const [selectedDay, setSelectedDay] = useState('')
@@ -88,8 +88,8 @@ const Event = () => {
     const [rateEvent] = useRateEventMutation()
 
     const handleRateSpace = async images => {
-        // const {data: isUserLogged} = await findUser({telegramId: user.id})
-        const isUserLogged = true
+        const {data: isUserLogged} = await findUser({telegramId: user.id})
+        // const isUserLogged = true
         if (isUserLogged) {
             if (text) {
                 const formdata = new FormData()
