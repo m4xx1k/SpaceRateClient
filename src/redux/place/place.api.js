@@ -75,7 +75,7 @@ export const placeApi = api.injectEndpoints({
         fetchAllRatings: builder.query({
             query: body => ({
                 url: 'place/ratings',
-                params: {...body}
+                params: body
             }),
             providesTags: ['Rating']
         }),

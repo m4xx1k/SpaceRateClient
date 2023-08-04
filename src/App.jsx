@@ -6,11 +6,7 @@ import Layout from "./components/Layout.jsx";
 import TelegramRequire from "./components/TelegramRequire.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import Favourites from "./pages/Favourites.jsx";
-// import Places from "./pages/Places.jsx";
-// import Events from "./pages/Movies.jsx";
-// import Movie from "./pages/Movie.jsx";
-// import Login from "./pages/Login/Login.jsx";
-// import Place from "./pages/Place.jsx";
+
 import {Suspense, lazy, useEffect} from 'react';
 import {useTelegram} from "./hooks/useTelegram.js";
 const routes = [

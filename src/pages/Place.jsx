@@ -115,6 +115,7 @@ const Reviews = ({placeId, userId}) => {
         placeId,
         telegramId: userId
     })
+    console.log({data,isSuccess})
     const [isVisibleCarousel, setIsVisibleCarousel] = useState(false)
     const [photoIndex,setPhotoIndex] = useState(0)
     const [photos,setPhotos] = useState([])
@@ -178,6 +179,27 @@ const Reviews = ({placeId, userId}) => {
                                             </div>
                                             <div
                                                 className="slide-rewievs__date">{formatDate(e.date)}</div>
+
+                                            {
+                                                e?.answers?.lenght ?
+                                                    <div className={'rewievs__answers'}>
+                                                        <h2 className={'rewievs__answers_title'}>{e.answers.length===1 ? 'Ответ':'Ответы'}</h2>
+                                                        <div className="rewievs__answers_list">
+                                                            {e.answers.map(answer=>(
+                                                                <div key={answer._id} className={'rewievs__answers_item'}>
+                                                                    <p className={'rewievs__answers_text'}>{answer.text}</p>
+                                                                    <div className={'slide-rewievs__date'} >{formatDate(e.date)}</div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+
+
+                                                    </div>
+                                                    :<></>
+                                            }
+                                            <div>
+
+                                            </div>
                                         </div>
                                     )
                                 })

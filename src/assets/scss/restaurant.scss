@@ -305,6 +305,31 @@
     max-width: 64px;
     max-height: 64px;
   }
+  &__answers{
+    margin-top: 8px;
+    width: 100%;
+    &_list{
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      padding-left: 20px;
+      gap: 16px;
+    }
+    &_item{
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #eee;
+      padding-top: 4px;
+    }
+    &_text{
+      font-weight: 300;
+      margin-bottom: 4px;
+    }
+    &_title{
+      font-weight: 600;
+
+    }
+  }
   &__body {
     padding-top: rem(50);
     padding-bottom: rem(40);
