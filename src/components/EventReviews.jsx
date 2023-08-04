@@ -9,6 +9,7 @@ const EventReviews = ({eventId, userId}) => {
         eventId,
         telegramId: userId
     })
+    console.log({data,isSuccess})
     const [isVisibleCarousel, setIsVisibleCarousel] = useState(false)
     const [photoIndex,setPhotoIndex] = useState(0)
     const [photos,setPhotos] = useState([])
