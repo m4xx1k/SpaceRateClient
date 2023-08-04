@@ -1,11 +1,12 @@
-import React, { useState} from 'react';
+import React, {useState} from 'react';
 import logo from '../assets/goodjoy41.png'
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {useTelegram} from "../hooks/useTelegram.js";
 import {useFavouriteCountQuery} from "../redux/place/place.api.js";
 import {BackButton} from "./BackButton";
 
 const Header = () => {
+    const {pathname} = useLocation()
     const [isSideMenu, setIsSideMenu] = useState(false)
     const {user} = useTelegram()
     //     const user = {id: '466439009'}
@@ -24,7 +25,7 @@ const Header = () => {
                         {/*<BackButton classname={'links__back-btn'}>{'⇦'}</BackButton>*/}
 
                         <Link to="/" className="header__logo">
-                            <img loading="lazy"  src={logo} alt=""/>
+                            <img loading="lazy" src={logo} alt=""/>
                         </Link>
 
                     </div>
@@ -32,10 +33,14 @@ const Header = () => {
                     <div className="header__menu menu">
                         <nav className="menu__body">
                             <ul className="menu__list">
-                                <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link active">Рейтинги</a></li>
-                                <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link">Сообщество</a></li>
-                                <li className="menu__item"><a href="https://t.me/goodjoy_uz" className="menu__link">Обзоры</a></li>
-                                <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link">ОТДЕЛ ЗАБОТЫ</a></li>
+                                <li className="menu__item"><a href="https://t.me/goodjoyuz_bot"
+                                                              className="menu__link active">Рейтинги</a></li>
+                                <li className="menu__item"><a href="https://t.me/goodjoyuz_bot"
+                                                              className="menu__link">Сообщество</a></li>
+                                <li className="menu__item"><a href="https://t.me/goodjoy_uz"
+                                                              className="menu__link">Обзоры</a></li>
+                                <li className="menu__item"><a href="https://t.me/goodjoyuz_bot" className="menu__link">ОТДЕЛ
+                                    ЗАБОТЫ</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -52,7 +57,7 @@ const Header = () => {
                                                                     className="actions-header__link _icon-user"></Link>
                         </div>
                         <div className="actions-header__item"><Link to="/favourites"
-                                                                 className="actions-header__link _icon-favorite active">{!!data ? data : <></>}</Link>
+                                                                    className="actions-header__link _icon-favorite active">{!!data ? data : <></>}</Link>
                         </div>
                         <button onClick={handleToggleSideMenu}
                                 type="button" className="menu__icon icon-menu"><span></span></button>
@@ -60,9 +65,9 @@ const Header = () => {
 
                 </div>
                 <div className="events-poster__top">
-                    <BackButton>
-                        <span className="events-poster__back">НАЗАД</span   >
-                    </BackButton>
+                    {pathname !== '/' ? <BackButton>
+                        <span className="events-poster__back">НАЗАД</span>
+                    </BackButton> : <></>}
                 </div>
             </div>
 
