@@ -13,7 +13,7 @@ const PosterTop = () => {
         <div className="poster__top">
             {/*<a href="#" className="poster__back">НАЗАД</a>*/}
             <button onClick={()=>setMenu(prev=>!prev)} className={clsx("poster__button","_icon-arrow-bottom", menu && 'active')}>СОБЫТИЯ</button>
-            <div className="poster__label">{pathname!=='/movies'? name:"КИНО"}</div>
+            {/*<div className="poster__label">{pathname!=='/movies'? name:"КИНО"}</div>*/}
             <ul className={clsx("poster__list", menu && 'active')}>
                 {/*<Link to={`/movies`} className={clsx("poster__item", pathname==='/movies'&&'active')}>КИНО</Link>*/}
 
