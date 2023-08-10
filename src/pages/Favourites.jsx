@@ -50,7 +50,7 @@ const Favourites = () => {
                                             <Link to={`/place/${e.place._id}`} className="item-favorite__body">
                                                 <div className="item-favorite__image-ibg">
                                                     <picture>
-                                                        <source 
+                                                        <source
                                                             srcSet={toWebp(`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`)}/>
                                                         <img
                                                             src={`${VITE__API}/places/${e?.photos?.length ? e.photos[0]?.photo : ''}`}
@@ -100,10 +100,10 @@ const Favourites = () => {
                                             <div onClick={() => handleToggleEventFavourite(e?._id)}
                                                  className="item-favorite_unlike">✛
                                             </div>
-                                            <Link to={`/${e.type.name==='movie'? 'movie':'event'}/${e._id}`} className="item-favorite__body">
+                                            <Link to={`/${e.type.isMovie ? 'movie':'event'}/${e._id}`} className="item-favorite__body">
                                                 <div className="item-favorite__image-ibg">
                                                     <picture>
-                                                        <source 
+                                                        <source
                                                             srcSet={toWebp(`${VITE__API}/events/${e?.photos?.length ? e.photos[0]?.photo : ''}`)}/>
                                                         <img
                                                             src={`${VITE__API}/events/${e?.photos?.length ? e.photos[0]?.photo : ''}`}

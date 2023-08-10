@@ -15,11 +15,11 @@ const PosterTop = () => {
             <button onClick={()=>setMenu(prev=>!prev)} className={clsx("poster__button","_icon-arrow-bottom", menu && 'active')}>СОБЫТИЯ</button>
             <div className="poster__label">{pathname!=='/movies'? name:"КИНО"}</div>
             <ul className={clsx("poster__list", menu && 'active')}>
-                <Link to={`/movies`} className={clsx("poster__item", pathname==='/movies'&&'active')}>КИНО</Link>
+                {/*<Link to={`/movies`} className={clsx("poster__item", pathname==='/movies'&&'active')}>КИНО</Link>*/}
 
                 {
                     types?.map(type=>(
-                        type.name!=='movie'&& <Link key={type._id} to={`/events/${type._id}/${type.name.replaceAll(' ','_')}`} className={clsx("poster__item",type.name.toLowerCase() ===name?.replaceAll('_',' ').toLowerCase() &&"active")}>{type.name}</Link>
+                        <Link key={type._id} to={!type.isMovie ?  `/events/${type._id}/${type.name.replaceAll(' ','_')}`:'/movies'} className={clsx("poster__item",type.name.toLowerCase() ===name?.replaceAll('_',' ').toLowerCase() &&"active")}>{type.name}</Link>
 
                     ))
                 }

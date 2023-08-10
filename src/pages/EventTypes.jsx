@@ -19,8 +19,8 @@ const EventTypes = () => {
                         {/*</li>*/}
                         {
                             types?.length && types.map(type => {
-                                const {name} = type
-                                if (name !== 'movie') {
+                                const {name,isMovie} = type
+                                if (!isMovie) {
                                     return <li key={name} className="events-poster__item">
                                         <Link to={`/events/${type._id}/${type.name}`}
                                               className="events-poster__link _icon-link">{name}</Link>
