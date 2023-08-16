@@ -13,7 +13,7 @@ import PosterTop from "../components/PosterTop.jsx";
 
 const VITE__API = import.meta.env.VITE__API
 
-const EventsLoader = () => {
+const EventsLoader = ({name}) => {
     return (
         <>
             <section className="poster">
@@ -22,7 +22,7 @@ const EventsLoader = () => {
                         <div className="poster__top">
                             {/*<a href="#" className="poster__back">НАЗАД</a>*/}
                             <button className="poster__button _icon-arrow-bottom">СОБЫТИЯ</button>
-                            <div className="poster__label">КИНО</div>
+                            <div className="poster__label">{name || ""}</div>
                             <ul className="poster__list">
                                 <li className="poster__item active">КИНО</li>
                                 <li className="poster__item">КОНЦЕРТЫ</li>
@@ -34,16 +34,16 @@ const EventsLoader = () => {
                             </ul>
                         </div>
                         <div className="events-poster__slider" style={{marginTop: 16}}>
-                            <Swiper className="events-poster__wrapper swiper-wrapper">
+                            {/*    <Swiper className="events-poster__wrapper swiper-wrapper">*/}
 
-                                <SwiperSlide style={{height: '90vw', width: '90vw', borderRadius: 36}}
-                                             className="events-poster__slide slide-events-poster swiper-slide skeleton-loading">
+                            {/*        <SwiperSlide style={{height: '90vw', width: '90vw', borderRadius: 36}}*/}
+                            {/*                     className="events-poster__slide slide-events-poster swiper-slide skeleton-loading">*/}
 
-                                </SwiperSlide>
+                            {/*        </SwiperSlide>*/}
 
 
-                            </Swiper>
-                            <div className="events-poster__pagination pagination"></div>
+                            {/*    </Swiper>*/}
+                            {/*    <div className="events-poster__pagination pagination"></div>*/}
                         </div>
                         <div className="calendar">
 
@@ -66,8 +66,8 @@ const EventsLoader = () => {
 
                         </div>
 
-                        <div className="poster__text">Сеансы, кинотеатры, афиша, премьеры!
-                        </div>
+                        {/*<div className="poster__text">Сеансы, кинотеатры, афиша, премьеры!*/}
+                        {/*</div>*/}
 
                     </div>
                 </div>
@@ -249,7 +249,7 @@ const Events2 = () => {
 
 
     const navigate = useNavigate()
-    if (!events || !aviableDates || isLoading || !isSuccessDates) return <EventsLoader/>
+    if (!events || !aviableDates || isLoading || !isSuccessDates) return <EventsLoader name={name}/>
     return (
         <>
 
