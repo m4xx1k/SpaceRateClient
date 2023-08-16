@@ -249,7 +249,7 @@ const Events2 = () => {
 
     const navigate = useNavigate()
     if (isLoading || isLoadingDates) return <EventsLoader name={name}/>
-    if(events===null || !aviableDates===null || !isSuccessDates) return <span className={'center'}>в категории "{name}" нету мест</span>
+    if(events===null || aviableDates===null || !isSuccessDates) return <span className={'center'}>в категории "{name}" нету мест</span>
     return (
         <>
 
