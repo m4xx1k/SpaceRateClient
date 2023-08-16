@@ -7,7 +7,6 @@ import {useEffect, useState} from "react";
 import {clsx} from "clsx";
 import {useNavigate} from "react-router-dom";
 import {monthNames, daysNames, toWebp} from './../utils.js'
-import {Swiper, SwiperSlide} from "swiper/react";
 import {useParams} from "react-router";
 import PosterTop from "../components/PosterTop.jsx";
 
@@ -226,7 +225,7 @@ const Events2 = () => {
     const [selectedDate, setSelectedDate] = useState('')
     const [events, setEvents] = useState([])
     const [fetchEvents] = useLazyGetEventsWithShowtimesByDateQuery();
-    const {data: aviableDates, isSuccess: isSuccessDates} = useGetAvailableShowtimeDatesQuery({typeId: type})
+    const {data: aviableDates, isSuccess: isSuccessDates,isLoading:isLoadingDates} = useGetAvailableShowtimeDatesQuery({typeId: type})
     useEffect(() => {
         const fetch = async () => {
             if (selectedDate && selectedDate !== '') {
@@ -249,7 +248,8 @@ const Events2 = () => {
 
 
     const navigate = useNavigate()
-    if (!events || !aviableDates || isLoading || !isSuccessDates) return <EventsLoader name={name}/>
+    if (isLoading || isLoadingDates) return <EventsLoader name={name}/>
+    if(events===null || !aviableDates===null || !isSuccessDates) return <span className={'center'}>в категории "{name}" нету мест</span>
     return (
         <>
 

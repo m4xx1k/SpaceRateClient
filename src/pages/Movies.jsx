@@ -242,13 +242,15 @@ const Movies2 = () => {
 
     const [selectedDate, setSelectedDate] = useState('')
     const [movies, setMovies] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
     const [fetchMovies] = useLazyGetEventsWithShowtimesByDateQuery();
-    const {data: aviableMovies, isSuccess: isSuccessDates} = useGetAvailableShowtimeDatesQuery()
+    const {data: aviableMovies, isSuccess: isSuccessDates, isLoading:isLoadingDates} = useGetAvailableShowtimeDatesQuery()
     useEffect(() => {
         const fetch = async () => {
             if (selectedDate && selectedDate !== '') {
                 const {data} = await fetchMovies({date:selectedDate});
                 setMovies(data)
+                setIsLoading(false)
             }
         }
         fetch()
@@ -264,7 +266,8 @@ const Movies2 = () => {
         }
     }, [aviableMovies, isSuccessDates, isSuccessPremieres, premieres])
 
-    if (!movies || !aviableMovies) return <MoviesLoader/>
+    if (isLoading || isLoadingDates) return <MoviesLoader/>
+    if(movies===null || aviableMovies ===null || !isSuccessDates) return  <>пока нету кино</>
     return (
         <>
 
